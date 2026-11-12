@@ -3,15 +3,14 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="theme-color" content="#08090B">
-
-<title>VYRA® — The Design Infection</title>
-<meta name="description" content="VYRA. An independent design organism. Objects that infect, adapt and evolve.">
+<meta name="description" content="VYRA — Parasitic Luxury. Objects that attach to identity.">
+<title>VYRA® — Parasitic Luxury</title>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
 
 <style>
 :root{
@@ -21,875 +20,537 @@
   --white:#F4F5F7;
   --ice:#8496B5;
   --steel:#343A42;
+  --muted:#777E89;
   --line:rgba(174,180,190,.17);
-  --muted:rgba(244,245,247,.48);
   --display:"Space Grotesk",sans-serif;
   --body:"Inter",sans-serif;
+  --pad:clamp(20px,5vw,76px);
 }
-
 *{box-sizing:border-box}
 html{scroll-behavior:smooth;background:var(--black)}
 body{
-  margin:0;
-  background:var(--black);
-  color:var(--white);
-  font-family:var(--body);
-  overflow-x:hidden;
+  margin:0;background:var(--black);color:var(--white);
+  font-family:var(--body);-webkit-font-smoothing:antialiased;
+  overflow-x:hidden
 }
+body.menu-open{overflow:hidden}
 a{color:inherit;text-decoration:none}
 button{font:inherit}
+img{display:block;width:100%}
 ::selection{background:var(--ice);color:var(--black)}
 
-body:after{
-  content:"";
-  position:fixed;
-  inset:0;
-  z-index:90;
-  pointer-events:none;
-  opacity:.12;
-  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.25'/%3E%3C/svg%3E");
+.noise{
+  position:fixed;inset:0;z-index:50;pointer-events:none;opacity:.035;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.7'/%3E%3C/svg%3E")
 }
-
-/* INTRO */
-
-.loader{
-  position:fixed;
-  inset:0;
-  z-index:999;
-  background:var(--black);
-  display:grid;
-  place-items:center;
-  transition:opacity 1s,visibility 1s;
+.announcement{
+  height:32px;padding:0 var(--pad);display:flex;align-items:center;
+  justify-content:space-between;border-bottom:1px solid var(--line);
+  color:var(--muted);font-size:8px;letter-spacing:.18em;text-transform:uppercase
 }
-.loader.hide{opacity:0;visibility:hidden}
-.loader-logo{
-  font:600 clamp(50px,10vw,100px) var(--display);
-  letter-spacing:.28em;
-  padding-left:.28em;
-}
-.loader-sub{
-  text-align:center;
-  margin-top:20px;
-  font-size:9px;
-  letter-spacing:.35em;
-  color:var(--muted);
-}
-.loader-bar{
-  width:180px;
-  height:1px;
-  background:var(--steel);
-  margin:25px auto;
-  overflow:hidden;
-}
-.loader-bar:after{
-  content:"";
-  display:block;
-  width:100%;
-  height:100%;
-  background:var(--platinum);
-  transform:translateX(-100%);
-  animation:loading 1.8s ease forwards;
-}
-@keyframes loading{to{transform:translateX(0)}}
-
-/* NAVIGATION */
-
+.announcement span:last-child{color:var(--ice)}
 header{
-  position:fixed;
-  top:0;
-  left:0;
-  width:100%;
-  height:76px;
-  padding:0 5%;
-  z-index:100;
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  border-bottom:1px solid transparent;
-  transition:.4s;
-}
-header.scrolled{
-  background:rgba(8,9,11,.83);
-  backdrop-filter:blur(22px);
-  border-color:var(--line);
+  position:absolute;top:32px;left:0;right:0;height:78px;z-index:20;
+  padding:0 var(--pad);display:grid;grid-template-columns:1fr auto 1fr;
+  align-items:center;border-bottom:1px solid rgba(255,255,255,.12)
 }
 .logo{
-  font:600 25px var(--display);
-  letter-spacing:.25em;
-  padding-left:.25em;
+  font-family:var(--display);font-weight:700;font-size:29px;
+  letter-spacing:-.105em
 }
-.nav{
-  display:flex;
-  align-items:center;
-  gap:38px;
+.logo sup{font:8px var(--body);vertical-align:top;margin-left:5px}
+nav{display:flex;gap:clamp(20px,3vw,44px)}
+nav a,.header-right a{
+  font-size:9px;letter-spacing:.14em;text-transform:uppercase;
+  color:rgba(244,245,247,.7);transition:color .25s
 }
-.nav a,.nav-action{
-  font-size:9px;
-  text-transform:uppercase;
-  letter-spacing:.2em;
-  color:rgba(244,245,247,.72);
-  transition:.3s;
+nav a:hover,.header-right a:hover{color:var(--white)}
+.header-right{display:flex;justify-content:flex-end}
+.menu-btn{
+  display:none;width:42px;height:42px;background:none;color:white;
+  border:1px solid var(--line);cursor:pointer
 }
-.nav a:hover,.nav-action:hover{color:var(--ice)}
-.nav-right{
-  font-size:9px;
-  letter-spacing:.18em;
-  color:var(--platinum);
-}
-.menu-button{
-  display:none;
-  background:none;
-  color:var(--white);
-  border:0;
-  font-size:23px;
-  cursor:pointer;
-}
-
-/* HERO */
 
 .hero{
-  min-height:100svh;
-  position:relative;
-  display:flex;
-  align-items:center;
-  overflow:hidden;
-  padding:130px 7% 100px;
+  min-height:100svh;min-height:max(720px,100svh);position:relative;
+  display:flex;align-items:flex-end;overflow:hidden;isolation:isolate;
   background:
-    radial-gradient(ellipse at 70% 50%,rgba(132,150,181,.13),transparent 38%),
-    radial-gradient(ellipse at 15% 85%,rgba(52,58,66,.2),transparent 35%),
-    var(--black);
+    radial-gradient(ellipse at 70% 43%,rgba(132,150,181,.16),transparent 34%),
+    linear-gradient(110deg,#08090B 0%,#171A20 65%,#08090B 100%)
 }
-.hero:before{
-  content:"";
-  position:absolute;
-  width:70vw;
-  height:70vw;
-  max-width:1000px;
-  max-height:1000px;
-  border:1px solid rgba(174,180,190,.07);
-  border-radius:50%;
-  right:-18%;
-  top:0;
-  box-shadow:
-    0 0 0 65px rgba(174,180,190,.012),
-    0 0 0 130px rgba(174,180,190,.008);
-  animation:rotate 100s linear infinite;
+.hero-image{
+  position:absolute;z-index:-2;inset:0 0 0 24%;width:76%;height:100%;
+  object-fit:cover;object-position:center 45%;opacity:.83;
+  filter:contrast(1.1) saturate(.55);
+  mask-image:linear-gradient(90deg,transparent 0%,black 28%,black 100%)
 }
 .hero:after{
-  content:"";
-  position:absolute;
-  inset:0;
-  pointer-events:none;
-  background:linear-gradient(90deg,var(--black) 0%,rgba(8,9,11,.85) 34%,transparent 80%);
+  content:"";position:absolute;z-index:-1;inset:0;
+  background:linear-gradient(90deg,#08090B 0%,rgba(8,9,11,.91) 25%,rgba(8,9,11,.2) 76%,rgba(8,9,11,.08)),
+  linear-gradient(0deg,#08090B 0%,transparent 38%,rgba(8,9,11,.22))
 }
-@keyframes rotate{to{transform:rotate(360deg)}}
-
-.hero-grid{
-  position:relative;
-  z-index:2;
-  width:100%;
-  display:grid;
-  grid-template-columns:1fr 1.05fr;
-  align-items:center;
-  gap:2%;
+.hero-content{width:100%;padding:190px var(--pad) 68px;position:relative}
+.kicker{
+  color:var(--ice);font-size:9px;letter-spacing:.23em;text-transform:uppercase;
+  display:flex;align-items:center;gap:12px
 }
-.hero-copy{position:relative;z-index:3}
-.eyebrow{
-  font-size:9px;
-  letter-spacing:.34em;
-  text-transform:uppercase;
-  color:var(--ice);
-}
+.kicker:before{content:"";width:27px;height:1px;background:var(--ice)}
 .hero h1{
-  font:400 clamp(80px,13vw,175px)/.78 var(--display);
-  letter-spacing:-.105em;
-  margin:38px 0 30px;
+  margin:32px 0 20px;font:500 clamp(78px,14vw,190px)/.75 var(--display);
+  letter-spacing:-.105em
 }
-.hero h1 span{display:block}
-.hero h1 .stroke{
-  color:transparent;
-  -webkit-text-stroke:1px rgba(244,245,247,.7);
-  padding-left:9vw;
+.hero h1 span{
+  display:block;color:transparent;-webkit-text-stroke:1px var(--platinum);
+  padding-left:.36em
+}
+.hero-bottom{
+  margin-top:58px;display:flex;align-items:flex-end;
+  justify-content:space-between;gap:30px
 }
 .hero-description{
-  max-width:330px;
-  margin-left:9vw;
-  color:var(--muted);
-  font-size:11px;
-  line-height:2.1;
+  max-width:340px;color:rgba(244,245,247,.62);font-size:11px;line-height:2
 }
-.hero-cta{
-  display:inline-flex;
-  margin:38px 0 0 9vw;
-  align-items:center;
-  gap:22px;
-  border-bottom:1px solid var(--ice);
-  padding:0 0 13px;
-  font-size:9px;
-  letter-spacing:.22em;
-  text-transform:uppercase;
-  transition:.3s;
+.hero-description strong{
+  display:block;color:var(--white);font:500 13px var(--display);
+  letter-spacing:.06em;margin-bottom:8px
 }
-.hero-cta span{color:var(--ice);font-size:18px;transition:.3s}
-.hero-cta:hover span{transform:translate(5px,-5px)}
-
-/* MAIN BAG VISUAL */
-
-.hero-product{
-  position:relative;
-  height:min(75vh,720px);
-  min-height:430px;
-  overflow:hidden;
-  background:#0b0d11;
-  border:1px solid rgba(174,180,190,.12);
+.cta{
+  display:inline-flex;align-items:center;justify-content:space-between;
+  gap:30px;padding:16px 19px;border:1px solid rgba(244,245,247,.45);
+  font-size:9px;letter-spacing:.15em;text-transform:uppercase;
+  transition:.3s
 }
-.hero-product img{
-  width:100%;
-  height:100%;
-  display:block;
-  object-fit:cover;
-  object-position:center 78%;
-  filter:grayscale(1) contrast(1.1) brightness(.76);
-  transform:scale(1.02);
-  transition:transform 1.5s,filter 1s;
-}
-.hero-product:hover img{
-  transform:scale(1.07);
-  filter:grayscale(.8) contrast(1.12) brightness(.9);
-}
-.hero-product:after{
-  content:"";
-  position:absolute;
-  inset:0;
-  background:linear-gradient(0deg,rgba(8,9,11,.8),transparent 45%,rgba(8,9,11,.1));
-  pointer-events:none;
-}
-.product-caption{
-  position:absolute;
-  z-index:2;
-  left:24px;
-  right:24px;
-  bottom:22px;
-  display:flex;
-  justify-content:space-between;
-  align-items:end;
-}
-.product-caption strong{
-  display:block;
-  font:400 20px var(--display);
-  letter-spacing:.04em;
-}
-.product-caption small{
-  font-size:8px;
-  color:var(--platinum);
-  letter-spacing:.2em;
-  display:block;
-  margin-top:7px;
-}
-.product-caption .number{
-  font-size:10px;
-  color:var(--ice);
-  letter-spacing:.2em;
+.cta:hover{background:var(--white);color:var(--black);border-color:var(--white)}
+.cta b{font-size:17px;font-weight:400}
+.hero-coordinate{
+  position:absolute;right:var(--pad);top:47%;writing-mode:vertical-rl;
+  color:rgba(244,245,247,.5);font-size:8px;letter-spacing:.2em
 }
 
-/* SIDE LABELS */
+.marquee{overflow:hidden;border-block:1px solid var(--line);background:#0D0F12}
+.marquee-track{
+  display:flex;width:max-content;padding:19px 0;
+  animation:scroll 34s linear infinite
+}
+.marquee span{
+  padding:0 28px;font:500 11px var(--display);
+  letter-spacing:.2em;text-transform:uppercase;white-space:nowrap;
+  color:var(--platinum)
+}
+.marquee i{font-style:normal;color:var(--ice);padding-left:22px}
+@keyframes scroll{to{transform:translateX(-50%)}}
 
-.hero-index{
-  position:absolute;
-  z-index:4;
-  bottom:35px;
-  left:5%;
-  right:5%;
-  display:flex;
-  justify-content:space-between;
-  color:var(--muted);
-  font-size:8px;
-  letter-spacing:.2em;
-  text-transform:uppercase;
+.intro{
+  padding:clamp(110px,16vw,220px) var(--pad);
+  display:grid;grid-template-columns:.8fr 2fr;gap:7vw
+}
+.label{color:var(--ice);font-size:9px;letter-spacing:.2em;text-transform:uppercase}
+.intro h2{
+  margin:-12px 0 0;font:400 clamp(40px,6.5vw,88px)/.99 var(--display);
+  letter-spacing:-.075em;max-width:1000px
+}
+.intro h2 em{font-style:normal;color:var(--ice)}
+.intro-note{
+  max-width:370px;margin:30px 0 0 auto;color:var(--muted);
+  font-size:11px;line-height:2
 }
 
-/* MANIFESTO */
+.collection{padding:0 var(--pad) 150px}
+.section-heading{
+  display:flex;align-items:flex-end;justify-content:space-between;
+  gap:25px;padding-bottom:26px;border-bottom:1px solid var(--line)
+}
+.section-heading h2{
+  margin:13px 0 0;font:500 clamp(42px,6vw,76px)/.92 var(--display);
+  letter-spacing:-.08em
+}
+.section-heading p{
+  max-width:220px;margin:0;color:var(--muted);
+  font-size:10px;line-height:1.9;text-align:right
+}
+.products{
+  display:grid;grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:16px;margin-top:28px
+}
+.product{min-width:0;background:#101216;border:1px solid rgba(174,180,190,.1)}
+.product-visual{
+  position:relative;aspect-ratio:4/5;overflow:hidden;
+  background:radial-gradient(ellipse at 50% 43%,rgba(132,150,181,.16),transparent 55%),#111419
+}
+.product-visual img{
+  height:100%;object-fit:cover;filter:saturate(.62) contrast(1.07);
+  transition:transform .9s cubic-bezier(.2,.7,.2,1),filter .5s
+}
+.product:hover .product-visual img{transform:scale(1.045);filter:saturate(.9) contrast(1.08)}
+.product-visual:after{
+  content:"";position:absolute;inset:0;pointer-events:none;
+  background:linear-gradient(0deg,rgba(8,9,11,.48),transparent 38%)
+}
+.product-index,.product-status{
+  position:absolute;z-index:2;top:17px;font-size:8px;
+  letter-spacing:.15em;text-transform:uppercase
+}
+.product-index{left:17px;color:rgba(244,245,247,.8)}
+.product-status{
+  right:17px;padding:7px 9px;border:1px solid rgba(244,245,247,.34);
+  backdrop-filter:blur(10px)
+}
+.product-details{
+  display:flex;justify-content:space-between;align-items:flex-start;
+  padding:19px 18px 21px;gap:15px
+}
+.product-details h3{
+  margin:0;font:500 clamp(21px,3vw,34px)/1 var(--display);
+  letter-spacing:-.06em
+}
+.product-details p{
+  margin:8px 0 0;color:var(--muted);font-size:9px;
+  letter-spacing:.1em;text-transform:uppercase
+}
+.product-arrow{color:var(--ice);font-size:21px;transition:transform .3s}
+.product:hover .product-arrow{transform:translate(4px,-4px)}
+
+.interruption{
+  min-height:660px;padding:110px var(--pad);position:relative;
+  display:flex;align-items:center;overflow:hidden;
+  border-block:1px solid var(--line);
+  background:radial-gradient(ellipse at 76% 50%,rgba(132,150,181,.16),transparent 42%),#0D1014
+}
+.interruption:after{
+  content:"V";position:absolute;right:4vw;top:50%;
+  transform:translateY(-56%);font:700 min(75vw,900px)/.8 var(--display);
+  color:transparent;-webkit-text-stroke:1px rgba(174,180,190,.1);
+  pointer-events:none
+}
+.interruption-content{position:relative;z-index:1}
+.interruption h2{
+  margin:28px 0;font:500 clamp(58px,9.5vw,130px)/.86 var(--display);
+  letter-spacing:-.09em
+}
+.interruption h2 span{color:transparent;-webkit-text-stroke:1px var(--platinum)}
+.interruption p{
+  max-width:340px;margin:34px 0 0;color:var(--muted);
+  font-size:11px;line-height:2
+}
 
 .manifesto{
-  padding:145px 9%;
-  border-top:1px solid var(--line);
-  border-bottom:1px solid var(--line);
-  position:relative;
-  overflow:hidden;
-}
-.section-label{
-  font-size:9px;
-  letter-spacing:.3em;
-  color:var(--ice);
-  text-transform:uppercase;
+  padding:150px var(--pad);display:grid;
+  grid-template-columns:1fr 1fr;gap:12vw
 }
 .manifesto h2{
-  font:400 clamp(55px,10vw,135px)/.9 var(--display);
-  letter-spacing:-.09em;
-  margin:45px 0 35px;
-  position:relative;
-  z-index:1;
+  margin:18px 0 0;font:500 clamp(43px,6.5vw,82px)/.94 var(--display);
+  letter-spacing:-.08em
 }
-.manifesto h2 span{
-  display:block;
-  color:transparent;
-  -webkit-text-stroke:1px rgba(244,245,247,.65);
-  padding-left:12vw;
+.manifesto-copy{align-self:end;max-width:440px}
+.manifesto-copy p{
+  color:rgba(244,245,247,.65);font-size:11px;line-height:2.15;
+  margin:0 0 22px
 }
-.manifesto p{
-  font-size:10px;
-  color:var(--muted);
-  letter-spacing:.2em;
-  text-transform:uppercase;
+.manifesto-copy .micro{
+  color:var(--ice);font-size:9px;letter-spacing:.18em;text-transform:uppercase
 }
-
-/* COLLECTION */
-
-.collection{
-  padding:120px 5% 150px;
-}
-.collection-top{
-  display:flex;
-  justify-content:space-between;
-  align-items:end;
-  padding-bottom:30px;
-  margin-bottom:30px;
-  border-bottom:1px solid var(--line);
-}
-.collection-top h2{
-  font:400 clamp(38px,6vw,72px) var(--display);
-  letter-spacing:-.07em;
-  margin:15px 0 0;
-}
-.collection-top p{
-  color:var(--muted);
-  font-size:9px;
-  letter-spacing:.2em;
-  text-transform:uppercase;
-}
-.collection-grid{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:16px;
-}
-.collection-card{
-  position:relative;
-  min-width:0;
-  background:#0d0f13;
-  border:1px solid var(--line);
-  overflow:hidden;
-  transition:border-color .5s,transform .5s;
-}
-.collection-card:hover{
-  border-color:rgba(174,180,190,.55);
-  transform:translateY(-6px);
-}
-.card-image{
-  height:clamp(330px,43vw,570px);
-  overflow:hidden;
-  position:relative;
-  background:#101318;
-}
-.card-image img{
-  width:100%;
-  height:100%;
-  object-fit:cover;
-  display:block;
-  filter:grayscale(1) contrast(1.12) brightness(.78);
-  transition:transform 1.2s,filter .8s;
-}
-.collection-card:hover .card-image img{
-  transform:scale(1.07);
-  filter:grayscale(.65) contrast(1.12) brightness(.94);
-}
-.card-image:after{
-  content:"";
-  position:absolute;
-  inset:0;
-  background:linear-gradient(0deg,rgba(8,9,11,.68),transparent 50%);
-  pointer-events:none;
-}
-.card-top{
-  position:absolute;
-  z-index:2;
-  top:20px;
-  left:20px;
-  right:20px;
-  display:flex;
-  justify-content:space-between;
-  font-size:8px;
-  letter-spacing:.2em;
-  color:var(--platinum);
-}
-.card-info{
-  padding:22px;
-  display:flex;
-  justify-content:space-between;
-  align-items:end;
-}
-.card-info h3{
-  font:400 26px var(--display);
-  letter-spacing:.04em;
-  margin:0 0 7px;
-}
-.card-info p{
-  margin:0;
-  font-size:8px;
-  letter-spacing:.17em;
-  color:var(--muted);
-  text-transform:uppercase;
-}
-.card-arrow{
-  font-size:20px;
-  color:var(--ice);
-}
-
-/* THE INFECTION */
-
-.infection{
-  min-height:85vh;
-  position:relative;
-  overflow:hidden;
-  display:flex;
-  align-items:center;
-  padding:120px 9%;
-  background:
-    radial-gradient(ellipse at 80% 50%,rgba(132,150,181,.12),transparent 40%),
-    var(--black);
-}
-.infection:before{
-  content:"V";
-  position:absolute;
-  right:-2%;
-  top:50%;
-  transform:translateY(-50%);
-  font:700 65vw/.8 var(--display);
-  color:rgba(174,180,190,.025);
-}
-.infection-content{position:relative;z-index:1}
-.infection h2{
-  font:400 clamp(65px,12vw,155px)/.85 var(--display);
-  letter-spacing:-.1em;
-  margin:40px 0;
-}
-.infection h2 span{
-  display:block;
-  color:transparent;
-  -webkit-text-stroke:1px rgba(244,245,247,.6);
-  padding-left:10vw;
-}
-.infection-text{
-  max-width:400px;
-  font-size:11px;
-  line-height:2.1;
-  color:var(--muted);
-  margin-left:10vw;
-}
-
-/* ABOUT */
-
-.about{
-  padding:130px 9%;
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:12%;
-  border-top:1px solid var(--line);
-}
-.about h2{
-  font:400 clamp(43px,6vw,76px)/1 var(--display);
-  letter-spacing:-.07em;
-  margin:25px 0;
-}
-.about-copy{
-  align-self:end;
-  color:var(--muted);
-  font-size:11px;
-  line-height:2.2;
-  max-width:430px;
-}
-.about-copy strong{color:var(--white);font-weight:400}
-.about-code{
-  margin-top:35px;
-  color:var(--ice);
-  font-size:9px;
-  letter-spacing:.2em;
-}
-
-/* CONTACT */
 
 .contact{
-  padding:120px 9%;
-  display:flex;
-  justify-content:space-between;
-  align-items:end;
-  gap:30px;
-  border-top:1px solid var(--line);
+  padding:105px var(--pad) 115px;background:#0D0F12;
+  border-top:1px solid var(--line)
 }
+.contact-row{display:flex;justify-content:space-between;gap:30px;align-items:flex-start}
 .contact h2{
-  font:400 clamp(55px,9vw,110px)/.9 var(--display);
-  letter-spacing:-.09em;
-  margin:25px 0 0;
+  margin:26px 0 0;font:500 clamp(58px,10vw,140px)/.82 var(--display);
+  letter-spacing:-.095em
 }
-.contact-link{
-  display:inline-flex;
-  gap:20px;
-  align-items:center;
-  border-bottom:1px solid var(--ice);
-  padding:0 0 14px;
-  font-size:9px;
-  letter-spacing:.2em;
-  text-transform:uppercase;
+.contact h2 span{color:var(--ice)}
+.contact-aside{
+  max-width:230px;padding-top:40px;color:var(--muted);
+  font-size:10px;line-height:2
 }
-.contact-link span{font-size:18px;color:var(--ice)}
-
+.contact-aside a{
+  display:inline-block;margin-top:20px;padding-bottom:8px;
+  border-bottom:1px solid var(--ice);color:var(--white);
+  font-size:10px;letter-spacing:.1em
+}
 footer{
-  border-top:1px solid var(--line);
-  padding:30px 5%;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:20px;
-  flex-wrap:wrap;
+  padding:25px var(--pad);display:flex;justify-content:space-between;
+  align-items:center;gap:20px;color:var(--muted);
+  font-size:8px;letter-spacing:.14em;text-transform:uppercase
 }
-.footer-logo{
-  font:600 20px var(--display);
-  letter-spacing:.25em;
-}
-footer small{
-  color:var(--muted);
-  font-size:8px;
-  letter-spacing:.17em;
-  text-transform:uppercase;
-}
+.footer-logo{font:700 19px var(--display);letter-spacing:-.1em;color:white}
+.footer-links{display:flex;gap:22px}
+footer a:hover{color:white}
 
-/* REVEAL */
-
-.reveal{
-  opacity:0;
-  transform:translateY(30px);
-  transition:opacity 1s ease,transform 1s ease;
-}
-.reveal.visible{
-  opacity:1;
-  transform:translateY(0);
-}
-
-/* RESPONSIVE */
+.reveal{opacity:0;transform:translateY(25px);transition:opacity .8s,transform .8s cubic-bezier(.2,.7,.2,1)}
+.reveal.show{opacity:1;transform:translateY(0)}
+.delay-1{transition-delay:.12s}
+.delay-2{transition-delay:.23s}
 
 @media(max-width:800px){
-  header{height:66px;padding:0 6%}
-  .logo{font-size:21px}
-  .menu-button{display:block}
-  .nav{
-    display:none;
-    position:absolute;
-    top:66px;
-    left:0;
-    right:0;
-    background:rgba(8,9,11,.97);
-    backdrop-filter:blur(20px);
-    padding:35px 7%;
-    flex-direction:column;
-    align-items:flex-start;
-    gap:27px;
-    border-bottom:1px solid var(--line);
+  header{grid-template-columns:1fr auto;height:68px}
+  nav{
+    position:fixed;inset:100px 0 0;z-index:30;background:rgba(8,9,11,.98);
+    backdrop-filter:blur(20px);padding:30px var(--pad);
+    display:flex;flex-direction:column;gap:0;
+    transform:translateX(100%);transition:transform .4s
   }
-  .nav.open{display:flex}
-  .nav-right{display:none}
-  .hero{padding:120px 6% 95px}
-  .hero-grid{grid-template-columns:1fr;gap:35px}
-  .hero h1{font-size:clamp(75px,18vw,125px)}
-  .hero h1 .stroke{padding-left:7vw}
-  .hero-description{margin-left:7vw}
-  .hero-cta{margin-left:7vw}
-  .hero-product{height:105vw;min-height:390px;max-height:600px}
-  .hero-index{left:6%;right:6%;bottom:25px}
-  .manifesto{padding:100px 7%}
-  .manifesto h2{font-size:clamp(55px,12vw,95px)}
-  .collection{padding:90px 6%}
-  .collection-top{align-items:flex-start;flex-direction:column;gap:15px}
-  .collection-grid{grid-template-columns:1fr}
-  .card-image{height:110vw;max-height:520px}
-  .infection{min-height:65vh;padding:100px 7%}
-  .infection h2{font-size:clamp(60px,14vw,100px)}
-  .about{padding:95px 7%;grid-template-columns:1fr;gap:30px}
-  .contact{padding:90px 7%;flex-direction:column;align-items:flex-start}
-  footer{padding:25px 6%}
+  nav.open{transform:translateX(0)}
+  nav a{
+    padding:21px 0;border-bottom:1px solid var(--line);
+    font:500 28px var(--display);letter-spacing:-.04em
+  }
+  .header-right{display:none}
+  .menu-btn{display:grid;place-items:center}
+  .hero{min-height:100svh}
+  .hero-image{
+    inset:0;width:100%;opacity:.58;object-position:58% center;
+    mask-image:linear-gradient(0deg,black 0%,black 65%,transparent 100%)
+  }
+  .hero:after{background:linear-gradient(0deg,#08090B 0%,rgba(8,9,11,.4) 55%,rgba(8,9,11,.12))}
+  .hero h1{font-size:clamp(75px,18vw,140px)}
+  .hero-bottom{align-items:flex-start;flex-direction:column;margin-top:40px}
+  .hero-coordinate{display:none}
+  .intro{grid-template-columns:1fr;gap:40px}
+  .intro-note{margin-left:0}
+  .manifesto{grid-template-columns:1fr;gap:50px}
+  .manifesto-copy{margin-left:auto}
+  .contact-row{flex-direction:column}
+  .contact-aside{padding-top:5px}
+}
+@media(max-width:520px){
+  .announcement{font-size:7px;letter-spacing:.1em}
+  .hero h1{font-size:20vw}
+  .section-heading{align-items:flex-start;flex-direction:column}
+  .section-heading p{text-align:left}
+  .products{grid-template-columns:1fr;gap:18px}
+  .product-details h3{font-size:28px}
+  .interruption{min-height:520px}
+  .interruption h2{font-size:16vw}
+  .contact h2{font-size:17vw}
+  footer{flex-wrap:wrap}
+  .footer-links{order:3;width:100%}
 }
 @media(prefers-reduced-motion:reduce){
-  *,*::before,*::after{
-    animation-duration:.01ms!important;
-    animation-iteration-count:1!important;
-    scroll-behavior:auto!important;
-    transition-duration:.01ms!important;
-  }
+  *,*:before,*:after{scroll-behavior:auto!important;animation:none!important;transition:none!important}
+  .reveal{opacity:1;transform:none}
 }
 </style>
 </head>
 
 <body>
+<div class="noise" aria-hidden="true"></div>
 
-<div class="loader" id="loader">
-  <div>
-    <div class="loader-logo">VYRA</div>
-    <div class="loader-bar"></div>
-    <div class="loader-sub">AN UNKNOWN FORM IS ARRIVING</div>
-  </div>
+<div class="announcement">
+  <span>Independent design organism</span>
+  <span>Evolution / 002 — Parasitic Luxury</span>
 </div>
 
-<header id="header">
-  <a class="logo" href="#home">VYRA®</a>
-
-  <nav class="nav" id="nav">
-    <a href="#collection">Collection</a>
-    <a href="#infection">The Infection</a>
-    <a href="#about">About</a>
+<header>
+  <a class="logo" href="#home">VYRA<sup>®</sup></a>
+  <nav id="nav">
+    <a href="#philosophy">Philosophy</a>
+    <a href="#objects">Objects</a>
+    <a href="#identity">Identity</a>
     <a href="#contact">Contact</a>
   </nav>
-
-  <div class="nav-right">SPECIMEN 001 / EARTH</div>
-
-  <button class="menu-button" id="menuButton" aria-label="Open menu">☰</button>
+  <div class="header-right"><a href="#objects">Discover the forms ↗</a></div>
+  <button class="menu-btn" id="menuBtn" aria-label="Open menu" aria-expanded="false">
+    <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+      <path d="M2 5H16M2 13H16" stroke="currentColor" stroke-width="1.2"/>
+    </svg>
+  </button>
 </header>
 
 <main>
-
-<!-- HERO / THE BRAND -->
-
 <section class="hero" id="home">
-  <div class="hero-grid">
-
-    <div class="hero-copy">
-      <div class="eyebrow reveal">INDEPENDENT DESIGN ORGANISM / 001</div>
-
-      <h1 class="reveal">
-        <span>VYRA</span>
-        <span class="stroke">IS HERE.</span>
-      </h1>
-
-      <p class="hero-description reveal">
-        Not a trend. Not a species you know.
-        A new design organism.
-        It attaches. It adapts. It spreads.
-      </p>
-
-      <a class="hero-cta reveal" href="#collection">
-        DISCOVER THE ORGANISM <span>↗</span>
-      </a>
-    </div>
-
-    <div class="hero-product reveal">
-      <img src="assets/vyra-world.png" alt="VYRA sculptural dark bag and alien design world">
-      <div class="product-caption">
-        <div>
-          <strong>SPECIMEN 001</strong>
-          <small>THE FIRST VYRA OBJECT</small>
-        </div>
-        <span class="number">V / 001</span>
+  <img class="hero-image" src="assets/hero-bag.png" alt="VYRA alien-inspired sculptural signature bag" fetchpriority="high">
+  <div class="hero-content">
+    <div class="kicker">A new species of object / 2026</div>
+    <h1>BEYOND<br><span>HUMAN FORM.</span></h1>
+    <div class="hero-bottom">
+      <div class="hero-description">
+        <strong>NOT MADE TO BELONG.</strong>
+        VYRA transforms the familiar into something unfamiliar. Objects with an instinct of their own. Designed to attach to identity.
       </div>
+      <a class="cta" href="#objects">Enter the evolution <b>↗</b></a>
     </div>
-
   </div>
-
-  <div class="hero-index">
-    <span>NOT FROM THIS WORLD.</span>
-    <span>INFECT — ADAPT — EVOLVE</span>
-    <span>TBILISI / EARTH</span>
-  </div>
+  <div class="hero-coordinate">VYRA® / PARASITIC LUXURY / 002</div>
 </section>
 
-<!-- BRAND MANIFESTO -->
-
-<section class="manifesto reveal">
-  <div class="section-label">01 / THE BEGINNING</div>
-  <h2>
-    SOMETHING
-    <span>IS SPREADING.</span>
-  </h2>
-  <p>YOU DON'T FOLLOW THE FORM. THE FORM FOLLOWS YOU.</p>
-</section>
-
-<!-- COLLECTION -->
-
-<section class="collection" id="collection">
-
-  <div class="collection-top reveal">
-    <div>
-      <div class="section-label">02 / THE FIRST GENERATION</div>
-      <h2>THREE FORMS. ONE ORGANISM.</h2>
-    </div>
-    <p>VYRA / ARRIVAL 001</p>
+<div class="marquee">
+  <div class="marquee-track">
+    <span>Attach <i>✳</i></span><span>Adapt <i>✳</i></span>
+    <span>Evolve <i>✳</i></span><span>Infect the ordinary <i>✳</i></span>
+    <span>Attach <i>✳</i></span><span>Adapt <i>✳</i></span>
+    <span>Evolve <i>✳</i></span><span>Infect the ordinary <i>✳</i></span>
   </div>
+</div>
 
-  <div class="collection-grid">
-
-    <article class="collection-card reveal">
-      <div class="card-image">
-        <img src="assets/vyra-world.png" alt="VYRA parasite inspired sculptural bag">
-        <div class="card-top">
-          <span>SPECIMEN 001-A</span>
-          <span>INFECT</span>
-        </div>
-      </div>
-      <div class="card-info">
-        <div>
-          <h3>PARASITE</h3>
-          <p>ATTACH / INFECT / SPREAD</p>
-        </div>
-        <span class="card-arrow">↗</span>
-      </div>
-    </article>
-
-    <article class="collection-card reveal">
-      <div class="card-image">
-        <img src="assets/vyra-world.png" alt="VYRA liquid chrome inspired bag">
-        <div class="card-top">
-          <span>SPECIMEN 001-B</span>
-          <span>ADAPT</span>
-        </div>
-      </div>
-      <div class="card-info">
-        <div>
-          <h3>LIQUID</h3>
-          <p>FLOW / MELT / REFORM</p>
-        </div>
-        <span class="card-arrow">↗</span>
-      </div>
-    </article>
-
-    <article class="collection-card reveal">
-      <div class="card-image">
-        <img src="assets/vyra-world.png" alt="VYRA mutant inspired sculptural bag">
-        <div class="card-top">
-          <span>SPECIMEN 001-C</span>
-          <span>EVOLVE</span>
-        </div>
-      </div>
-      <div class="card-info">
-        <div>
-          <h3>MUTANT</h3>
-          <p>MUTATE / TRANSFORM / EVOLVE</p>
-        </div>
-        <span class="card-arrow">↗</span>
-      </div>
-    </article>
-
-  </div>
-</section>
-
-<!-- THE INFECTION -->
-
-<section class="infection" id="infection">
-  <div class="infection-content">
-    <div class="section-label reveal">03 / THE VYRA EFFECT</div>
-
-    <h2 class="reveal">
-      YOU ARE
-      <span>THE HOST.</span>
+<section class="intro" id="philosophy">
+  <div class="label reveal">01 / The new mutation</div>
+  <div>
+    <h2 class="reveal delay-1">
+      BEAUTY IS NOT<br>
+      ALWAYS <em>HUMAN.</em><br>
+      FORM IS NOT<br>
+      ALWAYS FIXED.
     </h2>
-
-    <p class="infection-text reveal">
-      VYRA is not simply an object you carry.
-      It is a form that becomes part of your identity.
-      It moves with you. It changes with you.
-      And once it arrives, it does not disappear.
+    <p class="intro-note reveal delay-2">
+      A new visual language built from organic distortion, alien anatomy and industrial precision. Familiar objects, evolved into unfamiliar forms.
     </p>
   </div>
 </section>
 
-<!-- ABOUT -->
-
-<section class="about" id="about">
-  <div class="reveal">
-    <div class="section-label">04 / THE ORGANISM</div>
-    <h2>DESIGN<br>WITHOUT<br>ORIGIN.</h2>
-    <div class="about-code">VYRA / EARTH TRANSMISSION 001</div>
+<section class="collection" id="objects">
+  <div class="section-heading reveal">
+    <div>
+      <div class="label">02 / The object specimens</div>
+      <h2>THE FIRST MUTATIONS.</h2>
+    </div>
+    <p>Carry the unfamiliar. Four expressions of one evolving design organism.</p>
   </div>
 
-  <div class="about-copy reveal">
-    <p>
-      <strong>VYRA is an independent design universe.</strong>
-      We explore the boundaries between fashion, sculpture
-      and unfamiliar organic forms.
-    </p>
+  <div class="products">
+    <article class="product reveal">
+      <a href="#contact">
+        <div class="product-visual">
+          <img src="assets/hero-bag.png" alt="VYRA Origin — sculptural alien-inspired handbag" loading="lazy">
+          <span class="product-index">FORM 001 / ORIGIN</span>
+          <span class="product-status">Signature object</span>
+        </div>
+        <div class="product-details">
+          <div><h3>ORIGIN</h3><p>The first attachment</p></div>
+          <span class="product-arrow">↗</span>
+        </div>
+      </a>
+    </article>
 
-    <p>
-      Our objects are designed to challenge the familiar.
-      Unusual silhouettes, unexpected materials and a visual
-      language that belongs to no existing category.
-    </p>
+    <article class="product reveal delay-1">
+      <a href="#contact">
+        <div class="product-visual">
+          <img src="assets/bag-parasite.png" alt="VYRA Parasite — organic sculptural handbag" loading="lazy">
+          <span class="product-index">FORM 002 / PARASITE</span>
+          <span class="product-status">Organic mutation</span>
+        </div>
+        <div class="product-details">
+          <div><h3>PARASITE</h3><p>It finds a host</p></div>
+          <span class="product-arrow">↗</span>
+        </div>
+      </a>
+    </article>
 
-    <p>
-      We don't want to make another version of what already exists.
-      We want to introduce something people have never seen before.
+    <article class="product reveal">
+      <a href="#contact">
+        <div class="product-visual">
+          <img src="assets/bag-liquid.png" alt="VYRA Liquid — fluid chrome-inspired handbag" loading="lazy">
+          <span class="product-index">FORM 003 / LIQUID</span>
+          <span class="product-status">Fluid mutation</span>
+        </div>
+        <div class="product-details">
+          <div><h3>LIQUID</h3><p>Nothing stays solid</p></div>
+          <span class="product-arrow">↗</span>
+        </div>
+      </a>
+    </article>
+
+    <article class="product reveal delay-1">
+      <a href="#contact">
+        <div class="product-visual">
+          <img src="assets/bag-mutant.png" alt="VYRA Mutant — asymmetrical biomechanical handbag" loading="lazy">
+          <span class="product-index">FORM 004 / MUTANT</span>
+          <span class="product-status">Evolved anatomy</span>
+        </div>
+        <div class="product-details">
+          <div><h3>MUTANT</h3><p>Designed to evolve</p></div>
+          <span class="product-arrow">↗</span>
+        </div>
+      </a>
+    </article>
+  </div>
+</section>
+
+<section class="interruption">
+  <div class="interruption-content">
+    <div class="label reveal">03 / The VYRA principle</div>
+    <h2 class="reveal delay-1">
+      IT DOESN'T<br>
+      FOLLOW.<br>
+      IT <span>INFECTS.</span>
+    </h2>
+    <p class="reveal delay-2">
+      Trends are temporary. Instinct is not. VYRA is designed to spread through form, presence and the desire to be different.
     </p>
   </div>
 </section>
 
-<!-- CONTACT -->
+<section class="manifesto" id="identity">
+  <div>
+    <div class="label reveal">04 / Brand anatomy</div>
+    <h2 class="reveal delay-1">A DIFFERENT<br>SPECIES OF<br>DESIGN.</h2>
+  </div>
+  <div class="manifesto-copy reveal delay-2">
+    <p>
+      VYRA is an independent design brand exploring the space between fashion, sculpture and the unfamiliar. Our objects begin with a recognizable function and evolve into something unexpected.
+    </p>
+    <p>
+      Organic silhouettes. Industrial precision. Dark materiality. Alien proportions. Every detail exists for a reason. Nothing is ordinary by accident.
+    </p>
+    <div class="micro">Not an accessory. An attachment.</div>
+  </div>
+</section>
 
 <section class="contact" id="contact">
-  <div class="reveal">
-    <div class="section-label">05 / FIRST CONTACT</div>
-    <h2>THE WORLD<br>IS THE HOST.</h2>
-  </div>
-
-  <div class="reveal">
-    <a class="contact-link" href="mailto:hello@vyra.studio">
-      CONTACT VYRA <span>↗</span>
-    </a>
+  <div class="contact-row">
+    <div>
+      <div class="label reveal">05 / First contact</div>
+      <h2 class="reveal delay-1">BECOME<br>THE <span>HOST.</span></h2>
+    </div>
+    <div class="contact-aside reveal delay-2">
+      The next mutation is approaching. For product enquiries, collaborations and early access, make contact.
+      <br>
+      <a href="mailto:YOUR-EMAIL@example.com">CONTACT VYRA ↗</a>
+    </div>
   </div>
 </section>
-
 </main>
 
 <footer>
   <a class="footer-logo" href="#home">VYRA®</a>
-  <small>THE DESIGN INFECTION</small>
-  <small>© 2026 VYRA / ALL FORMS RESERVED</small>
+  <span>Parasitic Luxury / Evolution 002</span>
+  <div class="footer-links">
+    <a href="#philosophy">Philosophy</a>
+    <a href="#objects">Objects</a>
+    <a href="#home">Back to top ↑</a>
+  </div>
+  <span>© 2026 VYRA. All forms reserved.</span>
 </footer>
 
 <script>
-const loader = document.getElementById("loader");
+const menuBtn=document.getElementById("menuBtn");
+const nav=document.getElementById("nav");
 
-window.addEventListener("load", () => {
-  setTimeout(() => loader.classList.add("hide"), 1200);
+function closeMenu(){
+  nav.classList.remove("open");
+  document.body.classList.remove("menu-open");
+  menuBtn.setAttribute("aria-expanded","false");
+  menuBtn.setAttribute("aria-label","Open menu");
+}
+menuBtn.addEventListener("click",()=>{
+  const opened=nav.classList.toggle("open");
+  document.body.classList.toggle("menu-open",opened);
+  menuBtn.setAttribute("aria-expanded",String(opened));
+  menuBtn.setAttribute("aria-label",opened?"Close menu":"Open menu");
 });
+nav.querySelectorAll("a").forEach(link=>link.addEventListener("click",closeMenu));
+document.addEventListener("keydown",e=>{if(e.key==="Escape")closeMenu()});
 
-const header = document.getElementById("header");
-
-window.addEventListener("scroll", () => {
-  header.classList.toggle("scrolled", window.scrollY > 40);
-});
-
-const menuButton = document.getElementById("menuButton");
-const nav = document.getElementById("nav");
-
-menuButton.addEventListener("click", () => {
-  nav.classList.toggle("open");
-  menuButton.textContent = nav.classList.contains("open") ? "×" : "☰";
-});
-
-nav.querySelectorAll("a").forEach(link => {
-  link.addEventListener("click", () => {
-    nav.classList.remove("open");
-    menuButton.textContent = "☰";
-  });
-});
-
-const revealObserver = new IntersectionObserver(entries => {
-  entries.forEach(entry => {
+const observer=new IntersectionObserver(entries=>{
+  entries.forEach(entry=>{
     if(entry.isIntersecting){
-      entry.target.classList.add("visible");
-      revealObserver.unobserve(entry.target);
+      entry.target.classList.add("show");
+      observer.unobserve(entry.target);
     }
   });
 },{threshold:.12});
-
-document.querySelectorAll(".reveal").forEach(element => {
-  revealObserver.observe(element);
-});
+document.querySelectorAll(".reveal").forEach(el=>observer.observe(el));
 </script>
-
 </body>
 </html>
