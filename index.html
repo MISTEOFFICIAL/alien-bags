@@ -3,13 +3,14 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="theme-color" content="#08090B">
-<title>VYRA — Not From This World</title>
-<meta name="description" content="VYRA — Objects beyond ordinary. A new form of carrying.">
+<title>VYRA — Objects Beyond Ordinary</title>
+<meta name="description" content="VYRA — A design organism. Objects that attach, transform and spread.">
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 
 <style>
 :root{
@@ -19,556 +20,1329 @@
   --white:#F4F5F7;
   --ice:#8496B5;
   --steel:#343A42;
-  --line:rgba(174,180,190,.17);
-  --muted:rgba(244,245,247,.48);
-  --font:"Space Grotesk",sans-serif;
-  --body:"Inter",sans-serif;
+  --line:rgba(174,180,190,.16);
+  --muted:rgba(244,245,247,.55);
+  --serif:"Space Grotesk",sans-serif;
+  --sans:"Inter",sans-serif;
 }
-*{box-sizing:border-box}
+
+*{margin:0;padding:0;box-sizing:border-box}
 html{scroll-behavior:smooth;background:var(--black)}
 body{
-  margin:0;background:var(--black);color:var(--white);
-  font-family:var(--body);font-weight:300;
-  overflow-x:hidden;cursor:default;
-}
-body::before{
-  content:"";position:fixed;inset:0;pointer-events:none;z-index:20;
-  opacity:.13;mix-blend-mode:soft-light;
-  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.25'/%3E%3C/svg%3E");
+  background:var(--black);
+  color:var(--white);
+  font-family:var(--sans);
+  font-weight:300;
+  overflow-x:hidden;
 }
 a{color:inherit;text-decoration:none}
 button{font:inherit}
 ::selection{background:var(--ice);color:var(--black)}
+
+body::after{
+  content:"";
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  z-index:30;
+  opacity:.075;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.3'/%3E%3C/svg%3E");
+}
+
+/* INTRO */
+
 .preloader{
-  position:fixed;inset:0;background:var(--black);z-index:1000;
-  display:grid;place-items:center;transition:opacity 1s,visibility 1s;
+  position:fixed;
+  inset:0;
+  z-index:1000;
+  background:var(--black);
+  display:grid;
+  place-items:center;
+  transition:opacity .9s,visibility .9s;
 }
 .preloader.done{opacity:0;visibility:hidden}
 .preloader-inner{text-align:center}
 .preloader-logo{
-  font:500 clamp(42px,9vw,90px)/1 var(--font);letter-spacing:.28em;
-  padding-left:.28em;
+  font:600 clamp(48px,9vw,90px) var(--serif);
+  letter-spacing:.3em;
+  padding-left:.3em;
 }
-.preloader-line{height:1px;background:#343A42;width:180px;margin:25px auto;overflow:hidden}
-.preloader-line::after{content:"";display:block;height:100%;background:var(--platinum);animation:load 1.5s ease forwards}
-@keyframes load{from{width:0}to{width:100%}}
-.preloader small{font-size:9px;letter-spacing:.3em;color:var(--muted)}
-
-header{
-  height:76px;position:fixed;z-index:100;top:0;left:0;width:100%;
-  display:flex;align-items:center;justify-content:space-between;
-  padding:0 5.2%;border-bottom:1px solid transparent;
-  transition:background .4s,border .4s,backdrop-filter .4s;
-}
-header.scrolled{
-  background:rgba(8,9,11,.76);backdrop-filter:blur(22px);
-  border-color:var(--line);
-}
-.logo{
-  font:600 25px var(--font);letter-spacing:.25em;padding-left:.25em;
-}
-.nav{display:flex;align-items:center;gap:38px}
-.nav a,.nav button{
-  font:400 10px var(--body);letter-spacing:.17em;text-transform:uppercase;
-  color:rgba(244,245,247,.72);transition:color .3s;
-}
-.nav a:hover,.nav button:hover{color:var(--white)}
-.nav button{border:0;background:none;cursor:pointer}
-.nav-right{display:flex;gap:25px;align-items:center}
-.menu-toggle{display:none;background:none;border:0;color:white;font-size:22px}
-
-.hero{
-  min-height:100svh;position:relative;display:flex;align-items:center;
-  overflow:hidden;padding:140px 8% 100px;
-  background:
-    radial-gradient(ellipse at 73% 48%,rgba(72,89,112,.17),transparent 36%),
-    radial-gradient(ellipse at 23% 78%,rgba(43,49,60,.2),transparent 38%),
-    #08090B;
-}
-.hero::before{
-  content:"";position:absolute;width:65vw;height:65vw;max-width:900px;max-height:900px;
-  right:-9%;top:3%;border-radius:50%;
-  border:1px solid rgba(174,180,190,.07);
-  box-shadow:0 0 0 65px rgba(174,180,190,.012),0 0 0 130px rgba(174,180,190,.009);
-  animation:slowRotate 90s linear infinite;
-}
-.hero::after{
-  content:"";position:absolute;width:45vw;height:45vw;right:2%;top:14%;
-  border-radius:50%;background:radial-gradient(circle,rgba(132,150,181,.11),transparent 68%);
-  filter:blur(30px);animation:breath 9s ease-in-out infinite alternate;
-}
-@keyframes slowRotate{to{transform:rotate(360deg)}}
-@keyframes breath{to{transform:scale(1.3);opacity:.5}}
-.hero-content{position:relative;z-index:2;max-width:850px}
-.eyebrow,.section-index{
-  color:var(--ice);font-size:9px;letter-spacing:.32em;text-transform:uppercase;
-}
-.hero h1{
-  font:400 clamp(76px,13.5vw,190px)/.82 var(--font);
-  letter-spacing:-.095em;margin:34px 0 34px;
-}
-.hero h1 span{display:block}
-.hero h1 .outline{
-  color:transparent;-webkit-text-stroke:1px rgba(244,245,247,.65);
-  padding-left:12vw;
-}
-.hero-copy{
-  max-width:370px;margin-left:12vw;color:var(--muted);
-  font-size:12px;line-height:2.1;letter-spacing:.025em;
-}
-.hero-bottom{
-  position:absolute;z-index:2;bottom:42px;left:5.2%;right:5.2%;
-  display:flex;justify-content:space-between;align-items:end;
-}
-.hero-bottom span{font-size:9px;letter-spacing:.2em;color:var(--muted);text-transform:uppercase}
-.scroll-cue{display:flex;align-items:center;gap:14px}
-.scroll-cue i{width:50px;height:1px;background:var(--ice);display:block;position:relative;overflow:hidden}
-.scroll-cue i::after{content:"";position:absolute;inset:0;background:white;transform:translateX(-100%);animation:lineMove 2s infinite}
-@keyframes lineMove{to{transform:translateX(100%)}}
-
-.intro{
-  padding:150px 9% 160px;display:grid;grid-template-columns:1fr 1fr;
-  gap:10%;border-top:1px solid var(--line);align-items:start;
-}
-.intro-label{font-size:9px;letter-spacing:.28em;color:var(--ice);text-transform:uppercase}
-.intro h2{
-  font:400 clamp(38px,5.2vw,68px)/1.08 var(--font);
-  letter-spacing:-.055em;margin:0;max-width:680px;
-}
-.intro h2 em{font-style:normal;color:var(--ice)}
-.intro-copy{font-size:12px;line-height:2.1;color:var(--muted);max-width:360px;margin-top:30px}
-
-.collection{padding:45px 5.2% 140px}
-.collection-head{
-  display:flex;justify-content:space-between;align-items:end;
-  padding-bottom:30px;border-bottom:1px solid var(--line);margin-bottom:30px;
-}
-.collection-head h2{font:400 clamp(34px,5vw,64px) var(--font);letter-spacing:-.06em;margin:12px 0 0}
-.collection-head p{font-size:9px;letter-spacing:.18em;color:var(--muted);text-transform:uppercase}
-.specimens{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
-.specimen{
-  min-width:0;position:relative;background:#0D0F13;
-  border:1px solid rgba(174,180,190,.12);overflow:hidden;
-  transition:border-color .5s,transform .5s;
-}
-.specimen:hover{border-color:rgba(174,180,190,.48);transform:translateY(-5px)}
-.specimen-art{
-  position:relative;height:clamp(300px,40vw,560px);overflow:hidden;
-  background:radial-gradient(ellipse at 50% 50%,#242932 0%,#111419 48%,#0A0B0D 100%);
-}
-.specimen-art::after{
-  content:"";position:absolute;inset:0;pointer-events:none;
-  background:linear-gradient(180deg,transparent 65%,rgba(8,9,11,.7));
-}
-.specimen-info{padding:22px 22px 25px;display:flex;justify-content:space-between;align-items:end}
-.specimen-info h3{font:400 25px var(--font);letter-spacing:.04em;margin:0 0 7px}
-.specimen-info p{font-size:9px;letter-spacing:.16em;color:var(--muted);margin:0;text-transform:uppercase}
-.specimen-number{font-size:10px;color:var(--ice);letter-spacing:.15em}
-.art-canvas{width:100%;height:100%;display:block}
-
-/* PARASITE — a living form wrapping around its host */
-.parasite-scene{
-  position:absolute;inset:0;display:grid;place-items:center;perspective:900px;
-}
-.parasite-core{
-  position:absolute;width:29%;aspect-ratio:1;border-radius:42% 58% 51% 49%;
-  background:
-    radial-gradient(ellipse at 32% 25%,#69717b 0%,#252a31 13%,#08090B 48%,#020203 72%);
-  box-shadow:inset -15px -20px 35px #000, inset 8px 7px 20px rgba(255,255,255,.15),
-    0 0 55px rgba(0,0,0,.9),0 0 90px rgba(132,150,181,.09);
-  transform:rotateX(14deg) rotateY(-22deg);
-  animation:corePulse 6s ease-in-out infinite;
-}
-.parasite-core::before{
-  content:"";position:absolute;inset:13%;border-radius:50%;
-  border:1px solid rgba(174,180,190,.28);filter:blur(.2px);
-}
-.parasite-tendril{
-  position:absolute;width:56%;height:18%;border-radius:100%;
-  border:clamp(8px,1.4vw,17px) solid transparent;
-  border-top-color:#333941;border-left-color:#171B20;
-  filter:drop-shadow(0 5px 4px #000) drop-shadow(0 0 8px rgba(174,180,190,.12));
-  transform-origin:center;animation:wrap 9s ease-in-out infinite;
-}
-.parasite-tendril:nth-child(2){width:65%;height:30%;transform:rotate(48deg);animation-delay:-2s;border-top-color:#515862}
-.parasite-tendril:nth-child(3){width:48%;height:58%;transform:rotate(-55deg);animation-delay:-4s;border-left-color:#59616b}
-.parasite-tendril:nth-child(4){width:74%;height:43%;transform:rotate(115deg);animation-delay:-6s;border-top-color:#252b33}
-.parasite-tendril:nth-child(5){width:38%;height:76%;transform:rotate(22deg);animation-delay:-3s;border-left-color:#414953}
-.parasite-tip{
-  position:absolute;width:13px;height:13px;border-radius:50%;
-  background:radial-gradient(circle at 30% 25%,#9ba4b0,#11151a 65%);
-  box-shadow:0 0 14px rgba(174,180,190,.3);
-}
-.parasite-tip.t1{top:26%;left:28%}
-.parasite-tip.t2{bottom:24%;right:25%}
-@keyframes wrap{
-  0%,100%{border-radius:48% 52% 40% 60%;scale:1}
-  50%{border-radius:60% 40% 58% 42%;scale:1.08}
-}
-@keyframes corePulse{50%{transform:rotateX(20deg) rotateY(10deg) scale(1.06)}}
-
-/* LIQUID — flowing reflective chrome */
-.liquid-scene{
-  position:absolute;inset:0;display:grid;place-items:center;perspective:800px;
+.preloader-line{
+  width:170px;
+  height:1px;
+  background:var(--steel);
+  margin:24px auto;
   overflow:hidden;
 }
-.liquid-pool{
-  position:absolute;width:115%;height:45%;top:33%;left:-7%;
-  border-radius:50%;
-  background:linear-gradient(180deg,#f4f5f7 0%,#8b929c 8%,#303740 19%,#cbd0d8 29%,#5a626e 42%,#101317 56%,#9da5b0 70%,#252a31 83%,#050607 100%);
-  filter:drop-shadow(0 25px 22px #000);
-  transform:rotate(-13deg) rotateX(57deg);
-  animation:liquidFlow 8s ease-in-out infinite;
+.preloader-line::after{
+  content:"";
+  display:block;
+  width:100%;
+  height:100%;
+  background:var(--platinum);
+  transform:translateX(-100%);
+  animation:loading 1.5s ease forwards;
 }
-.liquid-pool::before{
-  content:"";position:absolute;inset:8% 4%;border-radius:50%;
-  background:linear-gradient(110deg,transparent 10%,rgba(255,255,255,.85) 17%,transparent 23%,rgba(5,7,10,.8) 35%,rgba(255,255,255,.6) 47%,transparent 53%,rgba(255,255,255,.4) 70%,transparent 77%);
-  filter:blur(3px);animation:chromeShine 5s linear infinite;
+.preloader small{
+  color:var(--muted);
+  font-size:8px;
+  letter-spacing:.35em;
+}
+@keyframes loading{to{transform:translateX(0)}}
+
+/* ANNOUNCEMENT */
+
+.announcement{
+  height:29px;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  border-bottom:1px solid var(--line);
+  color:var(--platinum);
+  font-size:8px;
+  letter-spacing:3px;
+}
+
+/* HEADER */
+
+header{
+  height:82px;
+  padding:0 6%;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  border-bottom:1px solid var(--line);
+  position:relative;
+  z-index:100;
+  background:var(--black);
+  transition:background .4s,backdrop-filter .4s;
+}
+header.scrolled{
+  background:rgba(8,9,11,.88);
+  backdrop-filter:blur(20px);
+}
+.logo{
+  font:700 29px var(--serif);
+  letter-spacing:8px;
+  position:relative;
+}
+.logo::after{
+  content:"";
+  position:absolute;
+  width:5px;
+  height:5px;
+  border-radius:50%;
+  background:var(--ice);
+  top:3px;
+  right:-9px;
+  box-shadow:0 0 12px var(--ice);
+}
+.nav{
+  display:flex;
+  align-items:center;
+  gap:38px;
+}
+.nav a{
+  font-size:9px;
+  letter-spacing:2px;
+  color:var(--platinum);
+  transition:color .3s;
+}
+.nav a:hover{color:var(--white)}
+.header-right{
+  display:flex;
+  align-items:center;
+  gap:22px;
+}
+.header-action{
+  font-size:9px;
+  letter-spacing:2px;
+  color:var(--ice);
+}
+.menu-toggle{
+  display:none;
+  background:none;
+  border:0;
+  color:var(--white);
+  font-size:22px;
+  cursor:pointer;
+}
+
+/* HERO */
+
+.hero{
+  min-height:calc(100svh - 111px);
+  display:grid;
+  grid-template-columns:.9fr 1.1fr;
+  align-items:center;
+  padding:65px 7%;
+  position:relative;
+  overflow:hidden;
+  border-bottom:1px solid var(--line);
+  background:
+    radial-gradient(ellipse at 76% 47%,rgba(132,150,181,.105),transparent 38%),
+    radial-gradient(ellipse at 12% 85%,rgba(52,58,66,.16),transparent 35%),
+    var(--black);
+}
+.hero-copy{position:relative;z-index:3}
+.eyebrow{
+  color:var(--ice);
+  font-size:9px;
+  letter-spacing:4px;
+  margin-bottom:35px;
+}
+.hero h1{
+  font:500 clamp(80px,11vw,155px)/.79 var(--serif);
+  letter-spacing:-.085em;
+}
+.hero h1 span{
+  color:var(--platinum);
+  display:block;
+}
+.hero-description{
+  color:var(--muted);
+  max-width:340px;
+  font-size:11px;
+  line-height:2.1;
+  margin-top:39px;
+}
+.hero-buttons{
+  display:flex;
+  align-items:center;
+  gap:30px;
+  margin-top:39px;
+}
+.button{
+  min-height:48px;
+  display:inline-flex;
+  justify-content:center;
+  align-items:center;
+  padding:0 25px;
+  background:var(--white);
+  color:var(--black);
+  font-size:9px;
+  letter-spacing:2px;
+  transition:background .3s,transform .3s;
+}
+.button:hover{
+  background:var(--platinum);
+  transform:translateY(-3px);
+}
+.text-button{
+  color:var(--platinum);
+  font-size:9px;
+  letter-spacing:2px;
+  transition:color .3s;
+}
+.text-button:hover{color:var(--white)}
+
+.hero-art{
+  position:relative;
+  width:100%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  min-height:550px;
+  isolation:isolate;
+}
+.hero-art::before{
+  content:"";
+  position:absolute;
+  width:80%;
+  aspect-ratio:1;
+  border-radius:50%;
+  background:radial-gradient(circle,rgba(132,150,181,.13),transparent 67%);
+  z-index:-1;
+}
+.hero-art::after{
+  content:"";
+  position:absolute;
+  width:65%;
+  height:1px;
+  background:linear-gradient(90deg,transparent,rgba(174,180,190,.3),transparent);
+  bottom:12%;
+}
+.hero-object{
+  width:min(100%,650px);
+  position:relative;
+  z-index:1;
+  overflow:visible;
+  animation:objectReveal 1.5s cubic-bezier(.2,.7,.2,1) both;
+}
+@keyframes objectReveal{
+  from{opacity:0;transform:translateY(28px) scale(.94)}
+  to{opacity:1;transform:translateY(0) scale(1)}
+}
+.object-caption{
+  position:absolute;
+  bottom:5px;
+  right:0;
+  font-size:8px;
+  letter-spacing:3px;
+  color:var(--platinum);
+}
+
+/* VYRA ORGANISM */
+
+.organism-thread{
+  stroke-dasharray:900;
+  stroke-dashoffset:900;
+  animation:threadAppear 4s ease forwards;
+}
+@keyframes threadAppear{to{stroke-dashoffset:0}}
+.organism-pulse{
+  transform-origin:center;
+  animation:organismPulse 7s ease-in-out infinite;
+}
+@keyframes organismPulse{
+  0%,100%{transform:scale(1) rotate(0)}
+  50%{transform:scale(1.035) rotate(2deg)}
+}
+
+/* INFO STRIP */
+
+.info-strip{
+  padding:24px 7%;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  border-bottom:1px solid var(--line);
+  color:var(--platinum);
+  font-size:8px;
+  letter-spacing:2px;
+}
+.info-strip span:nth-child(2){color:var(--ice)}
+
+/* COLLECTION */
+
+.collection{
+  padding:120px 7%;
+  border-bottom:1px solid var(--line);
+}
+.section-header{
+  display:flex;
+  justify-content:space-between;
+  align-items:end;
+  margin-bottom:55px;
+}
+.section-label{
+  color:var(--ice);
+  font-size:9px;
+  letter-spacing:3px;
+  margin-bottom:17px;
+}
+.section-header h2{
+  font:400 clamp(38px,5vw,66px) var(--serif);
+  letter-spacing:-3px;
+}
+.section-number{
+  font-size:9px;
+  letter-spacing:2px;
+  color:var(--platinum);
+}
+.products{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:18px;
+}
+.product{min-width:0}
+.product-image{
+  aspect-ratio:.86;
+  background:
+    radial-gradient(ellipse at 50% 42%,#242932 0%,#14171d 46%,#0b0d10 100%);
+  border:1px solid rgba(174,180,190,.12);
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  overflow:hidden;
+  position:relative;
+  isolation:isolate;
+  transition:border-color .5s,transform .5s;
+}
+.product-image::before{
+  content:"";
+  position:absolute;
+  width:75%;
+  aspect-ratio:1;
+  border-radius:50%;
+  background:radial-gradient(circle,rgba(132,150,181,.08),transparent 70%);
+  z-index:-1;
+}
+.product:hover .product-image{
+  border-color:rgba(174,180,190,.48);
+}
+.product-image svg{
+  width:96%;
+  height:96%;
+  overflow:visible;
+  transition:transform .8s cubic-bezier(.2,.7,.2,1);
+}
+.product:hover .product-image svg{
+  transform:scale(1.045) rotate(-1deg);
+}
+.product-index{
+  position:absolute;
+  top:17px;
+  left:17px;
+  font-size:8px;
+  letter-spacing:2px;
+  color:var(--platinum);
+  z-index:3;
+}
+.product-info{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding-top:19px;
+}
+.product-name{
+  font:500 16px var(--serif);
+  letter-spacing:1px;
+}
+.product-type{
+  font-size:8px;
+  color:var(--platinum);
+  letter-spacing:1px;
+  margin-top:7px;
+}
+.product-arrow{
+  color:var(--platinum);
+  font-size:17px;
+  transition:transform .3s,color .3s;
+}
+.product:hover .product-arrow{
+  transform:translate(4px,-4px);
+  color:var(--white);
+}
+
+/* PARASITE */
+
+.parasite-wrap{
+  transform-origin:center;
+  animation:parasiteBreathe 8s ease-in-out infinite;
+}
+.parasite-tendril{
+  fill:none;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+  stroke-dasharray:500;
+  stroke-dashoffset:0;
+  animation:tendrilFlow 8s ease-in-out infinite;
+}
+.parasite-tendril.t2{animation-delay:-2s}
+.parasite-tendril.t3{animation-delay:-4s}
+.parasite-tendril.t4{animation-delay:-6s}
+.parasite-highlight{
+  fill:none;
+  stroke:rgba(244,245,247,.5);
+  stroke-width:2;
+  stroke-linecap:round;
+}
+@keyframes parasiteBreathe{
+  0%,100%{transform:scale(1) rotate(0)}
+  50%{transform:scale(1.035) rotate(-2deg)}
+}
+@keyframes tendrilFlow{
+  0%,100%{stroke-dashoffset:0;opacity:.85}
+  50%{stroke-dashoffset:45;opacity:1}
+}
+
+/* LIQUID */
+
+.liquid-body{
+  transform-origin:center;
+  animation:liquidMorph 8s ease-in-out infinite;
+}
+.liquid-shine{
+  animation:liquidReflect 6s ease-in-out infinite;
 }
 .liquid-drop{
-  position:absolute;width:23%;aspect-ratio:.7;border-radius:48% 52% 56% 44%;
-  background:linear-gradient(110deg,#171b20 0%,#d8dce2 17%,#69717c 28%,#f4f5f7 39%,#303740 54%,#aeb4be 68%,#101317 85%);
-  box-shadow:inset -12px -15px 25px #050607, inset 7px 5px 14px rgba(255,255,255,.7),0 25px 35px #000;
-  animation:dropMove 6s ease-in-out infinite;
+  transform-box:fill-box;
+  transform-origin:center;
+  animation:dropFloat 5s ease-in-out infinite;
 }
-.liquid-drop.d1{top:17%;left:27%;transform:rotate(25deg)}
-.liquid-drop.d2{top:24%;right:23%;width:13%;animation-delay:-2s}
-.liquid-drop.d3{bottom:17%;left:45%;width:10%;animation-delay:-4s}
-@keyframes liquidFlow{
-  0%,100%{border-radius:48% 52% 44% 56%;transform:rotate(-13deg) rotateX(57deg) scale(1)}
-  50%{border-radius:62% 38% 57% 43%;transform:rotate(-7deg) rotateX(50deg) scale(1.08)}
+.liquid-drop.d2{animation-delay:-1.7s}
+.liquid-drop.d3{animation-delay:-3.1s}
+@keyframes liquidMorph{
+  0%,100%{transform:scale(1) rotate(0)}
+  50%{transform:scale(1.035) rotate(2deg)}
 }
-@keyframes chromeShine{to{transform:translateX(20%) rotate(5deg)}}
-@keyframes dropMove{0%,100%{translate:0 0;scale:1}50%{translate:12px 22px;scale:1.12}}
+@keyframes liquidReflect{
+  0%,100%{opacity:.3;transform:translateX(-10px)}
+  50%{opacity:.85;transform:translateX(15px)}
+}
+@keyframes dropFloat{
+  0%,100%{transform:translateY(0) scale(1)}
+  50%{transform:translateY(13px) scale(1.06)}
+}
 
-/* MUTANT — one organism evolving into another */
-.mutant-scene{position:absolute;inset:0;display:grid;place-items:center;perspective:900px}
+/* MUTANT */
+
 .mutant-body{
-  width:48%;aspect-ratio:1.05;position:relative;
+  transform-origin:center;
+  animation:mutate 9s ease-in-out infinite;
+}
+.mutant-growth{
+  transform-box:fill-box;
+  transform-origin:center;
+  animation:grow 9s ease-in-out infinite;
+}
+.mutant-growth.g2{animation-delay:-3s}
+.mutant-growth.g3{animation-delay:-6s}
+@keyframes mutate{
+  0%,100%{transform:scale(1) rotate(-2deg)}
+  35%{transform:scale(1.045) rotate(2deg)}
+  70%{transform:scale(.98) rotate(-1deg)}
+}
+@keyframes grow{
+  0%,100%{transform:scale(1) rotate(0)}
+  50%{transform:scale(1.12) rotate(7deg)}
+}
+
+/* MANIFESTO */
+
+.statement{
+  min-height:510px;
+  padding:110px 7%;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  text-align:center;
+  border-bottom:1px solid var(--line);
+  position:relative;
+  overflow:hidden;
   background:
-    radial-gradient(ellipse at 35% 25%,rgba(225,232,241,.65),transparent 12%),
-    radial-gradient(ellipse at 65% 70%,#12161c 0%,#343c47 22%,#090b0e 62%,#020304 100%);
-  border-radius:38% 62% 47% 53% / 53% 40% 60% 47%;
-  box-shadow:inset -20px -24px 35px #000,inset 12px 8px 24px rgba(255,255,255,.18),0 25px 50px #000;
-  animation:mutation 9s ease-in-out infinite;
+    radial-gradient(ellipse at 50% 100%,rgba(132,150,181,.09),transparent 55%);
 }
-.mutant-body::before,.mutant-body::after{
-  content:"";position:absolute;background:linear-gradient(120deg,#050607,#68727e 42%,#171c22 70%,#050607);
-  box-shadow:inset 3px 2px 8px rgba(255,255,255,.3),0 10px 18px #000;
+.statement::before{
+  content:"V";
+  position:absolute;
+  font:700 65vw/.8 var(--serif);
+  color:rgba(174,180,190,.018);
+  left:50%;
+  top:50%;
+  transform:translate(-50%,-50%);
+  pointer-events:none;
 }
-.mutant-body::before{
-  width:48%;height:19%;left:-21%;top:22%;border-radius:80% 10% 80% 10%;
-  transform:rotate(-34deg);transform-origin:right;animation:growth 9s ease-in-out infinite;
+.statement-label{
+  position:relative;
+  color:var(--ice);
+  font-size:9px;
+  letter-spacing:4px;
+  margin-bottom:35px;
 }
-.mutant-body::after{
-  width:23%;height:65%;right:-15%;bottom:-12%;border-radius:70% 30% 80% 20%;
-  transform:rotate(25deg);transform-origin:top;animation:growth2 9s ease-in-out infinite;
+.statement h2{
+  position:relative;
+  font:400 clamp(39px,7vw,88px)/1.08 var(--serif);
+  letter-spacing:-4px;
 }
-.mutant-spike{
-  position:absolute;width:13%;height:37%;top:-25%;left:46%;
-  background:linear-gradient(90deg,#08090b,#aeb4be 48%,#1a2028 70%);
-  clip-path:polygon(45% 0,100% 100%,0 76%);
-  transform:rotate(18deg);filter:drop-shadow(0 8px 8px #000);
-  animation:spike 9s ease-in-out infinite;
+.statement h2 span{color:var(--platinum)}
+.statement-description{
+  position:relative;
+  max-width:440px;
+  color:var(--muted);
+  font-size:11px;
+  line-height:2;
+  margin-top:32px;
 }
-.mutant-orb{
-  position:absolute;width:12%;aspect-ratio:1;border-radius:50%;
-  right:15%;top:30%;
-  background:radial-gradient(circle at 30% 25%,#f4f5f7,#8496b5 18%,#202329 58%,#030405 78%);
-  box-shadow:0 0 22px rgba(132,150,181,.2);
-}
-@keyframes mutation{
-  0%,100%{border-radius:38% 62% 47% 53% / 53% 40% 60% 47%;transform:rotate(-12deg) scale(1)}
-  35%{border-radius:62% 38% 34% 66% / 40% 61% 39% 60%;transform:rotate(9deg) scale(1.09)}
-  70%{border-radius:29% 71% 64% 36% / 62% 31% 69% 38%;transform:rotate(-4deg) scale(.96)}
-}
-@keyframes growth{50%{transform:rotate(-60deg) scaleY(1.5)}}
-@keyframes growth2{50%{transform:rotate(65deg) scaleY(.65)}}
-@keyframes spike{50%{transform:rotate(-18deg) scaleY(1.35)}}
 
-.manifesto{
-  min-height:78vh;padding:150px 9%;position:relative;overflow:hidden;
-  display:flex;flex-direction:column;justify-content:center;
-  border-top:1px solid var(--line);border-bottom:1px solid var(--line);
-  background:radial-gradient(ellipse at 85% 50%,rgba(132,150,181,.12),transparent 45%);
-}
-.manifesto::after{
-  content:"V";position:absolute;right:3%;top:50%;transform:translateY(-50%);
-  font:700 65vw/.8 var(--font);color:rgba(174,180,190,.025);pointer-events:none;
-}
-.manifesto h2{
-  position:relative;z-index:1;font:400 clamp(58px,11vw,150px)/.9 var(--font);
-  letter-spacing:-.09em;margin:40px 0;max-width:1000px;
-}
-.manifesto h2 span{display:block;color:transparent;-webkit-text-stroke:1px rgba(244,245,247,.65);padding-left:12vw}
-.manifesto p{position:relative;z-index:1;font-size:11px;letter-spacing:.16em;color:var(--muted);text-transform:uppercase}
+/* VYRA PHILOSOPHY */
 
-.about{
-  padding:145px 9%;display:grid;grid-template-columns:1fr 1fr;gap:12%;
+.philosophy{
+  padding:115px 7%;
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:80px;
+  border-bottom:1px solid var(--line);
 }
-.about h2{font:400 clamp(38px,5vw,66px)/1.08 var(--font);letter-spacing:-.06em;margin:18px 0}
-.about-copy{align-self:end;max-width:430px;color:var(--muted);font-size:12px;line-height:2.2}
-.about-copy strong{color:var(--white);font-weight:400}
-.about-mark{
-  margin-top:40px;width:90px;height:90px;border:1px solid var(--line);
-  border-radius:50%;display:grid;place-items:center;color:var(--ice);
-  font:300 30px var(--font);animation:slowRotate 22s linear infinite;
+.philosophy h2{
+  font:400 clamp(40px,5vw,65px)/1 var(--serif);
+  letter-spacing:-3px;
 }
+.philosophy h2 span{color:var(--ice)}
+.philosophy-text{
+  align-self:center;
+  color:var(--muted);
+  font-size:12px;
+  line-height:2.2;
+  max-width:440px;
+}
+.philosophy-text strong{
+  color:var(--white);
+  font-weight:400;
+}
+
+/* CONTACT */
 
 .contact{
-  padding:110px 9%;border-top:1px solid var(--line);
-  display:flex;justify-content:space-between;align-items:end;gap:30px;
+  padding:110px 7%;
+  display:flex;
+  align-items:end;
+  justify-content:space-between;
+  gap:30px;
 }
-.contact h2{font:400 clamp(48px,8vw,105px)/.9 var(--font);letter-spacing:-.08em;margin:20px 0}
+.contact h2{
+  font:400 clamp(45px,7vw,90px)/1 var(--serif);
+  letter-spacing:-5px;
+}
+.contact h2 span{color:var(--platinum)}
 .contact-link{
-  display:inline-flex;align-items:center;gap:20px;padding:16px 0;
-  border-bottom:1px solid var(--ice);font-size:10px;letter-spacing:.18em;text-transform:uppercase;
+  border-bottom:1px solid var(--platinum);
+  padding-bottom:10px;
+  font-size:10px;
+  letter-spacing:2px;
+  color:var(--platinum);
+  white-space:nowrap;
+  transition:color .3s,border-color .3s;
 }
-.contact-link span{color:var(--ice);font-size:18px;transition:transform .3s}
-.contact-link:hover span{transform:translate(5px,-5px)}
+.contact-link:hover{
+  color:var(--white);
+  border-color:var(--white);
+}
+
+/* FOOTER */
+
 footer{
-  padding:30px 5.2%;border-top:1px solid var(--line);
-  display:flex;justify-content:space-between;align-items:center;
-  color:var(--muted);font-size:9px;letter-spacing:.15em;text-transform:uppercase;
+  padding:35px 7%;
+  border-top:1px solid var(--line);
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:20px;
 }
-.footer-logo{font:600 19px var(--font);letter-spacing:.25em;color:var(--white)}
-.reveal{opacity:0;transform:translateY(35px);transition:opacity 1s,transform 1s}
-.reveal.visible{opacity:1;transform:translateY(0)}
-.cursor-glow{
-  position:fixed;width:280px;height:280px;border-radius:50%;pointer-events:none;
-  z-index:0;background:radial-gradient(circle,rgba(132,150,181,.045),transparent 70%);
-  transform:translate(-50%,-50%);
+.footer-logo{
+  font:700 20px var(--serif);
+  letter-spacing:5px;
 }
-@media(hover:none){.cursor-glow{display:none}}
-@media(max-width:760px){
-  header{height:66px;padding:0 6%}
-  .logo{font-size:21px}
+.footer-copy,.footer-location{
+  color:var(--steel);
+  font-size:8px;
+  letter-spacing:2px;
+}
+
+/* REVEAL */
+
+.reveal{
+  opacity:0;
+  transform:translateY(22px);
+  transition:opacity .8s ease,transform .8s ease;
+}
+.reveal.visible{
+  opacity:1;
+  transform:translateY(0);
+}
+
+/* RESPONSIVE */
+
+@media(max-width:850px){
+  .hero{
+    grid-template-columns:1fr 1fr;
+    padding:65px 5%;
+  }
+  .hero h1{
+    font-size:clamp(65px,10vw,100px);
+    letter-spacing:-6px;
+  }
+  .hero-art{min-height:420px}
+  .nav{gap:20px}
+  .collection,.philosophy,.statement,.contact{
+    padding-left:5%;
+    padding-right:5%;
+  }
+}
+@media(max-width:650px){
+  .announcement{
+    font-size:7px;
+    letter-spacing:2px;
+  }
+  header{
+    height:72px;
+    padding:0 6%;
+  }
+  .logo{font-size:24px}
+  .menu-toggle{display:block}
   .nav{
-    display:none;position:absolute;top:66px;left:0;width:100%;
-    padding:35px 7%;background:rgba(8,9,11,.96);backdrop-filter:blur(20px);
-    flex-direction:column;align-items:flex-start;gap:28px;border-bottom:1px solid var(--line);
+    display:none;
+    position:absolute;
+    top:72px;
+    left:0;
+    right:0;
+    padding:28px 6%;
+    background:rgba(8,9,11,.97);
+    backdrop-filter:blur(18px);
+    border-bottom:1px solid var(--line);
+    flex-direction:column;
+    align-items:flex-start;
+    gap:25px;
   }
   .nav.open{display:flex}
-  .nav-right{display:none}
-  .menu-toggle{display:block}
-  .hero{min-height:90svh;padding:130px 7% 100px}
-  .hero h1{font-size:clamp(67px,17vw,120px)}
-  .hero h1 .outline{padding-left:7vw}
-  .hero-copy{margin-left:7vw;font-size:11px}
-  .hero-bottom{left:7%;right:7%;bottom:28px}
-  .intro{padding:95px 7%;grid-template-columns:1fr;gap:35px}
-  .intro h2{font-size:43px}
-  .collection{padding:30px 6% 90px}
-  .collection-head{align-items:start;flex-direction:column;gap:15px}
-  .specimens{grid-template-columns:1fr;gap:14px}
-  .specimen-art{height:105vw;max-height:480px}
-  .specimen-info{padding:19px}
-  .manifesto{min-height:60vh;padding:100px 7%}
-  .manifesto h2{font-size:clamp(58px,13vw,95px)}
-  .about{padding:95px 7%;grid-template-columns:1fr;gap:30px}
-  .contact{padding:85px 7%;flex-direction:column;align-items:flex-start}
-  footer{padding:25px 6%;gap:15px;flex-wrap:wrap}
+  .nav a{font-size:10px}
+  .hero{
+    grid-template-columns:1fr;
+    padding:75px 7% 35px;
+  }
+  .hero h1{
+    font-size:clamp(78px,17vw,115px);
+    letter-spacing:-7px;
+  }
+  .hero-art{
+    min-height:350px;
+    margin-top:15px;
+  }
+  .object-caption{bottom:0}
+  .info-strip{
+    padding:19px 6%;
+    font-size:7px;
+    letter-spacing:1px;
+  }
+  .collection{padding:85px 6%}
+  .section-header{margin-bottom:35px}
+  .products{
+    grid-template-columns:1fr;
+    gap:42px;
+  }
+  .product-image{aspect-ratio:1.05}
+  .statement{
+    min-height:400px;
+    padding:90px 7%;
+  }
+  .statement h2{letter-spacing:-2px}
+  .philosophy{
+    grid-template-columns:1fr;
+    gap:35px;
+    padding:85px 7%;
+  }
+  .contact{
+    padding:85px 7%;
+    flex-direction:column;
+    align-items:flex-start;
+  }
+  footer{
+    padding:28px 6%;
+    flex-wrap:wrap;
+  }
 }
 @media(prefers-reduced-motion:reduce){
-  *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;scroll-behavior:auto!important;transition-duration:.01ms!important}
+  *,*::before,*::after{
+    animation:none!important;
+    transition:none!important;
+    scroll-behavior:auto!important;
+  }
 }
 </style>
 </head>
 
 <body>
+
 <div class="preloader" id="preloader">
   <div class="preloader-inner">
     <div class="preloader-logo">VYRA</div>
     <div class="preloader-line"></div>
-    <small>ENTERING AN UNKNOWN FORM</small>
+    <small>AN ORGANISM IS ARRIVING</small>
   </div>
 </div>
 
-<div class="cursor-glow" id="cursorGlow"></div>
+<div class="announcement">
+  INDEPENDENT DESIGN · GEORGIA · EST. 2026
+</div>
 
 <header id="header">
-  <a class="logo" href="#home">VYRA</a>
-  <nav class="nav" id="nav">
-    <a href="#collection">Collection</a>
-    <a href="#manifesto">Manifesto</a>
-    <a href="#about">About</a>
-    <a href="#contact">Contact</a>
+  <a href="#home" class="logo">VYRA</a>
+
+  <nav class="nav" id="navigation">
+    <a href="#collection">COLLECTION</a>
+    <a href="#manifesto">MANIFESTO</a>
+    <a href="#about">ABOUT</a>
+    <a href="#contact">CONTACT</a>
   </nav>
-  <div class="nav-right">
-    <a href="#collection">ARRIVAL 001 ↗</a>
+
+  <div class="header-right">
+    <span class="header-action">ARRIVAL 001</span>
+    <button class="menu-toggle" id="menuToggle" aria-label="Open menu">☰</button>
   </div>
-  <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu">☰</button>
 </header>
 
 <main>
+
+<!-- HERO -->
+
 <section class="hero" id="home">
-  <div class="hero-content">
-    <div class="eyebrow reveal">Independent objects / Tbilisi / Earth</div>
-    <h1 class="reveal">
-      <span>NOT</span>
-      <span class="outline">HUMAN.</span>
+  <div class="hero-copy reveal">
+    <div class="eyebrow">A NEW PERSPECTIVE ON FORM</div>
+
+    <h1>
+      BEYOND
+      <span>FORM.</span>
     </h1>
-    <p class="hero-copy reveal">
-      A new species of objects. Unfamiliar forms.
-      Designed beyond the limits of ordinary perception.
+
+    <p class="hero-description">
+      VYRA is a design organism.
+      It attaches to the familiar, transforms it
+      and spreads beyond expectation.
     </p>
+
+    <div class="hero-buttons">
+      <a href="#collection" class="button">DISCOVER VYRA</a>
+      <a href="#manifesto" class="text-button">OUR WORLD ↗</a>
+    </div>
   </div>
-  <div class="hero-bottom">
-    <span>VYRA — OBJECTS BEYOND ORDINARY</span>
-    <span class="scroll-cue">SCROLL TO DISCOVER <i></i></span>
-    <span>001 / 003</span>
+
+  <div class="hero-art">
+
+    <!-- VYRA: THE PARASITIC SIGNATURE OBJECT -->
+
+    <svg class="hero-object" viewBox="0 0 700 650" role="img" aria-label="VYRA signature parasitic sculptural bag">
+      <defs>
+        <linearGradient id="heroShell" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0" stop-color="#AEB4BE"/>
+          <stop offset=".14" stop-color="#59616D"/>
+          <stop offset=".36" stop-color="#202329"/>
+          <stop offset=".65" stop-color="#08090B"/>
+          <stop offset=".86" stop-color="#343A42"/>
+          <stop offset="1" stop-color="#08090B"/>
+        </linearGradient>
+        <linearGradient id="heroRim" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0" stop-color="#F4F5F7"/>
+          <stop offset=".4" stop-color="#8496B5"/>
+          <stop offset="1" stop-color="#202329"/>
+        </linearGradient>
+        <radialGradient id="heroLight" cx="32%" cy="20%" r="70%">
+          <stop offset="0" stop-color="#AEB4BE" stop-opacity=".55"/>
+          <stop offset=".5" stop-color="#8496B5" stop-opacity=".09"/>
+          <stop offset="1" stop-color="#08090B" stop-opacity="0"/>
+        </radialGradient>
+        <filter id="heroShadow" x="-50%" y="-50%" width="200%" height="200%">
+          <feGaussianBlur stdDeviation="22"/>
+        </filter>
+      </defs>
+
+      <ellipse cx="355" cy="558" rx="220" ry="25"
+        fill="#8496B5" opacity=".13" filter="url(#heroShadow)"/>
+
+      <g class="organism-pulse">
+
+        <!-- Main object -->
+        <path d="M177 257
+          C207 222 252 239 293 250
+          C355 268 409 232 468 249
+          C522 265 552 311 535 372
+          L508 484
+          C494 546 443 565 382 544
+          C325 525 282 568 226 535
+          C165 500 135 447 150 372
+          L162 291
+          C165 276 169 265 177 257Z"
+          fill="url(#heroShell)" stroke="url(#heroRim)" stroke-width="3"/>
+
+        <path d="M177 257
+          C207 222 252 239 293 250
+          C355 268 409 232 468 249
+          C522 265 552 311 535 372
+          L508 484
+          C494 546 443 565 382 544
+          C325 525 282 568 226 535
+          C165 500 135 447 150 372
+          L162 291
+          C165 276 169 265 177 257Z"
+          fill="url(#heroLight)"/>
+
+        <!-- Sculptural opening -->
+        <path d="M207 303
+          C252 269 298 305 345 309
+          C397 314 435 276 476 299
+          C509 319 493 358 465 374
+          C427 396 396 371 354 389
+          C305 409 269 425 230 393
+          C197 366 181 326 207 303Z"
+          fill="#08090B" stroke="#8496B5" stroke-opacity=".75" stroke-width="4"/>
+
+        <path d="M211 305 C257 279 298 309 345 313 C398 318 435 282 473 302"
+          fill="none" stroke="#F4F5F7" stroke-opacity=".45" stroke-width="3"/>
+
+        <!-- Handle -->
+        <path d="M250 250
+          C190 183 205 82 296 65
+          C388 48 466 121 450 216
+          C445 247 428 266 406 276
+          C423 211 410 137 354 117
+          C292 96 253 136 264 195
+          C268 216 280 231 295 245"
+          fill="none" stroke="url(#heroRim)" stroke-width="24"
+          stroke-linecap="round"/>
+
+        <path d="M250 250
+          C190 183 205 82 296 65
+          C388 48 466 121 450 216"
+          fill="none" stroke="#F4F5F7" stroke-opacity=".38" stroke-width="2"/>
+
+        <!-- VYRA tendrils wrapping the object -->
+        <path class="organism-thread" d="M132 329
+          C63 280 86 194 151 171
+          C220 146 259 211 226 257
+          C205 286 166 289 155 261"
+          fill="none" stroke="#59616D" stroke-width="15" stroke-linecap="round"/>
+
+        <path class="organism-thread" d="M510 283
+          C590 234 627 305 586 370
+          C557 416 519 403 495 382"
+          fill="none" stroke="#343A42" stroke-width="19" stroke-linecap="round"/>
+
+        <path class="organism-thread" d="M190 492
+          C131 553 175 605 240 577
+          C281 560 286 529 274 507"
+          fill="none" stroke="#59616D" stroke-width="13" stroke-linecap="round"/>
+
+        <path class="organism-thread" d="M445 512
+          C494 578 554 552 548 496
+          C545 467 525 450 505 447"
+          fill="none" stroke="#8496B5" stroke-opacity=".75" stroke-width="12" stroke-linecap="round"/>
+
+        <!-- Reflective sculptural ribs -->
+        <path d="M189 275 C213 354 198 437 244 510"
+          fill="none" stroke="#AEB4BE" stroke-opacity=".32" stroke-width="7"/>
+        <path d="M282 259 C307 339 295 452 341 548"
+          fill="none" stroke="#8496B5" stroke-opacity=".3" stroke-width="5"/>
+        <path d="M454 262 C427 342 461 435 419 537"
+          fill="none" stroke="#AEB4BE" stroke-opacity=".22" stroke-width="6"/>
+
+        <!-- Attachment points -->
+        <circle cx="151" cy="261" r="8" fill="#AEB4BE"/>
+        <circle cx="548" cy="450" r="7" fill="#8496B5"/>
+        <circle cx="228" cy="270" r="5" fill="#F4F5F7"/>
+      </g>
+    </svg>
+
+    <div class="object-caption">OBJECT Nº 001 — THE ORGANISM</div>
   </div>
 </section>
 
-<section class="intro reveal">
-  <div>
-    <div class="intro-label">01 — A DIFFERENT EXISTENCE</div>
-  </div>
-  <div>
-    <h2>We don't follow form.<br>We <em>create</em> it.</h2>
-    <p class="intro-copy">
-      VYRA explores the space between fashion, object and organism.
-      Each creation begins with a question: what if the familiar
-      could become something entirely unknown?
-    </p>
-  </div>
-</section>
+<div class="info-strip">
+  <span>FORM / 001</span>
+  <span>ATTACH. TRANSFORM. SPREAD.</span>
+  <span>VYRA STUDIO</span>
+</div>
+
+<!-- COLLECTION -->
 
 <section class="collection" id="collection">
-  <div class="collection-head reveal">
+  <div class="section-header reveal">
     <div>
-      <div class="section-index">02 — FIRST CONTACT</div>
-      <h2>ARRIVAL 001</h2>
+      <div class="section-label">THE FIRST CHAPTER</div>
+      <h2>Selected Objects</h2>
     </div>
-    <p>Three forms. One new dimension.</p>
+    <div class="section-number">001 — 003</div>
   </div>
 
-  <div class="specimens">
-    <article class="specimen reveal">
-      <div class="specimen-art">
-        <div class="parasite-scene">
-          <div class="parasite-core"></div>
-          <div class="parasite-tendril"></div>
-          <div class="parasite-tendril"></div>
-          <div class="parasite-tendril"></div>
-          <div class="parasite-tendril"></div>
-          <div class="parasite-tendril"></div>
-          <div class="parasite-tip t1"></div>
-          <div class="parasite-tip t2"></div>
-        </div>
+  <div class="products">
+
+    <!-- PARASITE -->
+
+    <article class="product reveal">
+      <div class="product-image">
+        <span class="product-index">01 / 03</span>
+
+        <svg viewBox="0 0 400 450" role="img" aria-label="PARASITE — glossy black sculptural handbag">
+          <defs>
+            <linearGradient id="paraShell" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0" stop-color="#AEB4BE"/>
+              <stop offset=".16" stop-color="#515A65"/>
+              <stop offset=".38" stop-color="#202329"/>
+              <stop offset=".72" stop-color="#08090B"/>
+              <stop offset="1" stop-color="#59616D"/>
+            </linearGradient>
+            <linearGradient id="paraRim" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0" stop-color="#F4F5F7"/>
+              <stop offset=".5" stop-color="#8496B5"/>
+              <stop offset="1" stop-color="#202329"/>
+            </linearGradient>
+            <radialGradient id="paraGlow" cx="35%" cy="20%" r="70%">
+              <stop offset="0" stop-color="#AEB4BE" stop-opacity=".55"/>
+              <stop offset=".55" stop-color="#8496B5" stop-opacity=".08"/>
+              <stop offset="1" stop-color="#08090B" stop-opacity="0"/>
+            </radialGradient>
+            <filter id="paraShadow">
+              <feGaussianBlur stdDeviation="9"/>
+            </filter>
+          </defs>
+
+          <ellipse cx="200" cy="373" rx="112" ry="16" fill="#000" opacity=".6" filter="url(#paraShadow)"/>
+
+          <g class="parasite-wrap">
+            <!-- Host object -->
+            <path d="M113 178
+              C132 153 163 158 192 168
+              C238 183 274 154 306 179
+              C337 203 326 251 313 301
+              L295 345
+              C280 378 239 382 204 365
+              C166 387 118 356 106 316
+              C93 276 96 215 113 178Z"
+              fill="url(#paraShell)" stroke="url(#paraRim)" stroke-width="2.5"/>
+
+            <path d="M113 178
+              C132 153 163 158 192 168
+              C238 183 274 154 306 179
+              C337 203 326 251 313 301
+              L295 345
+              C280 378 239 382 204 365
+              C166 387 118 356 106 316
+              C93 276 96 215 113 178Z"
+              fill="url(#paraGlow)"/>
+
+            <!-- Handle -->
+            <path d="M153 171 C128 111 160 69 206 77
+              C251 83 273 121 255 174"
+              fill="none" stroke="url(#paraRim)" stroke-width="17" stroke-linecap="round"/>
+
+            <!-- Deep organic opening -->
+            <path d="M125 221 C161 190 187 229 216 229
+              C252 228 276 194 302 223
+              C321 246 296 272 268 275
+              C235 279 217 300 183 291
+              C150 283 116 256 125 221Z"
+              fill="#08090B" stroke="#8496B5" stroke-width="3"/>
+
+            <!-- Parasite wrapping around the host -->
+            <path class="parasite-tendril t1"
+              d="M89 276 C40 244 52 174 103 146 C150 119 181 163 163 199 C151 224 123 226 109 207"
+              stroke="#59616D" stroke-width="17"/>
+
+            <path class="parasite-tendril t2"
+              d="M291 179 C340 128 382 172 365 222 C352 259 322 267 302 251"
+              stroke="#343A42" stroke-width="19"/>
+
+            <path class="parasite-tendril t3"
+              d="M126 326 C82 378 118 412 161 387 C183 374 188 352 174 335"
+              stroke="#515A65" stroke-width="14"/>
+
+            <path class="parasite-tendril t4"
+              d="M278 330 C314 389 366 365 348 316 C340 293 321 284 303 293"
+              stroke="#8496B5" stroke-width="12"/>
+
+            <!-- Surface ridges -->
+            <path d="M127 188 C147 242 132 302 176 351"
+              fill="none" stroke="#F4F5F7" stroke-opacity=".28" stroke-width="4"/>
+            <path d="M278 179 C253 238 281 294 259 355"
+              fill="none" stroke="#AEB4BE" stroke-opacity=".23" stroke-width="5"/>
+
+            <!-- Attachment marks -->
+            <circle cx="105" cy="207" r="6" fill="#AEB4BE"/>
+            <circle cx="305" cy="251" r="6" fill="#8496B5"/>
+          </g>
+        </svg>
       </div>
-      <div class="specimen-info">
+
+      <div class="product-info">
         <div>
-          <h3>PARASITE</h3>
-          <p>Organic attachment / 001-A</p>
+          <div class="product-name">PARASITE</div>
+          <div class="product-type">THE ART OF ATTACHMENT</div>
         </div>
-        <span class="specimen-number">01</span>
+        <div class="product-arrow">↗</div>
       </div>
     </article>
 
-    <article class="specimen reveal">
-      <div class="specimen-art">
-        <div class="liquid-scene">
-          <div class="liquid-pool"></div>
-          <div class="liquid-drop d1"></div>
-          <div class="liquid-drop d2"></div>
-          <div class="liquid-drop d3"></div>
-        </div>
+    <!-- LIQUID -->
+
+    <article class="product reveal">
+      <div class="product-image">
+        <span class="product-index">02 / 03</span>
+
+        <svg viewBox="0 0 400 450" role="img" aria-label="LIQUID — liquid chrome sculptural handbag">
+          <defs>
+            <linearGradient id="liqChrome" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0" stop-color="#F4F5F7"/>
+              <stop offset=".12" stop-color="#68727E"/>
+              <stop offset=".24" stop-color="#E3E6EB"/>
+              <stop offset=".38" stop-color="#343A42"/>
+              <stop offset=".51" stop-color="#AEB4BE"/>
+              <stop offset=".67" stop-color="#202329"/>
+              <stop offset=".82" stop-color="#DDE1E7"/>
+              <stop offset="1" stop-color="#343A42"/>
+            </linearGradient>
+            <linearGradient id="liqHandle" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0" stop-color="#F4F5F7"/>
+              <stop offset=".3" stop-color="#343A42"/>
+              <stop offset=".55" stop-color="#AEB4BE"/>
+              <stop offset="1" stop-color="#202329"/>
+            </linearGradient>
+            <filter id="liqShadow">
+              <feGaussianBlur stdDeviation="10"/>
+            </filter>
+          </defs>
+
+          <ellipse cx="202" cy="374" rx="110" ry="15" fill="#000" opacity=".6" filter="url(#liqShadow)"/>
+
+          <g class="liquid-body">
+            <!-- Handle formed from liquid metal -->
+            <path d="M139 183
+              C112 130 142 78 196 78
+              C250 78 286 119 264 177
+              C256 197 243 204 229 208"
+              fill="none" stroke="url(#liqHandle)" stroke-width="23" stroke-linecap="round"/>
+
+            <!-- Fluid body -->
+            <path d="M102 195
+              C126 164 157 174 186 182
+              C223 193 257 162 294 184
+              C335 210 324 266 304 315
+              C288 355 250 375 214 359
+              C177 377 129 357 110 322
+              C87 281 80 224 102 195Z"
+              fill="url(#liqChrome)" stroke="#D7DCE4" stroke-width="2"/>
+
+            <!-- Deep sculptural cutout -->
+            <path d="M134 226
+              C157 197 190 213 211 221
+              C243 235 268 205 291 230
+              C310 251 282 276 257 278
+              C223 281 207 308 173 288
+              C147 273 119 251 134 226Z"
+              fill="#08090B" stroke="#AEB4BE" stroke-width="3"/>
+
+            <!-- Reflective bands -->
+            <path class="liquid-shine"
+              d="M104 207 C142 158 190 164 230 182"
+              fill="none" stroke="#F4F5F7" stroke-width="7" stroke-linecap="round"/>
+
+            <path class="liquid-shine"
+              d="M130 329 C176 365 255 353 290 296"
+              fill="none" stroke="#F4F5F7" stroke-opacity=".8" stroke-width="5" stroke-linecap="round"/>
+
+            <path d="M291 203 C273 249 296 293 269 343"
+              fill="none" stroke="#08090B" stroke-opacity=".75" stroke-width="8"/>
+
+            <path d="M158 187 C175 236 164 292 190 351"
+              fill="none" stroke="#F4F5F7" stroke-opacity=".5" stroke-width="3"/>
+
+            <!-- Liquid dripping from the object -->
+            <path d="M120 300 C115 323 107 339 113 352 C119 367 134 361 135 347 C136 332 127 318 120 300Z"
+              fill="url(#liqChrome)" stroke="#AEB4BE" stroke-width="1.5" class="liquid-drop"/>
+
+            <path d="M281 310 C276 334 269 345 275 360 C282 375 298 365 295 350 C292 337 285 325 281 310Z"
+              fill="url(#liqChrome)" stroke="#AEB4BE" stroke-width="1.5" class="liquid-drop d2"/>
+
+            <path d="M204 348 C201 364 197 375 204 384 C211 393 222 384 218 373 C215 363 209 354 204 348Z"
+              fill="url(#liqChrome)" stroke="#AEB4BE" stroke-width="1.5" class="liquid-drop d3"/>
+          </g>
+        </svg>
       </div>
-      <div class="specimen-info">
+
+      <div class="product-info">
         <div>
-          <h3>LIQUID</h3>
-          <p>Fluid metal / 001-B</p>
+          <div class="product-name">LIQUID</div>
+          <div class="product-type">METAL WITHOUT FORM</div>
         </div>
-        <span class="specimen-number">02</span>
+        <div class="product-arrow">↗</div>
       </div>
     </article>
 
-    <article class="specimen reveal">
-      <div class="specimen-art">
-        <div class="mutant-scene">
-          <div class="mutant-body">
-            <div class="mutant-spike"></div>
-            <div class="mutant-orb"></div>
-          </div>
-        </div>
+    <!-- MUTANT -->
+
+    <article class="product reveal">
+      <div class="product-image">
+        <span class="product-index">03 / 03</span>
+
+        <svg viewBox="0 0 400 450" role="img" aria-label="MUTANT — evolving translucent sculptural handbag">
+          <defs>
+            <linearGradient id="mutShell" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0" stop-color="#DDE3EA" stop-opacity=".8"/>
+              <stop offset=".25" stop-color="#8496B5" stop-opacity=".45"/>
+              <stop offset=".55" stop-color="#343A42" stop-opacity=".9"/>
+              <stop offset=".8" stop-color="#08090B"/>
+              <stop offset="1" stop-color="#AEB4BE" stop-opacity=".65"/>
+            </linearGradient>
+            <linearGradient id="mutRidge" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0" stop-color="#F4F5F7"/>
+              <stop offset=".45" stop-color="#8496B5"/>
+              <stop offset="1" stop-color="#202329"/>
+            </linearGradient>
+            <radialGradient id="mutLens" cx="30%" cy="25%" r="70%">
+              <stop offset="0" stop-color="#F4F5F7"/>
+              <stop offset=".2" stop-color="#8496B5"/>
+              <stop offset=".6" stop-color="#202329"/>
+              <stop offset="1" stop-color="#08090B"/>
+            </radialGradient>
+            <filter id="mutShadow">
+              <feGaussianBlur stdDeviation="10"/>
+            </filter>
+          </defs>
+
+          <ellipse cx="201" cy="375" rx="110" ry="15" fill="#000" opacity=".6" filter="url(#mutShadow)"/>
+
+          <g class="mutant-body">
+            <!-- Main mutated shell -->
+            <path d="M117 181
+              C134 142 184 144 210 159
+              C249 135 293 166 301 205
+              C314 246 289 275 302 309
+              C315 350 276 374 241 358
+              C205 386 165 359 145 341
+              C101 326 90 281 105 246
+              C91 222 99 196 117 181Z"
+              fill="url(#mutShell)" stroke="#AEB4BE" stroke-width="2.5"/>
+
+            <!-- Irregular opening -->
+            <path d="M137 221
+              C161 188 190 207 212 218
+              C243 230 265 204 281 231
+              C298 260 268 280 243 276
+              C215 273 200 307 169 285
+              C146 269 122 246 137 221Z"
+              fill="#08090B" stroke="#8496B5" stroke-width="3"/>
+
+            <!-- Mutated appendage -->
+            <path class="mutant-growth"
+              d="M144 188 C112 146 83 119 96 93
+              C105 73 129 81 136 103
+              C146 130 170 151 185 166Z"
+              fill="url(#mutRidge)" stroke="#AEB4BE" stroke-width="2"/>
+
+            <path class="mutant-growth g2"
+              d="M273 191 C300 147 330 128 350 146
+              C371 165 344 191 325 202
+              C307 213 303 238 292 253Z"
+              fill="url(#mutRidge)" stroke="#AEB4BE" stroke-width="2"/>
+
+            <path class="mutant-growth g3"
+              d="M163 328 C129 351 112 378 128 394
+              C147 412 170 386 179 367
+              C187 351 201 346 212 342Z"
+              fill="url(#mutRidge)" stroke="#AEB4BE" stroke-width="2"/>
+
+            <!-- Translucent outer membrane -->
+            <path d="M117 181
+              C134 142 184 144 210 159
+              C249 135 293 166 301 205"
+              fill="none" stroke="#F4F5F7" stroke-opacity=".65" stroke-width="4"/>
+
+            <path d="M111 270 C139 318 176 338 215 352"
+              fill="none" stroke="#F4F5F7" stroke-opacity=".35" stroke-width="3"/>
+
+            <!-- Organic eye / sensor -->
+            <ellipse cx="264" cy="238" rx="16" ry="22"
+              fill="url(#mutLens)" stroke="#AEB4BE" stroke-width="2"/>
+
+            <circle cx="260" cy="231" r="4" fill="#F4F5F7" opacity=".8"/>
+
+            <!-- Surface evolution lines -->
+            <path d="M145 174 C180 193 186 216 180 242"
+              fill="none" stroke="#F4F5F7" stroke-opacity=".35" stroke-width="3"/>
+            <path d="M290 278 C267 302 270 328 252 349"
+              fill="none" stroke="#8496B5" stroke-width="4"/>
+            <path d="M204 160 C227 182 242 187 260 185"
+              fill="none" stroke="#F4F5F7" stroke-opacity=".4" stroke-width="3"/>
+          </g>
+        </svg>
       </div>
-      <div class="specimen-info">
+
+      <div class="product-info">
         <div>
-          <h3>MUTANT</h3>
-          <p>Continuous evolution / 001-C</p>
+          <div class="product-name">MUTANT</div>
+          <div class="product-type">A FORM IN EVOLUTION</div>
         </div>
-        <span class="specimen-number">03</span>
+        <div class="product-arrow">↗</div>
       </div>
     </article>
+
   </div>
 </section>
 
-<section class="manifesto" id="manifesto">
-  <div class="section-index reveal">03 — THE VYRA PRINCIPLE</div>
-  <h2 class="reveal">BEYOND <span>ORDINARY.</span></h2>
-  <p class="reveal">Not made to fit in. Made to redefine the shape.</p>
+<!-- MANIFESTO -->
+
+<section class="statement" id="manifesto">
+  <div class="statement-label reveal">THE VYRA MANIFESTO</div>
+  <h2 class="reveal">
+    It attaches.<br>
+    It transforms.<br>
+    It <span>spreads.</span>
+  </h2>
+  <p class="statement-description reveal">
+    VYRA is not designed to blend in.
+    It is designed to become impossible to ignore.
+    A new form. A new presence. A new organism.
+  </p>
 </section>
 
-<section class="about" id="about">
+<!-- ABOUT -->
+
+<section class="philosophy" id="about">
   <div class="reveal">
-    <div class="section-index">04 — ORIGIN</div>
-    <h2>THE FUTURE<br>IS AN<br>UNKNOWN<br>SHAPE.</h2>
-    <div class="about-mark">V.</div>
+    <div class="section-label">A DIFFERENT POINT OF VIEW</div>
+    <h2>
+      We are not<br>
+      another form<br>
+      of <span>fashion.</span>
+    </h2>
   </div>
-  <div class="about-copy reveal">
+
+  <div class="philosophy-text reveal">
     <p>
-      <strong>VYRA is an independent design universe.</strong>
-      We look at everyday objects from an unfamiliar perspective,
-      transforming the known into something unexpected.
+      <strong>VYRA is an independent design organism.</strong>
+      It begins with the familiar, attaches itself to it,
+      and changes what it touches.
     </p>
+    <br>
     <p>
-      Our language is sculptural. Our attitude is experimental.
-      Our forms exist somewhere between the organic and the artificial.
+      Our language is sculptural.
+      Our forms are organic, artificial and unexpected.
+      We create objects that become part of a person's identity —
+      not accessories that simply follow it.
     </p>
-    <p>THIS IS NOT AN IMITATION OF THE FUTURE. THIS IS OUR INTERPRETATION.</p>
+    <br>
+    <p>
+      The idea is simple: once VYRA reaches you,
+      it becomes part of your world.
+    </p>
   </div>
 </section>
+
+<!-- CONTACT -->
 
 <section class="contact" id="contact">
   <div class="reveal">
-    <div class="section-index">05 — MAKE CONTACT</div>
-    <h2>ENTER<br>THE UNKNOWN.</h2>
+    <div class="section-label">FIRST CONTACT</div>
+    <h2>LET IT<br><span>SPREAD.</span></h2>
   </div>
-  <div class="reveal">
-    <a class="contact-link" href="mailto:hello@vyra.studio">
-      GET IN TOUCH <span>↗</span>
-    </a>
-  </div>
+
+  <a class="contact-link" href="mailto:hello@vyra.studio">
+    GET IN TOUCH ↗
+  </a>
 </section>
+
 </main>
 
 <footer>
-  <a class="footer-logo" href="#home">VYRA</a>
-  <span>NOT FROM THIS WORLD.</span>
-  <span>© VYRA 2026</span>
+  <a href="#home" class="footer-logo">VYRA</a>
+  <div class="footer-copy">© 2026 VYRA. ALL RIGHTS RESERVED.</div>
+  <div class="footer-location">INDEPENDENT DESIGN · GEORGIA</div>
 </footer>
 
 <script>
 const preloader = document.getElementById("preloader");
+
 window.addEventListener("load", () => {
   setTimeout(() => preloader.classList.add("done"), 1100);
 });
 
 const header = document.getElementById("header");
+
 window.addEventListener("scroll", () => {
-  header.classList.toggle("scrolled", window.scrollY > 40);
+  header.classList.toggle("scrolled", window.scrollY > 35);
 });
 
 const menuToggle = document.getElementById("menuToggle");
-const nav = document.getElementById("nav");
+const navigation = document.getElementById("navigation");
+
 menuToggle.addEventListener("click", () => {
-  nav.classList.toggle("open");
-  menuToggle.textContent = nav.classList.contains("open") ? "×" : "☰";
+  navigation.classList.toggle("open");
+  menuToggle.textContent =
+    navigation.classList.contains("open") ? "×" : "☰";
 });
-nav.querySelectorAll("a").forEach(link => {
+
+navigation.querySelectorAll("a").forEach(link => {
   link.addEventListener("click", () => {
-    nav.classList.remove("open");
+    navigation.classList.remove("open");
     menuToggle.textContent = "☰";
   });
 });
@@ -581,15 +1355,11 @@ const observer = new IntersectionObserver(entries => {
     }
   });
 },{threshold:.12});
-document.querySelectorAll(".reveal").forEach(el => observer.observe(el));
 
-const glow = document.getElementById("cursorGlow");
-if(window.matchMedia("(hover:hover)").matches){
-  window.addEventListener("pointermove", e => {
-    glow.style.left = e.clientX + "px";
-    glow.style.top = e.clientY + "px";
-  });
-}
+document.querySelectorAll(".reveal").forEach(element => {
+  observer.observe(element);
+});
 </script>
+
 </body>
 </html>
