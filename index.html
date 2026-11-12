@@ -1,0 +1,454 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#08090B">
+
+  <title>VYRA — Objects Beyond Ordinary</title>
+  <meta name="description" content="VYRA — Independent design objects. Sculptural forms beyond ordinary.">
+
+  <!-- VYRA Typography -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --black: #08090B;
+      --graphite: #202329;
+      --platinum: #AEB4BE;
+      --white: #F4F5F7;
+      --ice: #8496B5;
+      --steel: #343A42;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background: var(--black);
+      color: var(--white);
+      font-family: 'Inter', sans-serif;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    /* HEADER */
+
+    header {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 88px;
+      padding: 0 7%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      z-index: 10;
+      border-bottom: 1px solid rgba(174,180,190,0.12);
+    }
+
+    .logo {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 27px;
+      font-weight: 700;
+      letter-spacing: 7px;
+    }
+
+    nav {
+      display: flex;
+      gap: 38px;
+      align-items: center;
+    }
+
+    nav a {
+      font-size: 10px;
+      letter-spacing: 2px;
+      color: var(--platinum);
+      transition: color .3s;
+    }
+
+    nav a:hover {
+      color: var(--white);
+    }
+
+    .header-index {
+      font-size: 10px;
+      letter-spacing: 2px;
+      color: var(--ice);
+    }
+
+    /* HERO */
+
+    .hero {
+      min-height: 100vh;
+      padding: 150px 7% 75px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      align-items: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+    }
+
+    .eyebrow {
+      color: var(--ice);
+      font-size: 10px;
+      letter-spacing: 4px;
+      margin-bottom: 32px;
+    }
+
+    h1 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(65px, 9vw, 125px);
+      line-height: .88;
+      letter-spacing: -8px;
+      font-weight: 500;
+    }
+
+    h1 span {
+      color: var(--platinum);
+      display: block;
+    }
+
+    .hero-description {
+      max-width: 350px;
+      color: var(--platinum);
+      font-size: 12px;
+      line-height: 2;
+      margin-top: 36px;
+      letter-spacing: .4px;
+    }
+
+    .hero-actions {
+      margin-top: 42px;
+      display: flex;
+      align-items: center;
+      gap: 28px;
+    }
+
+    .primary-button {
+      display: inline-block;
+      padding: 17px 27px;
+      background: var(--white);
+      color: var(--black);
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 2px;
+      transition: .3s;
+    }
+
+    .primary-button:hover {
+      background: var(--ice);
+      transform: translateY(-3px);
+    }
+
+    .secondary-link {
+      color: var(--platinum);
+      font-size: 10px;
+      letter-spacing: 2px;
+    }
+
+    /* ABSTRACT VISUAL */
+
+    .hero-visual {
+      min-height: 510px;
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .orb {
+      width: min(70%, 390px);
+      aspect-ratio: 1;
+      border-radius: 43% 57% 61% 39% / 44% 39% 61% 56%;
+      background:
+        radial-gradient(ellipse at 32% 25%, rgba(244,245,247,.9), transparent 5%),
+        radial-gradient(ellipse at 35% 30%, #69717E 0%, #343A42 18%, #15191F 42%, #08090B 70%);
+      box-shadow:
+        inset -30px -35px 65px rgba(0,0,0,.9),
+        inset 15px 12px 35px rgba(174,180,190,.25),
+        0 0 100px rgba(132,150,181,.09);
+      transform: rotate(-25deg);
+      animation: float 8s ease-in-out infinite;
+      position: relative;
+    }
+
+    .orb::before {
+      content: "";
+      position: absolute;
+      width: 48%;
+      height: 62%;
+      top: 19%;
+      left: 28%;
+      border: 1px solid rgba(174,180,190,.45);
+      border-radius: 50%;
+      transform: rotate(35deg);
+      box-shadow: 0 0 35px rgba(174,180,190,.12);
+    }
+
+    .orb::after {
+      content: "";
+      position: absolute;
+      width: 20%;
+      height: 20%;
+      top: 40%;
+      left: 42%;
+      border-radius: 50%;
+      background: var(--black);
+      box-shadow: 0 0 35px rgba(132,150,181,.2);
+    }
+
+    .orbit {
+      position: absolute;
+      width: 115%;
+      height: 38%;
+      border: 1px solid rgba(132,150,181,.28);
+      border-radius: 50%;
+      transform: rotate(-35deg);
+    }
+
+    .visual-label {
+      position: absolute;
+      bottom: 28px;
+      right: 0;
+      color: var(--platinum);
+      font-size: 9px;
+      letter-spacing: 3px;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: rotate(-25deg) translateY(0); }
+      50% { transform: rotate(-19deg) translateY(-17px); }
+    }
+
+    /* COLLECTION INTRO */
+
+    .collection {
+      padding: 100px 7%;
+      border-top: 1px solid rgba(174,180,190,.12);
+    }
+
+    .section-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 65px;
+    }
+
+    .section-top h2 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 32px;
+      font-weight: 500;
+      letter-spacing: -1px;
+    }
+
+    .section-top span {
+      font-size: 10px;
+      color: var(--ice);
+      letter-spacing: 3px;
+    }
+
+    .collection-placeholder {
+      min-height: 220px;
+      border: 1px solid rgba(174,180,190,.15);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      background: linear-gradient(135deg, #08090B, #15191F);
+    }
+
+    .collection-placeholder p {
+      color: var(--platinum);
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 13px;
+      letter-spacing: 5px;
+    }
+
+    /* FOOTER */
+
+    footer {
+      padding: 35px 7%;
+      border-top: 1px solid rgba(174,180,190,.12);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    footer p {
+      color: var(--steel);
+      font-size: 9px;
+      letter-spacing: 2px;
+    }
+
+    /* RESPONSIVE */
+
+    @media (max-width: 760px) {
+      header {
+        height: 72px;
+        padding: 0 6%;
+      }
+
+      .logo {
+        font-size: 23px;
+      }
+
+      nav {
+        gap: 16px;
+      }
+
+      nav a {
+        font-size: 8px;
+        letter-spacing: 1px;
+      }
+
+      .header-index {
+        display: none;
+      }
+
+      .hero {
+        padding: 130px 6% 50px;
+        grid-template-columns: 1fr;
+      }
+
+      h1 {
+        font-size: clamp(65px, 16vw, 105px);
+        letter-spacing: -5px;
+      }
+
+      .hero-visual {
+        min-height: 350px;
+        margin-top: 15px;
+      }
+
+      .orb {
+        width: 65%;
+      }
+
+      .collection {
+        padding: 75px 6%;
+      }
+
+      footer {
+        padding: 30px 6%;
+      }
+    }
+
+    @media (max-width: 400px) {
+      nav {
+        gap: 11px;
+      }
+
+      nav a {
+        font-size: 7px;
+      }
+
+      .hero-actions {
+        gap: 18px;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation: none !important;
+        scroll-behavior: auto !important;
+        transition: none !important;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <a href="#" class="logo">VYRA</a>
+
+    <nav>
+      <a href="#collection">COLLECTION</a>
+      <a href="#about">ABOUT</a>
+      <a href="#contact">CONTACT</a>
+    </nav>
+
+    <div class="header-index">001 / 026</div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="hero-content">
+        <p class="eyebrow">INDEPENDENT DESIGN OBJECTS</p>
+
+        <h1>
+          BEYOND
+          <span>FORM.</span>
+        </h1>
+
+        <p class="hero-description">
+          Objects that challenge the familiar.
+          Sculptural forms designed for a different perspective.
+        </p>
+
+        <div class="hero-actions">
+          <a href="#collection" class="primary-button">DISCOVER VYRA</a>
+          <a href="#about" class="secondary-link">OUR WORLD ↗</a>
+        </div>
+      </div>
+
+      <div class="hero-visual">
+        <div class="orb">
+          <div class="orbit"></div>
+        </div>
+        <p class="visual-label">OBJECT Nº 001 — UNKNOWN FORM</p>
+      </div>
+    </section>
+
+    <section class="collection" id="collection">
+      <div class="section-top">
+        <h2>First Encounter</h2>
+        <span>COLLECTION 001</span>
+      </div>
+
+      <div class="collection-placeholder">
+        <p>NEW OBJECTS. NEW PERSPECTIVE.</p>
+      </div>
+    </section>
+
+    <section class="collection" id="about">
+      <div class="section-top">
+        <h2>Beyond the Ordinary</h2>
+        <span>ABOUT VYRA</span>
+      </div>
+      <div class="collection-placeholder">
+        <p>DESIGN WITHOUT CONVENTION.</p>
+      </div>
+    </section>
+  </main>
+
+  <footer id="contact">
+    <p>© VYRA 2026</p>
+    <p>OBJECTS BEYOND ORDINARY</p>
+    <p>GEORGIA</p>
+  </footer>
+
+</body>
+</html>
