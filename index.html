@@ -3,13 +3,14 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="theme-color" content="#08090B">
 <title>VYRA — Objects Beyond Ordinary</title>
+<meta name="description" content="VYRA is an independent design brand exploring sculptural forms, unconventional objects and futuristic accessories.">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
 
 <style>
 :root {
@@ -19,257 +20,993 @@
   --white:#F4F5F7;
   --ice:#8496B5;
   --steel:#343A42;
+  --line:rgba(174,180,190,.17);
+  --serif: 'Space Grotesk', sans-serif;
+  --sans: 'Inter', sans-serif;
 }
-* { margin:0; padding:0; box-sizing:border-box; }
+
+* {
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+}
+
 html { scroll-behavior:smooth; }
+
 body {
   background:var(--black);
   color:var(--white);
-  font-family:'Inter',sans-serif;
+  font-family:var(--sans);
+  overflow-x:hidden;
 }
-a { color:inherit; text-decoration:none; }
+
+a {
+  text-decoration:none;
+  color:inherit;
+}
+
+button { font:inherit; }
+
+::selection {
+  background:var(--platinum);
+  color:var(--black);
+}
+
+/* ANNOUNCEMENT */
+
+.announcement {
+  height:29px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border-bottom:1px solid var(--line);
+  color:var(--platinum);
+  font-size:8px;
+  letter-spacing:3px;
+}
+
+/* HEADER */
 
 header {
   height:82px;
-  padding:0 7%;
+  padding:0 6%;
   display:flex;
   align-items:center;
   justify-content:space-between;
-  border-bottom:1px solid rgba(174,180,190,.12);
-}
-.logo {
-  font:700 27px 'Space Grotesk',sans-serif;
-  letter-spacing:7px;
-}
-nav { display:flex; gap:36px; }
-nav a {
-  font-size:10px;
-  letter-spacing:2px;
-  color:var(--platinum);
-  transition:.3s;
-}
-nav a:hover { color:var(--white); }
-.header-right {
-  font-size:9px;
-  letter-spacing:2px;
-  color:var(--ice);
+  border-bottom:1px solid var(--line);
+  position:relative;
+  z-index:20;
+  background:var(--black);
 }
 
-.hero {
-  min-height:calc(100vh - 82px);
-  display:grid;
-  grid-template-columns: .85fr 1.15fr;
-  align-items:center;
-  padding:55px 7%;
-  gap:30px;
-  overflow:hidden;
+.logo {
+  font-family:var(--serif);
+  font-size:29px;
+  font-weight:700;
+  letter-spacing:8px;
 }
+
+.nav {
+  display:flex;
+  align-items:center;
+  gap:38px;
+}
+
+.nav a, .header-action {
+  font-size:9px;
+  letter-spacing:2px;
+  color:var(--platinum);
+  transition:color .3s;
+}
+
+.nav a:hover, .header-action:hover {
+  color:var(--white);
+}
+
+.header-right {
+  display:flex;
+  align-items:center;
+  gap:25px;
+}
+
+.menu-toggle {
+  display:none;
+  background:none;
+  border:0;
+  color:var(--white);
+  cursor:pointer;
+  font-size:22px;
+}
+
+/* HERO */
+
+.hero {
+  min-height:760px;
+  min-height:calc(100svh - 111px);
+  display:grid;
+  grid-template-columns: .9fr 1.1fr;
+  align-items:center;
+  padding:75px 7%;
+  position:relative;
+  overflow:hidden;
+  border-bottom:1px solid var(--line);
+}
+
+.hero-copy {
+  position:relative;
+  z-index:2;
+}
+
 .eyebrow {
-  font-size:10px;
   color:var(--ice);
+  font-size:9px;
   letter-spacing:4px;
   margin-bottom:35px;
 }
-h1 {
-  font:500 clamp(70px,9vw,125px)/.88 'Space Grotesk',sans-serif;
-  letter-spacing:-8px;
+
+.hero h1 {
+  font-family:var(--serif);
+  font-size:clamp(80px,11vw,155px);
+  font-weight:500;
+  line-height:.79;
+  letter-spacing:-11px;
 }
-h1 span { color:var(--platinum); }
-.description {
-  max-width:340px;
+
+.hero h1 span {
   color:var(--platinum);
-  font-size:12px;
-  line-height:2;
-  margin-top:35px;
+  display:block;
 }
-.actions {
+
+.hero-description {
+  color:var(--platinum);
+  max-width:330px;
+  font-size:11px;
+  line-height:2.1;
+  margin-top:39px;
+}
+
+.hero-buttons {
   display:flex;
   align-items:center;
-  gap:28px;
-  margin-top:42px;
+  gap:30px;
+  margin-top:39px;
 }
+
 .button {
+  min-height:48px;
+  display:inline-flex;
+  justify-content:center;
+  align-items:center;
+  padding:0 25px;
   background:var(--white);
   color:var(--black);
-  padding:17px 25px;
   font-size:9px;
   letter-spacing:2px;
-  transition:.3s;
+  transition:background .3s, transform .3s;
 }
+
 .button:hover {
   background:var(--platinum);
   transform:translateY(-3px);
 }
-.text-link {
+
+.text-button {
+  color:var(--platinum);
   font-size:9px;
   letter-spacing:2px;
-  color:var(--platinum);
+  transition:color .3s;
 }
 
-.visual {
-  height:650px;
+.text-button:hover { color:var(--white); }
+
+.hero-art {
   position:relative;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-}
-.visual img {
   width:100%;
-  height:100%;
-  object-fit:contain;
-  filter:contrast(1.06);
-  animation:appear 1.5s ease both;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  min-height:550px;
 }
-.visual-label {
+
+.hero-art::before {
+  content:"";
   position:absolute;
-  bottom:20px;
+  width:75%;
+  aspect-ratio:1;
+  border-radius:50%;
+  background:radial-gradient(circle,rgba(132,150,181,.11),transparent 68%);
+}
+
+.hero-object {
+  width:min(100%,650px);
+  position:relative;
+  z-index:1;
+  overflow:visible;
+  animation:objectReveal 1.5s cubic-bezier(.2,.7,.2,1) both;
+}
+
+@keyframes objectReveal {
+  from { opacity:0; transform:translateY(35px) scale(.94); }
+  to { opacity:1; transform:translateY(0) scale(1); }
+}
+
+.object-caption {
+  position:absolute;
+  bottom:5px;
   right:0;
-  font-size:9px;
+  font-size:8px;
   letter-spacing:3px;
   color:var(--platinum);
 }
-@keyframes appear {
-  from { opacity:0; transform:translateY(20px); }
-  to { opacity:1; transform:translateY(0); }
+
+/* INTRO STRIP */
+
+.info-strip {
+  padding:24px 7%;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  border-bottom:1px solid var(--line);
+  color:var(--platinum);
+  font-size:8px;
+  letter-spacing:2px;
 }
+
+/* COLLECTION */
 
 .collection {
-  border-top:1px solid rgba(174,180,190,.14);
-  padding:100px 7%;
+  padding:120px 7%;
+  border-bottom:1px solid var(--line);
 }
-.section-heading {
+
+.section-header {
   display:flex;
   justify-content:space-between;
-  align-items:center;
-  margin-bottom:50px;
+  align-items:end;
+  margin-bottom:55px;
 }
-.section-heading h2 {
-  font:500 32px 'Space Grotesk',sans-serif;
-}
-.section-heading span {
-  font-size:9px;
+
+.section-label {
   color:var(--ice);
+  font-size:9px;
   letter-spacing:3px;
+  margin-bottom:17px;
 }
-.collection-grid {
+
+.section-header h2 {
+  font-family:var(--serif);
+  font-weight:400;
+  font-size:clamp(38px,5vw,66px);
+  letter-spacing:-3px;
+}
+
+.section-number {
+  font-size:9px;
+  letter-spacing:2px;
+  color:var(--platinum);
+}
+
+.products {
   display:grid;
   grid-template-columns:repeat(3,1fr);
-  gap:15px;
+  gap:18px;
 }
-.collection-card {
-  aspect-ratio:4/5;
-  background:var(--graphite);
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  color:var(--platinum);
-  font:500 13px 'Space Grotesk',sans-serif;
-  letter-spacing:3px;
-}
-.about {
-  padding:130px 7%;
-  text-align:center;
-  border-top:1px solid rgba(174,180,190,.14);
-}
-.about p {
-  font:500 clamp(30px,5vw,65px)/1.15 'Space Grotesk',sans-serif;
-  max-width:850px;
-  margin:auto;
-  letter-spacing:-2px;
-}
-.about span { color:var(--ice); }
 
-footer {
-  border-top:1px solid rgba(174,180,190,.14);
-  padding:35px 7%;
+.product {
+  min-width:0;
+}
+
+.product-image {
+  aspect-ratio: .86;
+  background:linear-gradient(145deg,#171a20,#0d0f12);
+  border:1px solid rgba(174,180,190,.1);
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  overflow:hidden;
+  position:relative;
+  transition:border-color .4s;
+}
+
+.product:hover .product-image {
+  border-color:rgba(174,180,190,.4);
+}
+
+.product-image svg {
+  width:90%;
+  height:90%;
+  transition:transform .7s cubic-bezier(.2,.7,.2,1);
+}
+
+.product:hover .product-image svg {
+  transform:scale(1.055) rotate(-2deg);
+}
+
+.product-index {
+  position:absolute;
+  top:17px;
+  left:17px;
+  font-size:8px;
+  letter-spacing:2px;
+  color:var(--platinum);
+}
+
+.product-info {
   display:flex;
   justify-content:space-between;
-  color:var(--steel);
+  align-items:center;
+  padding-top:19px;
+}
+
+.product-name {
+  font-family:var(--serif);
+  font-size:16px;
+  letter-spacing:1px;
+}
+
+.product-type {
+  font-size:8px;
+  color:var(--platinum);
+  letter-spacing:1px;
+  margin-top:7px;
+}
+
+.product-arrow {
+  color:var(--platinum);
+  font-size:17px;
+  transition:transform .3s;
+}
+
+.product:hover .product-arrow {
+  transform:translate(4px,-4px);
+}
+
+/* STATEMENT */
+
+.statement {
+  min-height:510px;
+  padding:110px 7%;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  text-align:center;
+  border-bottom:1px solid var(--line);
+}
+
+.statement-label {
+  color:var(--ice);
   font-size:9px;
+  letter-spacing:4px;
+  margin-bottom:35px;
+}
+
+.statement h2 {
+  font-family:var(--serif);
+  font-weight:400;
+  font-size:clamp(39px,7vw,88px);
+  line-height:1.08;
+  letter-spacing:-4px;
+}
+
+.statement h2 span { color:var(--platinum); }
+
+.statement-description {
+  max-width:420px;
+  color:var(--platinum);
+  font-size:11px;
+  line-height:2;
+  margin-top:32px;
+}
+
+/* PHILOSOPHY */
+
+.philosophy {
+  padding:115px 7%;
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:80px;
+  border-bottom:1px solid var(--line);
+}
+
+.philosophy h2 {
+  font-family:var(--serif);
+  font-size:clamp(40px,5vw,65px);
+  font-weight:400;
+  line-height:1;
+  letter-spacing:-3px;
+}
+
+.philosophy h2 span { color:var(--ice); }
+
+.philosophy-text {
+  align-self:center;
+  color:var(--platinum);
+  font-size:12px;
+  line-height:2.2;
+  max-width:430px;
+}
+
+/* CONTACT */
+
+.contact {
+  padding:110px 7%;
+  display:flex;
+  align-items:end;
+  justify-content:space-between;
+  gap:30px;
+}
+
+.contact h2 {
+  font-family:var(--serif);
+  font-size:clamp(45px,7vw,90px);
+  font-weight:400;
+  letter-spacing:-5px;
+  line-height:1;
+}
+
+.contact h2 span { color:var(--platinum); }
+
+.contact-link {
+  border-bottom:1px solid var(--platinum);
+  padding-bottom:10px;
+  font-size:10px;
+  letter-spacing:2px;
+  color:var(--platinum);
+  white-space:nowrap;
+}
+
+/* FOOTER */
+
+footer {
+  padding:35px 7%;
+  border-top:1px solid var(--line);
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:20px;
+}
+
+.footer-logo {
+  font:700 20px var(--serif);
+  letter-spacing:5px;
+}
+
+.footer-copy, .footer-location {
+  color:var(--steel);
+  font-size:8px;
   letter-spacing:2px;
 }
 
-@media(max-width:760px) {
-  header { height:70px; padding:0 5%; }
-  .logo { font-size:22px; }
-  nav { gap:13px; }
-  nav a { font-size:8px; letter-spacing:1px; }
-  .header-right { display:none; }
+/* REVEAL */
+
+.reveal {
+  opacity:0;
+  transform:translateY(22px);
+  transition:opacity .8s ease, transform .8s ease;
+}
+
+.reveal.visible {
+  opacity:1;
+  transform:translateY(0);
+}
+
+/* RESPONSIVE */
+
+@media(max-width:850px) {
+  .hero {
+    grid-template-columns:1fr 1fr;
+    padding:65px 5%;
+  }
+
+  .hero h1 {
+    font-size:clamp(65px,10vw,100px);
+    letter-spacing:-6px;
+  }
+
+  .hero-art { min-height:420px; }
+
+  .nav { gap:20px; }
+
+  .collection, .philosophy, .statement, .contact {
+    padding-left:5%;
+    padding-right:5%;
+  }
+}
+
+@media(max-width:650px) {
+  .announcement {
+    font-size:7px;
+    letter-spacing:2px;
+  }
+
+  header {
+    height:72px;
+    padding:0 6%;
+  }
+
+  .logo { font-size:24px; }
+
+  .menu-toggle { display:block; }
+
+  .header-right { gap:15px; }
+
+  .nav {
+    display:none;
+    position:absolute;
+    top:72px;
+    left:0;
+    right:0;
+    padding:28px 6%;
+    background:var(--black);
+    border-bottom:1px solid var(--line);
+    flex-direction:column;
+    align-items:flex-start;
+    gap:25px;
+  }
+
+  .nav.open { display:flex; }
+
+  .nav a { font-size:10px; }
+
   .hero {
     grid-template-columns:1fr;
-    padding:75px 6% 30px;
+    padding:75px 7% 35px;
   }
-  h1 { font-size:clamp(70px,15vw,105px); letter-spacing:-5px; }
-  .visual { height:420px; }
-  .collection { padding:75px 6%; }
-  .collection-grid { grid-template-columns:1fr; }
-  .about { padding:90px 6%; }
-  footer { padding:30px 6%; }
+
+  .hero h1 {
+    font-size:clamp(78px,17vw,115px);
+    letter-spacing:-7px;
+  }
+
+  .hero-art {
+    min-height:350px;
+    margin-top:15px;
+  }
+
+  .object-caption { bottom:0; }
+
+  .info-strip {
+    padding:19px 6%;
+    font-size:7px;
+  }
+
+  .collection { padding:85px 6%; }
+
+  .section-header { margin-bottom:35px; }
+
+  .products {
+    grid-template-columns:1fr;
+    gap:42px;
+  }
+
+  .product-image { aspect-ratio:1.05; }
+
+  .statement {
+    min-height:400px;
+    padding:90px 7%;
+  }
+
+  .statement h2 { letter-spacing:-2px; }
+
+  .philosophy {
+    grid-template-columns:1fr;
+    gap:35px;
+    padding:85px 7%;
+  }
+
+  .contact {
+    padding:85px 7%;
+    flex-direction:column;
+    align-items:flex-start;
+  }
+
+  footer {
+    padding:28px 6%;
+    flex-wrap:wrap;
+  }
 }
+
 @media(prefers-reduced-motion:reduce) {
   *,*::before,*::after {
     animation:none!important;
     transition:none!important;
+    scroll-behavior:auto!important;
   }
 }
 </style>
 </head>
 
 <body>
+
+<div class="announcement">
+  INDEPENDENT DESIGN · GEORGIA · EST. 2026
+</div>
+
 <header>
-  <a class="logo" href="#">VYRA</a>
-  <nav>
+  <a href="#" class="logo">VYRA</a>
+
+  <nav class="nav" id="navigation">
     <a href="#collection">COLLECTION</a>
+    <a href="#manifesto">MANIFESTO</a>
     <a href="#about">ABOUT</a>
     <a href="#contact">CONTACT</a>
   </nav>
-  <div class="header-right">INDEPENDENT DESIGN</div>
+
+  <div class="header-right">
+    <button class="menu-toggle" id="menuToggle" aria-label="Open menu">☰</button>
+  </div>
 </header>
 
 <main>
+
+<!-- HERO -->
+
 <section class="hero">
-  <div>
-    <div class="eyebrow">A DIFFERENT KIND OF OBJECT</div>
-    <h1>BEYOND<br><span>FORM.</span></h1>
-    <p class="description">
-      A study of shape, material and identity.
-      Objects designed to exist beyond convention.
+  <div class="hero-copy">
+    <div class="eyebrow">A NEW PERSPECTIVE ON FORM</div>
+
+    <h1>
+      BEYOND
+      <span>FORM.</span>
+    </h1>
+
+    <p class="hero-description">
+      An exploration of unconventional shape,
+      material and identity. Designed to challenge
+      the familiar. Created to exist beyond ordinary.
     </p>
-    <div class="actions">
-      <a href="#collection" class="button">EXPLORE OBJECTS</a>
-      <a href="#about" class="text-link">OUR PHILOSOPHY ↗</a>
+
+    <div class="hero-buttons">
+      <a href="#collection" class="button">DISCOVER VYRA</a>
+      <a href="#manifesto" class="text-button">OUR WORLD ↗</a>
     </div>
   </div>
 
-  <div class="visual">
-    <!-- Replace this source with the final VYRA product image -->
-    <img src="assets/hero-bag.png" alt="VYRA sculptural object">
-    <div class="visual-label">OBJECT 001 — VYRA</div>
+  <div class="hero-art">
+
+    <!-- ORIGINAL SELF-CONTAINED SCULPTURAL OBJECT -->
+    <svg class="hero-object" viewBox="0 0 700 650" role="img" aria-label="Abstract sculptural black handbag concept">
+      <defs>
+        <linearGradient id="bagSurface" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0" stop-color="#AEB4BE"/>
+          <stop offset=".16" stop-color="#59616D"/>
+          <stop offset=".36" stop-color="#202329"/>
+          <stop offset=".61" stop-color="#08090B"/>
+          <stop offset=".82" stop-color="#343A42"/>
+          <stop offset="1" stop-color="#090A0D"/>
+        </linearGradient>
+
+        <linearGradient id="bagEdge" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0" stop-color="#F4F5F7"/>
+          <stop offset=".4" stop-color="#8496B5"/>
+          <stop offset="1" stop-color="#202329"/>
+        </linearGradient>
+
+        <linearGradient id="handle" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0" stop-color="#AEB4BE"/>
+          <stop offset=".5" stop-color="#343A42"/>
+          <stop offset="1" stop-color="#08090B"/>
+        </linearGradient>
+
+        <radialGradient id="bagLight" cx="35%" cy="20%" r="70%">
+          <stop offset="0" stop-color="#AEB4BE" stop-opacity=".45"/>
+          <stop offset=".45" stop-color="#8496B5" stop-opacity=".08"/>
+          <stop offset="1" stop-color="#08090B" stop-opacity="0"/>
+        </radialGradient>
+
+        <filter id="shadow" x="-50%" y="-50%" width="200%" height="200%">
+          <feGaussianBlur stdDeviation="24"/>
+        </filter>
+      </defs>
+
+      <ellipse cx="355" cy="555" rx="220" ry="28"
+        fill="#8496B5" opacity=".13" filter="url(#shadow)"/>
+
+      <!-- sculptural handle -->
+      <path d="M245 248
+        C180 173 201 72 298 63
+        C394 53 459 123 448 218
+        C445 250 424 270 402 275
+        C423 211 410 135 353 116
+        C292 95 253 136 263 193
+        C267 213 277 226 290 240Z"
+        fill="none" stroke="url(#handle)" stroke-width="25"
+        stroke-linecap="round"/>
+
+      <path d="M245 248
+        C180 173 201 72 298 63
+        C394 53 459 123 448 218"
+        fill="none" stroke="#F4F5F7" stroke-opacity=".25"
+        stroke-width="2"/>
+
+      <!-- main body -->
+      <path d="M171 255
+        C195 229 246 238 290 251
+        C350 268 397 239 456 244
+        C510 249 549 295 538 356
+        L514 476
+        C505 536 459 558 393 546
+        C331 535 294 573 233 546
+        C168 519 134 460 145 385
+        L158 297
+        C160 279 163 266 171 255Z"
+        fill="url(#bagSurface)" stroke="url(#bagEdge)"
+        stroke-width="3"/>
+
+      <path d="M171 255
+        C195 229 246 238 290 251
+        C350 268 397 239 456 244
+        C510 249 549 295 538 356
+        L514 476
+        C505 536 459 558 393 546
+        C331 535 294 573 233 546
+        C168 519 134 460 145 385
+        L158 297
+        C160 279 163 266 171 255Z"
+        fill="url(#bagLight)"/>
+
+      <!-- organic opening -->
+      <path d="M211 295
+        C258 266 300 301 342 306
+        C394 314 430 274 475 292
+        C504 305 505 341 481 363
+        C449 392 411 371 373 381
+        C323 395 280 424 235 393
+        C200 370 182 319 211 295Z"
+        fill="#08090B" stroke="#8496B5"
+        stroke-opacity=".65" stroke-width="4"/>
+
+      <path d="M211 295
+        C258 266 300 301 342 306
+        C394 314 430 274 475 292"
+        fill="none" stroke="#F4F5F7"
+        stroke-opacity=".35" stroke-width="3"/>
+
+      <!-- sculptural ribs -->
+      <path d="M190 278 C207 349 198 431 245 508"
+        fill="none" stroke="#AEB4BE" stroke-opacity=".28" stroke-width="7"/>
+
+      <path d="M283 258 C305 332 295 445 342 548"
+        fill="none" stroke="#8496B5" stroke-opacity=".3" stroke-width="5"/>
+
+      <path d="M450 259 C426 338 457 434 420 536"
+        fill="none" stroke="#AEB4BE" stroke-opacity=".22" stroke-width="6"/>
+
+      <path d="M495 301 C475 358 500 423 479 489"
+        fill="none" stroke="#F4F5F7" stroke-opacity=".2" stroke-width="3"/>
+
+      <!-- details -->
+      <path d="M152 371 C205 402 211 475 255 516"
+        fill="none" stroke="#F4F5F7" stroke-opacity=".24" stroke-width="2"/>
+
+      <path d="M520 364 C485 411 502 466 474 508"
+        fill="none" stroke="#8496B5" stroke-opacity=".35" stroke-width="2"/>
+
+      <circle cx="228" cy="270" r="5" fill="#AEB4BE"/>
+      <circle cx="467" cy="267" r="5" fill="#AEB4BE"/>
+    </svg>
+
+    <div class="object-caption">OBJECT Nº 001 — CONCEPT FORM</div>
   </div>
 </section>
+
+<div class="info-strip">
+  <span>FORM / 001</span>
+  <span>DESIGNED TO BE DIFFERENT</span>
+  <span>VYRA STUDIO</span>
+</div>
+
+<!-- COLLECTION -->
 
 <section class="collection" id="collection">
-  <div class="section-heading">
-    <h2>Selected Objects</h2>
-    <span>COLLECTION 001</span>
+  <div class="section-header reveal">
+    <div>
+      <div class="section-label">THE FIRST CHAPTER</div>
+      <h2>Selected Objects</h2>
+    </div>
+    <div class="section-number">001 — 003</div>
   </div>
-  <div class="collection-grid">
-    <div class="collection-card">PARASITE</div>
-    <div class="collection-card">LIQUID</div>
-    <div class="collection-card">MUTANT</div>
+
+  <div class="products">
+
+    <article class="product reveal">
+      <div class="product-image">
+        <span class="product-index">01 / 03</span>
+        <svg viewBox="0 0 400 450" aria-label="Black sculptural object">
+          <defs>
+            <linearGradient id="p1" x1="0" y1="0" x2="1" y2="1">
+              <stop stop-color="#AEB4BE"/>
+              <stop offset=".3" stop-color="#343A42"/>
+              <stop offset=".7" stop-color="#08090B"/>
+              <stop offset="1" stop-color="#59616D"/>
+            </linearGradient>
+          </defs>
+          <path d="M112 174 C58 88 164 50 210 109 C245 152 220 190 186 206
+            C255 158 317 190 302 269 L277 345 C264 396 195 388 145 363
+            C87 335 73 273 112 174Z"
+            fill="url(#p1)" stroke="#8496B5" stroke-width="2"/>
+          <path d="M112 174 C58 88 164 50 210 109 C245 152 220 190 186 206"
+            fill="none" stroke="#AEB4BE" stroke-width="14" stroke-linecap="round"/>
+          <path d="M134 216 C175 188 208 244 250 216 C289 190 311 248 271 276
+            C225 307 190 258 150 301"
+            fill="none" stroke="#08090B" stroke-width="26" stroke-linecap="round"/>
+          <path d="M100 190 C125 250 103 305 163 356"
+            fill="none" stroke="#AEB4BE" stroke-opacity=".3" stroke-width="5"/>
+        </svg>
+      </div>
+      <div class="product-info">
+        <div>
+          <div class="product-name">PARASITE</div>
+          <div class="product-type">ORGANIC STRUCTURE</div>
+        </div>
+        <div class="product-arrow">↗</div>
+      </div>
+    </article>
+
+    <article class="product reveal">
+      <div class="product-image">
+        <span class="product-index">02 / 03</span>
+        <svg viewBox="0 0 400 450" aria-label="Chrome sculptural object">
+          <defs>
+            <linearGradient id="p2" x1="0" y1="0" x2="1" y2="1">
+              <stop stop-color="#F4F5F7"/>
+              <stop offset=".2" stop-color="#8496B5"/>
+              <stop offset=".4" stop-color="#343A42"/>
+              <stop offset=".65" stop-color="#AEB4BE"/>
+              <stop offset="1" stop-color="#202329"/>
+            </linearGradient>
+          </defs>
+          <path d="M91 214 C103 129 174 85 237 121 C289 151 335 196 304 275
+            C284 326 228 381 163 348 C101 318 82 272 91 214Z"
+            fill="url(#p2)" stroke="#AEB4BE" stroke-width="2"/>
+          <path d="M125 221 C155 170 210 166 253 205 C284 235 266 280 223 292
+            C182 303 155 274 125 221Z"
+            fill="#08090B" stroke="#AEB4BE" stroke-width="3"/>
+          <path d="M105 202 C144 139 210 109 262 161"
+            fill="none" stroke="#F4F5F7" stroke-opacity=".8" stroke-width="8"
+            stroke-linecap="round"/>
+          <path d="M155 332 C211 364 273 313 292 265"
+            fill="none" stroke="#8496B5" stroke-width="5"/>
+        </svg>
+      </div>
+      <div class="product-info">
+        <div>
+          <div class="product-name">LIQUID</div>
+          <div class="product-type">FLUID METALLIC FORM</div>
+        </div>
+        <div class="product-arrow">↗</div>
+      </div>
+    </article>
+
+    <article class="product reveal">
+      <div class="product-image">
+        <span class="product-index">03 / 03</span>
+        <svg viewBox="0 0 400 450" aria-label="Translucent sculptural object">
+          <defs>
+            <linearGradient id="p3" x1="0" y1="0" x2="1" y2="1">
+              <stop stop-color="#AEB4BE" stop-opacity=".8"/>
+              <stop offset=".4" stop-color="#8496B5" stop-opacity=".35"/>
+              <stop offset="1" stop-color="#343A42" stop-opacity=".8"/>
+            </linearGradient>
+          </defs>
+          <path d="M112 160 C128 93 243 74 282 139 C312 189 304 250 278 307
+            C249 373 150 379 113 313 C85 262 94 210 112 160Z"
+            fill="url(#p3)" stroke="#AEB4BE" stroke-width="3"/>
+          <path d="M139 184 C157 149 222 134 254 175 C275 203 266 239 241 261
+            C216 284 172 277 146 245 C130 226 128 202 139 184Z"
+            fill="#08090B" stroke="#8496B5" stroke-width="4"/>
+          <path d="M111 166 C148 114 231 94 273 147"
+            fill="none" stroke="#F4F5F7" stroke-opacity=".55" stroke-width="6"/>
+          <path d="M127 301 C160 345 230 351 267 304"
+            fill="none" stroke="#F4F5F7" stroke-opacity=".35" stroke-width="4"/>
+        </svg>
+      </div>
+      <div class="product-info">
+        <div>
+          <div class="product-name">MUTANT</div>
+          <div class="product-type">TRANSLUCENT FORM</div>
+        </div>
+        <div class="product-arrow">↗</div>
+      </div>
+    </article>
+
   </div>
 </section>
 
-<section class="about" id="about">
-  <p>Not made to follow form.<br>
-  Made to <span>redefine it.</span></p>
+<!-- MANIFESTO -->
+
+<section class="statement" id="manifesto">
+  <div class="statement-label reveal">THE VYRA MANIFESTO</div>
+  <h2 class="reveal">
+    Not made to follow form.<br>
+    Made to <span>redefine it.</span>
+  </h2>
+  <p class="statement-description reveal">
+    We believe design should provoke curiosity.
+    Every object is an exploration of shape,
+    material and a different way of seeing the world.
+  </p>
 </section>
+
+<!-- ABOUT -->
+
+<section class="philosophy" id="about">
+  <div class="reveal">
+    <div class="section-label">A DIFFERENT POINT OF VIEW</div>
+    <h2>
+      Beyond the<br>
+      <span>ordinary.</span>
+    </h2>
+  </div>
+
+  <p class="philosophy-text reveal">
+    VYRA is an independent design brand exploring the
+    boundaries between fashion, form and function.
+
+    <br><br>
+
+    We approach everyday objects as opportunities
+    for expression. Unfamiliar silhouettes.
+    Unexpected materials. Distinctive identities.
+
+    <br><br>
+
+    Designed for those who see things differently.
+  </p>
+</section>
+
+<!-- CONTACT -->
+
+<section class="contact" id="contact">
+  <div class="reveal">
+    <div class="section-label">START A CONVERSATION</div>
+    <h2>ENTER THE<br><span>VYRA WORLD.</span></h2>
+  </div>
+
+  <a class="contact-link" href="mailto:hello@vyra.studio">
+    GET IN TOUCH ↗
+  </a>
+</section>
+
 </main>
 
-<footer id="contact">
-  <span>© VYRA 2026</span>
-  <span>OBJECTS BEYOND ORDINARY</span>
-  <span>GEORGIA</span>
+<footer>
+  <a href="#" class="footer-logo">VYRA</a>
+  <div class="footer-copy">© 2026 VYRA. ALL RIGHTS RESERVED.</div>
+  <div class="footer-location">INDEPENDENT DESIGN · GEORGIA</div>
 </footer>
+
+<script>
+const menuToggle = document.getElementById('menuToggle');
+const navigation = document.getElementById('navigation');
+
+menuToggle.addEventListener('click', () => {
+  navigation.classList.toggle('open');
+  menuToggle.textContent =
+    navigation.classList.contains('open') ? '×' : '☰';
+});
+
+navigation.querySelectorAll('a').forEach(link => {
+  link.addEventListener('click', () => {
+    navigation.classList.remove('open');
+    menuToggle.textContent = '☰';
+  });
+});
+
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+      observer.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.12 });
+
+document.querySelectorAll('.reveal').forEach(element => {
+  observer.observe(element);
+});
+</script>
+
 </body>
 </html>
