@@ -6,12 +6,12 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="theme-color" content="#08090B">
 
-<title>VYRA — Beyond Known Form</title>
-<meta name="description" content="VYRA. A new species of object. Beyond known form.">
+<title>VYRA — An Organism Beyond Form</title>
+<meta name="description" content="VYRA. A foreign organism. A new species of form.">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 
 <style>
 :root {
@@ -25,19 +25,19 @@
   --display: "Space Grotesk", sans-serif;
   --body: "Inter", sans-serif;
 
-  --gutter: clamp(22px, 5.2vw, 82px);
-  --max-width: 1440px;
+  --gutter: clamp(22px, 5vw, 76px);
+  --max: 1500px;
 }
 
 * {
+  box-sizing: border-box;
   margin: 0;
   padding: 0;
-  box-sizing: border-box;
 }
 
 html {
-  scroll-behavior: smooth;
   background: var(--black);
+  scroll-behavior: smooth;
   scrollbar-color: var(--steel) var(--black);
 }
 
@@ -47,6 +47,10 @@ body {
   font-family: var(--body);
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
+}
+
+body, button, a {
+  -webkit-tap-highlight-color: transparent;
 }
 
 ::selection {
@@ -71,9 +75,9 @@ img {
 }
 
 .container {
-  width: min(100%, var(--max-width));
-  margin-inline: auto;
+  width: min(100%, var(--max));
   padding-inline: var(--gutter);
+  margin-inline: auto;
 }
 
 .eyebrow {
@@ -88,13 +92,11 @@ img {
   color: var(--platinum);
 }
 
-/* --------------------------------
-   NAVIGATION
--------------------------------- */
+/* NAVIGATION */
 
 .header {
   position: absolute;
-  z-index: 50;
+  z-index: 20;
   inset: 0 0 auto;
   height: 76px;
   border-bottom: 1px solid rgba(174,180,190,.12);
@@ -117,119 +119,115 @@ img {
 
 .logo {
   font-family: var(--display);
-  font-size: 23px;
+  font-size: 25px;
   font-weight: 600;
-  letter-spacing: .19em;
+  letter-spacing: .2em;
 }
 
 .nav {
   display: flex;
   align-items: center;
-  gap: clamp(22px, 3.3vw, 48px);
+  gap: clamp(20px, 3vw, 44px);
 }
 
 .nav a,
-.header-action {
+.nav-entry {
   color: var(--platinum);
   font-size: 9px;
-  letter-spacing: .14em;
+  letter-spacing: .15em;
   text-transform: uppercase;
-  transition: color .25s ease;
+  transition: color .2s ease;
 }
 
-.nav a:hover,
-.header-action:hover {
+.nav a:hover {
   color: var(--ice);
 }
 
-.header-action {
+.nav-entry {
   color: var(--ice);
 }
 
 .menu-toggle {
   display: none;
-  padding: 8px 0;
-  border: 0;
   background: none;
   color: var(--white);
-  font-size: 9px;
+  border: 0;
+  font-size: 10px;
   letter-spacing: .15em;
   text-transform: uppercase;
   cursor: pointer;
 }
 
-/* --------------------------------
-   HERO
--------------------------------- */
+/* HERO */
 
 .hero {
+  min-height: 900px;
+  min-height: max(760px, 100svh);
   position: relative;
-  min-height: max(740px, 100svh);
   display: flex;
-  align-items: center;
+  align-items: flex-end;
   overflow: hidden;
   background: var(--black);
 }
 
-.hero-media {
+.hero-visual {
   position: absolute;
   inset: 0;
   background: var(--graphite);
 }
 
-.hero-media img {
-  opacity: .76;
-  object-position: center 48%;
+.hero-visual img {
+  object-position: center;
+  opacity: .78;
 }
 
-.hero-media::after {
+.hero-visual::after {
   content: "";
   position: absolute;
   inset: 0;
   background:
-    linear-gradient(90deg,
-      rgba(8,9,11,.88) 0%,
-      rgba(8,9,11,.56) 48%,
-      rgba(8,9,11,.12) 100%),
-    linear-gradient(0deg,
-      rgba(8,9,11,.62),
-      transparent 48%);
+    linear-gradient(90deg, rgba(8,9,11,.8), rgba(8,9,11,.12) 75%),
+    linear-gradient(0deg, rgba(8,9,11,.92), rgba(8,9,11,.05) 75%);
 }
 
 .hero-content {
   position: relative;
-  z-index: 1;
+  z-index: 2;
   width: 100%;
-  padding-top: 85px;
+  padding-top: 170px;
+  padding-bottom: clamp(55px, 9vh, 100px);
 }
 
 .hero-meta {
   display: flex;
+  justify-content: space-between;
   align-items: center;
-  gap: 16px;
-  margin-bottom: 34px;
+  gap: 20px;
+  margin-bottom: clamp(55px, 10vh, 110px);
 }
 
-.hero-meta span:first-child {
-  color: var(--ice);
+.hero-meta span {
   font-size: 9px;
   letter-spacing: .17em;
-}
-
-.hero-meta span:last-child {
-  color: var(--platinum);
-  font-size: 9px;
-  letter-spacing: .16em;
   text-transform: uppercase;
 }
 
+.hero-meta .left {
+  color: var(--ice);
+}
+
+.hero-meta .right {
+  color: rgba(244,245,247,.7);
+  text-align: right;
+}
+
 .hero h1 {
-  max-width: 1100px;
+  max-width: 1150px;
   font-family: var(--display);
-  font-size: clamp(64px, 10.4vw, 148px);
-  line-height: .88;
+  font-size: clamp(66px, 11.5vw, 164px);
   font-weight: 500;
-  letter-spacing: -.085em;
+  letter-spacing: -.095em;
+  line-height: .82;
   text-transform: uppercase;
 }
 
@@ -237,22 +235,23 @@ img {
   display: block;
 }
 
-.hero h1 .outline {
+.hero h1 .second {
   color: transparent;
-  -webkit-text-stroke: 1px rgba(244,245,247,.82);
+  -webkit-text-stroke: 1px var(--white);
+  margin-left: clamp(25px, 9vw, 130px);
 }
 
-.hero-footer {
+.hero-bottom {
   display: flex;
-  align-items: flex-end;
   justify-content: space-between;
-  gap: 30px;
-  margin-top: clamp(60px, 10vh, 105px);
+  align-items: end;
+  gap: 25px;
+  margin-top: clamp(60px, 10vh, 110px);
 }
 
 .hero-description {
-  max-width: 330px;
-  color: rgba(244,245,247,.76);
+  max-width: 350px;
+  color: rgba(244,245,247,.78);
   font-size: 11px;
   line-height: 1.95;
 }
@@ -260,396 +259,309 @@ img {
 .hero-coordinate {
   color: var(--ice);
   font-family: var(--display);
-  font-size: 9px;
-  letter-spacing: .15em;
-  line-height: 1.9;
-  text-align: right;
-}
-
-/* --------------------------------
-   TICKER
--------------------------------- */
-
-.ticker {
-  overflow: hidden;
-  padding: 19px 0;
-  border-top: 1px solid rgba(174,180,190,.13);
-  border-bottom: 1px solid rgba(174,180,190,.13);
-}
-
-.ticker-track {
-  display: flex;
-  width: max-content;
-  animation: tickerMove 36s linear infinite;
-}
-
-.ticker-group {
-  display: flex;
-  align-items: center;
-  gap: 48px;
-  padding-right: 48px;
-}
-
-.ticker span {
-  color: var(--platinum);
-  font-family: var(--display);
-  font-size: 9px;
-  letter-spacing: .22em;
-  white-space: nowrap;
-}
-
-.ticker .accent {
-  color: var(--ice);
-}
-
-@keyframes tickerMove {
-  to {
-    transform: translateX(-50%);
-  }
-}
-
-/* --------------------------------
-   MANIFESTO
--------------------------------- */
-
-.manifesto {
-  padding-block: clamp(130px, 17vw, 225px);
-}
-
-.manifesto-heading {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  gap: 30px;
-  margin-bottom: 48px;
-}
-
-.manifesto-note {
-  color: var(--platinum);
-  font-size: 9px;
-  line-height: 1.8;
-  letter-spacing: .13em;
-  text-align: right;
-  text-transform: uppercase;
-}
-
-.manifesto h2 {
-  max-width: 1120px;
-  font-family: var(--display);
-  font-size: clamp(36px, 6.2vw, 84px);
-  font-weight: 400;
-  line-height: 1.08;
-  letter-spacing: -.065em;
-  text-transform: uppercase;
-}
-
-.manifesto h2 span {
-  color: transparent;
-  -webkit-text-stroke: 1px var(--platinum);
-}
-
-.manifesto-bottom {
-  display: flex;
-  justify-content: flex-end;
-  margin-top: 42px;
-}
-
-.manifesto-bottom p {
-  max-width: 310px;
-  color: var(--platinum);
   font-size: 10px;
-  line-height: 1.95;
-}
-
-/* --------------------------------
-   CONCEPTS
--------------------------------- */
-
-.concepts {
-  padding-bottom: clamp(125px, 16vw, 205px);
-}
-
-.section-intro {
-  display: flex;
-  align-items: flex-end;
-  justify-content: space-between;
-  gap: 25px;
-  margin-bottom: 35px;
-}
-
-.section-intro h2 {
-  margin-top: 13px;
-  font-family: var(--display);
-  font-size: clamp(30px, 4.2vw, 52px);
-  font-weight: 400;
-  letter-spacing: -.065em;
-  text-transform: uppercase;
-}
-
-.section-intro > p {
-  color: var(--ice);
-  font-size: 9px;
-  letter-spacing: .15em;
-  text-transform: uppercase;
+  letter-spacing: .16em;
+  line-height: 1.8;
   text-align: right;
 }
 
-.concept-grid {
+/* INTRODUCTION */
+
+.intro {
+  padding-block: clamp(115px, 17vw, 225px);
+}
+
+.intro-layout {
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 17px;
+  grid-template-columns: .75fr 1.25fr;
+  gap: clamp(35px, 9vw, 140px);
 }
 
-.concept {
-  min-width: 0;
-}
-
-.concept-image {
-  position: relative;
-  overflow: hidden;
-  aspect-ratio: 4 / 5;
-  background: var(--graphite);
-}
-
-.concept-image img {
-  transition: transform .8s cubic-bezier(.2,.7,.2,1);
-}
-
-.concept:hover .concept-image img {
-  transform: scale(1.045);
-}
-
-.concept-index {
-  position: absolute;
-  z-index: 2;
-  top: 15px;
-  left: 15px;
-  color: var(--ice);
-  font-size: 8px;
-  letter-spacing: .16em;
-}
-
-.concept-title {
-  display: flex;
-  justify-content: space-between;
-  align-items: baseline;
-  gap: 8px;
-  padding-top: 17px;
-}
-
-.concept-title h3 {
-  font-family: var(--display);
-  font-size: clamp(15px, 1.5vw, 20px);
-  font-weight: 500;
-  letter-spacing: .01em;
-}
-
-.concept-title span {
-  color: var(--ice);
-  font-size: 9px;
-}
-
-.concept p {
-  max-width: 245px;
-  margin-top: 10px;
-  color: var(--platinum);
-  font-size: 9px;
-  line-height: 1.85;
-}
-
-/* --------------------------------
-   DOCTRINE
--------------------------------- */
-
-.doctrine {
-  padding-block: clamp(105px, 14vw, 180px);
-  background: #0B0D11;
-}
-
-.doctrine-layout {
-  display: grid;
-  grid-template-columns: .78fr 1.22fr;
-  gap: clamp(35px, 8vw, 110px);
-  align-items: start;
-}
-
-.doctrine-aside {
+.intro-label {
   display: flex;
   flex-direction: column;
-  gap: 28px;
+  justify-content: space-between;
+  gap: 30px;
 }
 
-.signal {
-  display: inline-flex;
-  align-items: center;
-  gap: 9px;
-  color: var(--ice);
-  font-size: 9px;
-  letter-spacing: .16em;
-  text-transform: uppercase;
-}
-
-.signal::before {
-  content: "";
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: var(--ice);
-  animation: signalPulse 2.6s ease-in-out infinite;
-}
-
-@keyframes signalPulse {
-  0%, 100% { opacity: .4; }
-  50% { opacity: 1; }
-}
-
-.doctrine-aside p {
-  max-width: 260px;
+.intro-label p {
+  max-width: 210px;
   color: var(--platinum);
   font-size: 10px;
-  line-height: 1.95;
+  line-height: 1.9;
 }
 
-.doctrine-main h2 {
+.intro-main h2 {
   font-family: var(--display);
-  font-size: clamp(42px, 6.3vw, 86px);
+  font-size: clamp(38px, 6.5vw, 88px);
   font-weight: 400;
-  line-height: .99;
   letter-spacing: -.075em;
+  line-height: .98;
   text-transform: uppercase;
 }
 
-.doctrine-main h2 span {
-  color: transparent;
-  -webkit-text-stroke: 1px var(--ice);
+.intro-main h2 span {
+  color: var(--ice);
 }
 
-.doctrine-main > p {
-  max-width: 430px;
-  margin: 32px 0 0 auto;
+.intro-main > p {
+  max-width: 420px;
+  margin: 35px 0 0 auto;
   color: var(--platinum);
-  font-size: 10px;
+  font-size: 11px;
   line-height: 2;
 }
 
-.process {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  margin-top: clamp(65px, 9vw, 115px);
+/* ORGANISM */
+
+.organism {
+  padding-bottom: clamp(120px, 16vw, 210px);
 }
 
-.process-item {
-  padding: 20px 18px 20px 0;
-}
-
-.process-item + .process-item {
-  padding-left: 22px;
-}
-
-.process-item span {
-  color: var(--ice);
-  font-size: 9px;
-  letter-spacing: .14em;
-}
-
-.process-item h3 {
-  margin-top: 20px;
-  font-family: var(--display);
-  font-size: clamp(15px, 1.8vw, 22px);
-  font-weight: 400;
-}
-
-/* --------------------------------
-   FEATURE
--------------------------------- */
-
-.feature {
-  padding-block: clamp(125px, 16vw, 215px);
-}
-
-.feature-heading {
+.organism-heading {
   display: flex;
-  align-items: flex-end;
   justify-content: space-between;
+  align-items: end;
   gap: 25px;
-  margin-bottom: 30px;
+  margin-bottom: 32px;
 }
 
-.feature-heading h2 {
+.organism-heading h2 {
   margin-top: 13px;
   font-family: var(--display);
-  font-size: clamp(43px, 7vw, 92px);
+  font-size: clamp(30px, 5vw, 62px);
   font-weight: 400;
-  line-height: .94;
-  letter-spacing: -.075em;
+  letter-spacing: -.07em;
+  text-transform: uppercase;
 }
 
-.feature-heading h2 span {
-  color: transparent;
-  -webkit-text-stroke: 1px var(--platinum);
-}
-
-.feature-heading p {
-  max-width: 220px;
+.organism-heading p {
   color: var(--platinum);
   font-size: 9px;
-  line-height: 1.9;
-  letter-spacing: .1em;
+  letter-spacing: .13em;
   text-align: right;
+  line-height: 1.8;
 }
 
-.feature-image {
-  height: clamp(380px, 63vw, 740px);
+.organism-image {
+  position: relative;
+  width: 100%;
+  height: clamp(420px, 68vw, 850px);
   overflow: hidden;
   background: var(--graphite);
 }
 
-.feature-image img {
-  transition: transform 1s ease;
+.organism-image img {
+  transition: transform 1.2s cubic-bezier(.2,.7,.2,1);
 }
 
-.feature-image:hover img {
+.organism-image:hover img {
   transform: scale(1.025);
 }
 
-.feature-caption {
+.organism-caption {
   display: flex;
   justify-content: space-between;
   gap: 20px;
   padding-top: 15px;
   color: var(--ice);
   font-size: 8px;
-  letter-spacing: .15em;
+  letter-spacing: .17em;
   text-transform: uppercase;
 }
 
-/* --------------------------------
-   FIELD INDEX
--------------------------------- */
+/* SPECIES */
 
-.field-index {
-  padding-block: clamp(110px, 14vw, 180px);
-  background: var(--black);
+.species {
+  padding-block: clamp(110px, 15vw, 190px);
+  background: #0c0e12;
 }
 
-.index-heading {
+.species-heading {
   display: flex;
-  align-items: flex-end;
   justify-content: space-between;
-  gap: 30px;
-  margin-bottom: clamp(45px, 6vw, 72px);
+  align-items: end;
+  gap: 25px;
+  margin-bottom: 55px;
 }
 
-.index-heading h2 {
+.species-heading h2 {
   margin-top: 14px;
   font-family: var(--display);
-  font-size: clamp(38px, 5.2vw, 70px);
+  font-size: clamp(38px, 6vw, 78px);
   font-weight: 400;
-  line-height: 1;
-  letter-spacing: -.07em;
+  letter-spacing: -.08em;
+  line-height: .95;
+  text-transform: uppercase;
 }
 
-.index-description {
+.species-heading p {
+  max-width: 220px;
+  color: var(--platinum);
+  font-size: 10px;
+  line-height: 1.9;
+  text-align: right;
+}
+
+.species-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 50px 22px;
+}
+
+.species-card {
+  min-width: 0;
+}
+
+.species-photo {
+  position: relative;
+  aspect-ratio: 1.18 / 1;
+  overflow: hidden;
+  background: var(--graphite);
+}
+
+.species-photo img {
+  transition: transform .9s ease;
+}
+
+.species-card:hover .species-photo img {
+  transform: scale(1.04);
+}
+
+.species-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 15px;
+  padding-top: 18px;
+}
+
+.species-info h3 {
+  font-family: var(--display);
+  font-size: clamp(19px, 2.4vw, 30px);
+  font-weight: 400;
+  letter-spacing: -.04em;
+  text-transform: uppercase;
+}
+
+.species-info span {
+  color: var(--ice);
+  font-size: 9px;
+  letter-spacing: .15em;
+}
+
+.species-description {
+  max-width: 330px;
+  margin-top: 10px;
+  color: var(--platinum);
+  font-size: 10px;
+  line-height: 1.9;
+}
+
+/* TRANSMISSION */
+
+.transmission {
+  padding-block: clamp(120px, 17vw, 220px);
+}
+
+.transmission-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(35px, 8vw, 120px);
+  align-items: center;
+}
+
+.transmission-image {
+  aspect-ratio: .82 / 1;
+  overflow: hidden;
+  background: var(--graphite);
+}
+
+.transmission-image img {
+  transition: transform 1s ease;
+}
+
+.transmission-image:hover img {
+  transform: scale(1.03);
+}
+
+.transmission-copy {
+  max-width: 600px;
+}
+
+.transmission-copy h2 {
+  margin-top: 25px;
+  font-family: var(--display);
+  font-size: clamp(42px, 6.6vw, 86px);
+  font-weight: 400;
+  letter-spacing: -.085em;
+  line-height: .92;
+  text-transform: uppercase;
+}
+
+.transmission-copy h2 span {
+  color: var(--ice);
+}
+
+.transmission-copy > p {
+  max-width: 390px;
+  margin-top: 35px;
+  color: var(--platinum);
+  font-size: 11px;
+  line-height: 2;
+}
+
+.transmission-stages {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+  margin-top: 55px;
+}
+
+.stage {
+  padding-top: 15px;
+  border-top: 1px solid rgba(174,180,190,.25);
+}
+
+.stage span {
+  color: var(--ice);
+  font-size: 8px;
+  letter-spacing: .13em;
+}
+
+.stage h3 {
+  margin-top: 13px;
+  font-family: var(--display);
+  font-size: 13px;
+  font-weight: 400;
+  text-transform: uppercase;
+}
+
+/* CLASSIFIED ARCHIVE */
+
+.archive {
+  padding-block: clamp(110px, 15vw, 185px);
+  background: #0c0e12;
+}
+
+.archive-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: end;
+  gap: 25px;
+  margin-bottom: 65px;
+}
+
+.archive-heading h2 {
+  margin-top: 15px;
+  font-family: var(--display);
+  font-size: clamp(38px, 6.2vw, 82px);
+  font-weight: 400;
+  letter-spacing: -.08em;
+  line-height: .95;
+}
+
+.archive-subtitle {
   color: var(--platinum);
   font-size: 9px;
   line-height: 1.9;
@@ -657,79 +569,139 @@ img {
   text-align: right;
 }
 
-.index-groups {
+.archive-groups {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: clamp(18px, 3vw, 44px);
+  gap: 14px;
 }
 
-.index-group {
-  min-width: 0;
-  padding-top: 8px;
+.archive-group {
+  min-height: 205px;
+  padding: 22px 18px;
+  background: #14171d;
+  transition: background .3s ease, transform .3s ease;
 }
 
-.index-group-label {
-  display: block;
-  margin-bottom: 23px;
+.archive-group:hover {
+  background: #1b2028;
+  transform: translateY(-4px);
+}
+
+.archive-group-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.archive-group-head span {
   color: var(--ice);
-  font-family: var(--display);
-  font-size: 9px;
-  letter-spacing: .16em;
+  font-size: 8px;
+  letter-spacing: .14em;
 }
 
-.index-entry {
+.archive-group-head small {
+  color: rgba(174,180,190,.55);
+  font-size: 8px;
+  letter-spacing: .1em;
+}
+
+.archive-word {
   display: flex;
   align-items: baseline;
-  gap: 12px;
-  padding: 10px 0;
-  transition: transform .3s ease;
+  gap: 11px;
+  padding: 7px 0;
 }
 
-.index-entry:hover {
-  transform: translateX(4px);
-}
-
-.index-entry span {
-  flex: 0 0 19px;
+.archive-word span {
   color: var(--ice);
   font-family: var(--display);
   font-size: 9px;
-  letter-spacing: .08em;
+  flex-shrink: 0;
 }
 
-.index-entry h3 {
-  color: var(--white);
+.archive-word h3 {
   font-family: var(--display);
-  font-size: clamp(13px, 1.25vw, 17px);
+  font-size: clamp(13px, 1.2vw, 17px);
   font-weight: 400;
   letter-spacing: .015em;
-  transition: color .25s ease;
+  text-transform: uppercase;
+  transition: color .2s ease;
 }
 
-.index-entry:hover h3 {
+.archive-group:hover .archive-word h3 {
+  color: var(--platinum);
+}
+
+/* FINAL IMAGE */
+
+.final-image-section {
+  padding-top: clamp(110px, 15vw, 190px);
+}
+
+.final-image {
+  position: relative;
+  height: clamp(380px, 65vw, 780px);
+  overflow: hidden;
+  background: var(--graphite);
+}
+
+.final-image img {
+  transition: transform 1.2s ease;
+}
+
+.final-image:hover img {
+  transform: scale(1.025);
+}
+
+.final-image::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(0deg, rgba(8,9,11,.75), transparent 60%);
+}
+
+.final-image-caption {
+  position: absolute;
+  z-index: 2;
+  left: clamp(22px, 5vw, 76px);
+  bottom: clamp(25px, 5vw, 65px);
+}
+
+.final-image-caption span {
   color: var(--ice);
+  font-size: 9px;
+  letter-spacing: .2em;
 }
 
-/* --------------------------------
-   CLOSING
--------------------------------- */
+.final-image-caption h2 {
+  margin-top: 14px;
+  font-family: var(--display);
+  font-size: clamp(45px, 9vw, 120px);
+  font-weight: 500;
+  letter-spacing: -.085em;
+  line-height: .9;
+  text-transform: uppercase;
+}
+
+/* CLOSING */
 
 .closing {
-  padding-block: clamp(140px, 19vw, 250px);
+  padding-block: clamp(125px, 18vw, 240px);
   text-align: center;
 }
 
 .closing .eyebrow {
   display: block;
-  margin-bottom: 32px;
+  margin-bottom: 30px;
 }
 
 .closing h2 {
   font-family: var(--display);
-  font-size: clamp(48px, 9.5vw, 130px);
+  font-size: clamp(50px, 10vw, 138px);
   font-weight: 500;
-  line-height: .9;
-  letter-spacing: -.085em;
+  letter-spacing: -.09em;
+  line-height: .86;
   text-transform: uppercase;
 }
 
@@ -741,40 +713,38 @@ img {
 
 .closing p {
   max-width: 340px;
-  margin: 38px auto 0;
+  margin: 35px auto 0;
   color: var(--platinum);
   font-size: 10px;
-  line-height: 1.95;
+  line-height: 1.9;
 }
 
-/* --------------------------------
-   FOOTER
--------------------------------- */
+/* FOOTER */
 
 .footer {
-  padding-block: 27px;
-  border-top: 1px solid rgba(174,180,190,.15);
+  border-top: 1px solid rgba(174,180,190,.14);
+  padding-block: 28px;
 }
 
 .footer-inner {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 25px;
+  gap: 20px;
 }
 
 .footer-logo {
   font-family: var(--display);
-  font-size: 19px;
+  font-size: 20px;
   font-weight: 600;
-  letter-spacing: .18em;
+  letter-spacing: .2em;
 }
 
 .footer-copy,
 .footer-link {
   color: var(--platinum);
   font-size: 8px;
-  letter-spacing: .13em;
+  letter-spacing: .14em;
   text-transform: uppercase;
 }
 
@@ -782,14 +752,12 @@ img {
   color: var(--ice);
 }
 
-/* --------------------------------
-   REVEAL
--------------------------------- */
+/* REVEAL */
 
 .reveal {
   opacity: 0;
-  transform: translateY(16px);
-  transition: opacity .7s ease, transform .7s ease;
+  transform: translateY(18px);
+  transition: opacity .75s ease, transform .75s ease;
 }
 
 .reveal.visible {
@@ -797,39 +765,29 @@ img {
   transform: translateY(0);
 }
 
-/* --------------------------------
-   RESPONSIVE
--------------------------------- */
+/* RESPONSIVE */
 
-@media (max-width: 950px) {
-  .concept-grid {
+@media (max-width: 1000px) {
+  .archive-groups {
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 34px 16px;
   }
 
-  .doctrine-layout {
-    grid-template-columns: 1fr;
-    gap: 38px;
+  .archive-group {
+    min-height: 185px;
   }
 
-  .doctrine-main > p {
-    margin-left: 0;
-  }
-
-  .index-groups {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    column-gap: 35px;
-    row-gap: 32px;
+  .transmission-layout {
+    gap: 35px;
   }
 }
 
-@media (max-width: 640px) {
+@media (max-width: 680px) {
   :root {
     --gutter: 21px;
   }
 
   .header {
-    height: 70px;
+    height: 68px;
   }
 
   .logo {
@@ -843,22 +801,22 @@ img {
   .nav {
     display: none;
     position: absolute;
-    top: 70px;
+    top: 68px;
     left: 0;
     right: 0;
-    padding: 25px var(--gutter) 28px;
-    background: rgba(8,9,11,.98);
+    padding: 25px var(--gutter);
+    background: rgba(8,9,11,.97);
     border-bottom: 1px solid rgba(174,180,190,.15);
     flex-direction: column;
     align-items: flex-start;
-    gap: 23px;
+    gap: 24px;
   }
 
   .nav.open {
     display: flex;
   }
 
-  .header-action {
+  .nav-entry {
     display: none;
   }
 
@@ -866,154 +824,154 @@ img {
     min-height: 100svh;
   }
 
-  .hero-media img {
-    object-position: 60% center;
+  .hero-visual img {
+    object-position: 58% center;
   }
 
-  .hero-media::after {
+  .hero-visual::after {
     background:
-      linear-gradient(90deg, rgba(8,9,11,.82), rgba(8,9,11,.25)),
-      linear-gradient(0deg, rgba(8,9,11,.82), transparent 72%);
+      linear-gradient(90deg, rgba(8,9,11,.68), rgba(8,9,11,.1)),
+      linear-gradient(0deg, rgba(8,9,11,.94), transparent 78%);
   }
 
   .hero-content {
-    padding-top: 80px;
+    padding-top: 130px;
+    padding-bottom: 45px;
+  }
+
+  .hero-meta {
+    margin-bottom: 65px;
+  }
+
+  .hero-meta .right {
+    max-width: 130px;
   }
 
   .hero h1 {
-    font-size: clamp(57px, 13.8vw, 86px);
+    font-size: clamp(58px, 13.5vw, 92px);
   }
 
-  .hero-footer {
+  .hero h1 .second {
+    margin-left: 20px;
+  }
+
+  .hero-bottom {
     align-items: flex-start;
     flex-direction: column;
-    margin-top: 60px;
+    margin-top: 65px;
   }
 
   .hero-coordinate {
     text-align: left;
   }
 
-  .manifesto-heading {
-    align-items: flex-start;
-  }
-
-  .manifesto-note {
-    max-width: 110px;
-  }
-
-  .manifesto h2 {
-    font-size: clamp(34px, 9vw, 58px);
-  }
-
-  .manifesto-bottom {
-    justify-content: flex-start;
-  }
-
-  .section-intro {
-    align-items: flex-start;
-    flex-direction: column;
-  }
-
-  .section-intro > p {
-    text-align: left;
-  }
-
-  .concept-grid {
-    gap: 30px 12px;
-  }
-
-  .concept-title {
-    display: block;
-  }
-
-  .concept-title h3 {
-    font-size: 16px;
-  }
-
-  .concept-title span {
-    display: block;
-    margin-top: 6px;
-  }
-
-  .concept p {
-    font-size: 9px;
-  }
-
-  .doctrine {
-    padding-block: 90px;
-  }
-
-  .doctrine-main h2 {
-    font-size: clamp(40px, 11vw, 65px);
-  }
-
-  .doctrine-main > p {
-    margin-top: 25px;
-  }
-
-  .process {
+  .intro-layout {
     grid-template-columns: 1fr;
-    margin-top: 55px;
+    gap: 40px;
   }
 
-  .process-item,
-  .process-item + .process-item {
-    padding: 17px 0;
+  .intro-label {
+    flex-direction: row;
+    align-items: start;
   }
 
-  .process-item h3 {
-    margin-top: 11px;
+  .intro-label p {
+    max-width: 145px;
   }
 
-  .feature-heading {
+  .intro-main h2 {
+    font-size: clamp(42px, 10vw, 65px);
+  }
+
+  .intro-main > p {
+    margin-left: 0;
+  }
+
+  .organism-heading,
+  .species-heading,
+  .archive-heading {
     align-items: flex-start;
     flex-direction: column;
   }
 
-  .feature-heading p {
+  .organism-heading p,
+  .species-heading p,
+  .archive-subtitle {
     text-align: left;
   }
 
-  .feature-image {
-    height: 470px;
+  .organism-image {
+    height: 480px;
   }
 
-  .index-heading {
-    align-items: flex-start;
-    flex-direction: column;
-    margin-bottom: 35px;
+  .species-grid {
+    grid-template-columns: 1fr;
+    gap: 40px;
   }
 
-  .index-description {
-    text-align: left;
+  .species-photo {
+    aspect-ratio: 1.08 / 1;
   }
 
-  .index-groups {
-    column-gap: 18px;
-    row-gap: 28px;
+  .transmission-layout {
+    grid-template-columns: 1fr;
+    gap: 38px;
   }
 
-  .index-group-label {
-    margin-bottom: 14px;
+  .transmission-image {
+    aspect-ratio: 1 / 1;
+    max-height: 520px;
   }
 
-  .index-entry {
-    gap: 7px;
-    padding: 9px 0;
+  .transmission-copy h2 {
+    font-size: clamp(48px, 12vw, 72px);
   }
 
-  .index-entry span {
-    flex-basis: 17px;
-    font-size: 8px;
+  .transmission-stages {
+    margin-top: 40px;
+    gap: 10px;
   }
 
-  .index-entry h3 {
+  .stage h3 {
+    font-size: 11px;
+  }
+
+  .archive-heading {
+    margin-bottom: 38px;
+  }
+
+  .archive-groups {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+  }
+
+  .archive-group {
+    min-height: 175px;
+    padding: 16px 13px;
+  }
+
+  .archive-group-head {
+    margin-bottom: 18px;
+  }
+
+  .archive-word {
+    gap: 8px;
+  }
+
+  .archive-word h3 {
     font-size: 12px;
   }
 
+  .final-image {
+    height: 490px;
+  }
+
+  .final-image-caption h2 {
+    font-size: clamp(43px, 11vw, 70px);
+  }
+
   .closing h2 {
-    font-size: clamp(48px, 13vw, 82px);
+    font-size: clamp(49px, 13vw, 82px);
   }
 
   .footer-inner {
@@ -1026,16 +984,16 @@ img {
   }
 }
 
-@media (max-width: 360px) {
+@media (max-width: 380px) {
   .hero h1 {
-    font-size: 52px;
+    font-size: 54px;
   }
 
-  .index-groups {
-    column-gap: 12px;
+  .archive-group {
+    padding-inline: 11px;
   }
 
-  .index-entry h3 {
+  .archive-word h3 {
     font-size: 11px;
   }
 }
@@ -1045,9 +1003,7 @@ img {
     scroll-behavior: auto;
   }
 
-  *,
-  *::before,
-  *::after {
+  *, *::before, *::after {
     animation-duration: .01ms !important;
     transition-duration: .01ms !important;
   }
@@ -1068,19 +1024,15 @@ img {
     <a class="logo" href="#home">VYRA</a>
 
     <nav class="nav" id="navigation">
-      <a href="#origin">Origin</a>
-      <a href="#concepts">Concepts</a>
-      <a href="#parasite">Parasite</a>
+      <a href="#organism">Organism</a>
+      <a href="#species">Species</a>
+      <a href="#transmission">Transmission</a>
       <a href="#archive">Archive</a>
     </nav>
 
-    <a class="header-action" href="#contact">Enter the unknown</a>
+    <span class="nav-entry">Foreign life / 001</span>
 
-    <button
-      class="menu-toggle"
-      id="menuToggle"
-      aria-expanded="false"
-      aria-controls="navigation">
+    <button class="menu-toggle" id="menuToggle" aria-expanded="false">
       Menu
     </button>
 
@@ -1093,34 +1045,179 @@ img {
 
   <section class="hero" id="home">
 
-    <div class="hero-media">
-      <img src="assets/hero.jpg" alt="VYRA — Beyond Known Form">
+    <div class="hero-visual">
+      <img src="assets/hero-organism.jpg" alt="VYRA — foreign organism">
     </div>
 
     <div class="container hero-content">
 
       <div class="hero-meta">
-        <span>VYRA / 001</span>
-        <span>An evolving design universe</span>
+        <span class="left">VYRA / ORGANISM 001</span>
+        <span class="right">A foreign presence<br>Beyond known biology</span>
       </div>
 
       <h1>
-        <span>BEYOND KNOWN</span>
-        <span class="outline">FORM.</span>
+        <span>A FOREIGN</span>
+        <span class="second">LIFEFORM.</span>
       </h1>
 
-      <div class="hero-footer">
-
+      <div class="hero-bottom">
         <p class="hero-description">
-          Not made to belong. Not designed to follow.
-          VYRA exists somewhere between the familiar
-          and the unknown.
+          It does not belong to the world.
+          It enters the world, adapts to it
+          and changes what it touches.
         </p>
 
         <div class="hero-coordinate">
-          FORM IS NOT FINAL<br>
-          EST. 2026
+          SPECIES UNKNOWN<br>
+          ORIGIN UNDISCLOSED
         </div>
+      </div>
+
+    </div>
+
+  </section>
+
+  <!-- INTRODUCTION -->
+
+  <section class="intro container reveal">
+
+    <div class="intro-layout">
+
+      <div class="intro-label">
+        <span class="eyebrow">01 / An introduction</span>
+        <p>
+          Not a product category.
+          Not a familiar object.
+          Not a known species.
+        </p>
+      </div>
+
+      <div class="intro-main">
+        <h2>
+          SOMETHING<br>
+          HAS ENTERED<br>
+          <span>THE SYSTEM.</span>
+        </h2>
+
+        <p>
+          VYRA is an evolving organism of form.
+          It takes shape through contact, mutation
+          and adaptation. It has no permanent body
+          and no obligation to remain what it was.
+        </p>
+      </div>
+
+    </div>
+
+  </section>
+
+  <!-- ORGANISM -->
+
+  <section class="organism container reveal" id="organism">
+
+    <div class="organism-heading">
+      <div>
+        <span class="eyebrow">02 / Primary organism</span>
+        <h2>THE FOREIGN BODY</h2>
+      </div>
+
+      <p>
+        OBSERVATION 001<br>
+        BIOLOGICAL STATUS / UNKNOWN
+      </p>
+    </div>
+
+    <div class="organism-image">
+      <img src="assets/organism-main.jpg" alt="VYRA primary organism" loading="lazy">
+    </div>
+
+    <div class="organism-caption">
+      <span>VYRA / PRIMARY FORM</span>
+      <span>Unclassified material</span>
+    </div>
+
+  </section>
+
+  <!-- SPECIES -->
+
+  <section class="species" id="species">
+
+    <div class="container">
+
+      <div class="species-heading reveal">
+        <div>
+          <span class="eyebrow">03 / Morphological states</span>
+          <h2>IT TAKES<br>MANY FORMS.</h2>
+        </div>
+
+        <p>
+          One organism.<br>
+          Multiple manifestations.
+        </p>
+      </div>
+
+      <div class="species-grid">
+
+        <article class="species-card reveal">
+          <div class="species-photo">
+            <img src="assets/specimen-01.jpg" alt="VYRA specimen — Origin" loading="lazy">
+          </div>
+
+          <div class="species-info">
+            <h3>ORIGIN</h3>
+            <span>FORM 001</span>
+          </div>
+
+          <p class="species-description">
+            The first trace of an unfamiliar existence.
+          </p>
+        </article>
+
+        <article class="species-card reveal">
+          <div class="species-photo">
+            <img src="assets/specimen-02.jpg" alt="VYRA specimen — Parasite" loading="lazy">
+          </div>
+
+          <div class="species-info">
+            <h3>PARASITE</h3>
+            <span>FORM 002</span>
+          </div>
+
+          <p class="species-description">
+            A foreign presence that survives through contact.
+          </p>
+        </article>
+
+        <article class="species-card reveal">
+          <div class="species-photo">
+            <img src="assets/specimen-03.jpg" alt="VYRA specimen — Liquid" loading="lazy">
+          </div>
+
+          <div class="species-info">
+            <h3>LIQUID</h3>
+            <span>FORM 003</span>
+          </div>
+
+          <p class="species-description">
+            An unstable body that refuses a final shape.
+          </p>
+        </article>
+
+        <article class="species-card reveal">
+          <div class="species-photo">
+            <img src="assets/specimen-04.jpg" alt="VYRA specimen — Mutant" loading="lazy">
+          </div>
+
+          <div class="species-info">
+            <h3>MUTANT</h3>
+            <span>FORM 004</span>
+          </div>
+
+          <p class="species-description">
+            A new structure produced by transformation.
+          </p>
+        </article>
 
       </div>
 
@@ -1130,341 +1227,168 @@ img {
 
   <!-- TRANSMISSION -->
 
-  <div class="ticker">
-    <div class="ticker-track">
+  <section class="transmission container" id="transmission">
 
-      <div class="ticker-group">
-        <span>NOT MADE TO BELONG</span>
-        <span class="accent">VYRA</span>
-        <span>IT DOESN'T FOLLOW. IT INFECTS.</span>
-        <span class="accent">BEYOND HUMAN FORM</span>
+    <div class="transmission-layout">
+
+      <div class="transmission-image reveal">
+        <img src="assets/transmission.jpg" alt="VYRA — transmission and mutation" loading="lazy">
       </div>
 
-      <div class="ticker-group" aria-hidden="true">
-        <span>NOT MADE TO BELONG</span>
-        <span class="accent">VYRA</span>
-        <span>IT DOESN'T FOLLOW. IT INFECTS.</span>
-        <span class="accent">BEYOND HUMAN FORM</span>
-      </div>
+      <div class="transmission-copy reveal">
 
-    </div>
-  </div>
+        <span class="eyebrow">04 / The transmission</span>
 
-  <!-- ORIGIN -->
-
-  <section class="manifesto container reveal" id="origin">
-
-    <div class="manifesto-heading">
-      <span class="eyebrow">01 / The beginning</span>
-
-      <span class="manifesto-note">
-        A different kind<br>
-        of existence
-      </span>
-    </div>
-
-    <h2>
-      WE ARE NOT HERE TO CREATE ANOTHER FORM.
-      <span>
-        WE ARE HERE TO QUESTION WHAT FORM CAN BECOME.
-      </span>
-    </h2>
-
-    <div class="manifesto-bottom">
-      <p>
-        VYRA challenges the boundaries between object,
-        organism and identity. A presence that cannot
-        be reduced to a single definition.
-      </p>
-    </div>
-
-  </section>
-
-  <!-- CONCEPTS -->
-
-  <section class="concepts container" id="concepts">
-
-    <div class="section-intro reveal">
-
-      <div>
-        <span class="eyebrow">02 / The collection of ideas</span>
-        <h2>Four states of VYRA</h2>
-      </div>
-
-      <p>One universe / Multiple forms</p>
-
-    </div>
-
-    <div class="concept-grid">
-
-      <article class="concept reveal">
-
-        <div class="concept-image">
-          <span class="concept-index">01 / ORIGIN</span>
-          <img src="assets/origin.jpg" alt="ORIGIN" loading="lazy">
-        </div>
-
-        <div class="concept-title">
-          <h3>ORIGIN</h3>
-          <span>01</span>
-        </div>
+        <h2>
+          IT ENTERS.<br>
+          IT CHANGES.<br>
+          <span>IT SPREADS.</span>
+        </h2>
 
         <p>
-          The point before definition. The beginning of another form.
+          VYRA does not need a fixed identity.
+          It attaches to existing structures,
+          learns their language and transforms
+          them into something else.
         </p>
 
-      </article>
+        <div class="transmission-stages">
 
-      <article class="concept reveal">
+          <div class="stage">
+            <span>01</span>
+            <h3>Attach</h3>
+          </div>
 
-        <div class="concept-image">
-          <span class="concept-index">02 / PARASITE</span>
-          <img src="assets/parasite.jpg" alt="PARASITE" loading="lazy">
-        </div>
+          <div class="stage">
+            <span>02</span>
+            <h3>Mutate</h3>
+          </div>
 
-        <div class="concept-title">
-          <h3>PARASITE</h3>
-          <span>02</span>
-        </div>
-
-        <p>
-          It attaches. It adapts. It becomes impossible to ignore.
-        </p>
-
-      </article>
-
-      <article class="concept reveal">
-
-        <div class="concept-image">
-          <span class="concept-index">03 / LIQUID</span>
-          <img src="assets/liquid.jpg" alt="LIQUID" loading="lazy">
-        </div>
-
-        <div class="concept-title">
-          <h3>LIQUID</h3>
-          <span>03</span>
-        </div>
-
-        <p>
-          A form without permanence. Always shifting, never settled.
-        </p>
-
-      </article>
-
-      <article class="concept reveal">
-
-        <div class="concept-image">
-          <span class="concept-index">04 / MUTANT</span>
-          <img src="assets/mutant.jpg" alt="MUTANT" loading="lazy">
-        </div>
-
-        <div class="concept-title">
-          <h3>MUTANT</h3>
-          <span>04</span>
-        </div>
-
-        <p>
-          Transformation beyond expectation. A new kind of presence.
-        </p>
-
-      </article>
-
-    </div>
-
-  </section>
-
-  <!-- INFECTION PROTOCOL -->
-
-  <section class="doctrine">
-
-    <div class="container">
-
-      <div class="doctrine-layout">
-
-        <aside class="doctrine-aside reveal">
-
-          <span class="eyebrow">03 / The infection protocol</span>
-
-          <span class="signal">Transmission active</span>
-
-          <p>
-            VYRA is not a form that asks for attention.
-            It is a presence that changes the space around it.
-          </p>
-
-        </aside>
-
-        <div class="doctrine-main reveal">
-
-          <h2>
-            IT ENTERS.<br>
-            IT ADAPTS.<br>
-            <span>IT BECOMES.</span>
-          </h2>
-
-          <p>
-            No borders. No fixed identity. No single host.
-            VYRA moves between forms, absorbs its surroundings
-            and leaves something unfamiliar behind.
-          </p>
+          <div class="stage">
+            <span>03</span>
+            <h3>Spread</h3>
+          </div>
 
         </div>
 
       </div>
 
-      <div class="process reveal">
-
-        <div class="process-item">
-          <span>01 / CONTACT</span>
-          <h3>It finds a surface.</h3>
-        </div>
-
-        <div class="process-item">
-          <span>02 / MERGE</span>
-          <h3>It becomes part of it.</h3>
-        </div>
-
-        <div class="process-item">
-          <span>03 / TAKEOVER</span>
-          <h3>The boundary disappears.</h3>
-        </div>
-
-      </div>
-
-    </div>
-
-  </section>
-
-  <!-- PARASITE -->
-
-  <section class="feature container reveal" id="parasite">
-
-    <div class="feature-heading">
-
-      <div>
-        <span class="eyebrow">Primary specimen</span>
-        <h2>THE <span>PARASITE.</span></h2>
-      </div>
-
-      <p>
-        IT DOESN'T FOLLOW.<br>
-        IT INFECTS.<br>
-        IT STAYS.
-      </p>
-
-    </div>
-
-    <div class="feature-image">
-      <img src="assets/parasite-feature.jpg" alt="VYRA — The Parasite" loading="lazy">
-    </div>
-
-    <div class="feature-caption">
-      <span>VYRA / SPECIMEN 002</span>
-      <span>Beyond human form</span>
     </div>
 
   </section>
 
   <!-- CLASSIFIED ARCHIVE -->
 
-  <section class="field-index" id="archive">
+  <section class="archive" id="archive">
 
     <div class="container">
 
-      <div class="index-heading reveal">
+      <div class="archive-heading reveal">
 
         <div>
-          <span class="eyebrow">04 / CLASSIFIED ARCHIVE</span>
+          <span class="eyebrow">05 / Classified archive</span>
           <h2>FIELD INDEX</h2>
         </div>
 
-        <p class="index-description">
+        <p class="archive-subtitle">
           12 observations<br>
           One evolving universe
         </p>
 
       </div>
 
-      <div class="index-groups">
+      <div class="archive-groups">
 
-        <div class="index-group reveal">
+        <div class="archive-group reveal">
 
-          <span class="index-group-label">01 — 03</span>
+          <div class="archive-group-head">
+            <span>GROUP 01</span>
+            <small>01—03</small>
+          </div>
 
-          <div class="index-entry">
+          <div class="archive-word">
             <span>01</span>
             <h3>ORIGIN</h3>
           </div>
 
-          <div class="index-entry">
+          <div class="archive-word">
             <span>02</span>
             <h3>PARASITE</h3>
           </div>
 
-          <div class="index-entry">
+          <div class="archive-word">
             <span>03</span>
             <h3>LIQUID</h3>
           </div>
 
         </div>
 
-        <div class="index-group reveal">
+        <div class="archive-group reveal">
 
-          <span class="index-group-label">04 — 06</span>
+          <div class="archive-group-head">
+            <span>GROUP 02</span>
+            <small>04—06</small>
+          </div>
 
-          <div class="index-entry">
+          <div class="archive-word">
             <span>04</span>
             <h3>MUTANT</h3>
           </div>
 
-          <div class="index-entry">
+          <div class="archive-word">
             <span>05</span>
             <h3>SPORE</h3>
           </div>
 
-          <div class="index-entry">
+          <div class="archive-word">
             <span>06</span>
             <h3>RELIC</h3>
           </div>
 
         </div>
 
-        <div class="index-group reveal">
+        <div class="archive-group reveal">
 
-          <span class="index-group-label">07 — 09</span>
+          <div class="archive-group-head">
+            <span>GROUP 03</span>
+            <small>07—09</small>
+          </div>
 
-          <div class="index-entry">
+          <div class="archive-word">
             <span>07</span>
             <h3>FERAL</h3>
           </div>
 
-          <div class="index-entry">
+          <div class="archive-word">
             <span>08</span>
             <h3>VESSEL</h3>
           </div>
 
-          <div class="index-entry">
+          <div class="archive-word">
             <span>09</span>
             <h3>ALTER</h3>
           </div>
 
         </div>
 
-        <div class="index-group reveal">
+        <div class="archive-group reveal">
 
-          <span class="index-group-label">10 — 12</span>
+          <div class="archive-group-head">
+            <span>GROUP 04</span>
+            <small>10—12</small>
+          </div>
 
-          <div class="index-entry">
+          <div class="archive-word">
             <span>10</span>
             <h3>ECHO</h3>
           </div>
 
-          <div class="index-entry">
+          <div class="archive-word">
             <span>11</span>
             <h3>SPECIMEN</h3>
           </div>
 
-          <div class="index-entry">
+          <div class="archive-word">
             <span>12</span>
             <h3>AFTERFORM</h3>
           </div>
@@ -1477,11 +1401,28 @@ img {
 
   </section>
 
+  <!-- FINAL SPECIMEN -->
+
+  <section class="final-image-section container reveal">
+
+    <div class="final-image">
+
+      <img src="assets/final-specimen.jpg" alt="VYRA — final specimen" loading="lazy">
+
+      <div class="final-image-caption">
+        <span>VYRA / SPECIMEN 012</span>
+        <h2>NOTHING<br>REMAINS<br>UNCHANGED.</h2>
+      </div>
+
+    </div>
+
+  </section>
+
   <!-- CLOSING -->
 
-  <section class="closing container reveal" id="contact">
+  <section class="closing container reveal">
 
-    <span class="eyebrow">VYRA / End of known form</span>
+    <span class="eyebrow">VYRA / Unknown origin</span>
 
     <h2>
       NOT MADE
@@ -1489,9 +1430,9 @@ img {
     </h2>
 
     <p>
-      A new species of object.
-      An evolving presence.
-      An unfamiliar world.
+      A foreign organism.
+      An evolving form.
+      A presence without boundaries.
     </p>
 
   </section>
@@ -1502,85 +1443,70 @@ img {
 
   <div class="container footer-inner">
 
-    <a href="#home" class="footer-logo">VYRA</a>
+    <a class="footer-logo" href="#home">VYRA</a>
 
     <span class="footer-copy">
       A new species of object. © 2026 VYRA
     </span>
 
-    <a class="footer-link" href="#contact">Contact</a>
+    <a class="footer-link" href="#home">Return to origin</a>
 
   </div>
 
 </footer>
 
 <script>
-/* MOBILE NAVIGATION */
+/* HEADER */
+
+const header = document.querySelector(".header");
+
+function updateHeader() {
+  header.classList.toggle("scrolled", window.scrollY > 35);
+}
+
+window.addEventListener("scroll", updateHeader, { passive: true });
+updateHeader();
+
+/* MOBILE MENU */
 
 const menuToggle = document.getElementById("menuToggle");
 const navigation = document.getElementById("navigation");
 
 menuToggle.addEventListener("click", () => {
-  const isOpen = navigation.classList.toggle("open");
+  const open = navigation.classList.toggle("open");
 
-  menuToggle.setAttribute("aria-expanded", String(isOpen));
-  menuToggle.textContent = isOpen ? "Close" : "Menu";
+  menuToggle.textContent = open ? "Close" : "Menu";
+  menuToggle.setAttribute("aria-expanded", String(open));
 });
 
 navigation.querySelectorAll("a").forEach(link => {
   link.addEventListener("click", () => {
     navigation.classList.remove("open");
-    menuToggle.setAttribute("aria-expanded", "false");
     menuToggle.textContent = "Menu";
+    menuToggle.setAttribute("aria-expanded", "false");
   });
 });
 
-/* STICKY HEADER */
-
-const header = document.querySelector(".header");
-
-function updateHeader() {
-  header.classList.toggle("scrolled", window.scrollY > 36);
-}
-
-window.addEventListener("scroll", updateHeader, {
-  passive: true
-});
-
-updateHeader();
-
 /* REVEAL */
 
-const revealElements = document.querySelectorAll(".reveal");
+const revealItems = document.querySelectorAll(".reveal");
 
 if ("IntersectionObserver" in window) {
-
-  const observer = new IntersectionObserver((entries, obs) => {
-
+  const revealObserver = new IntersectionObserver((entries, observer) => {
     entries.forEach(entry => {
-
       if (entry.isIntersecting) {
         entry.target.classList.add("visible");
-        obs.unobserve(entry.target);
+        observer.unobserve(entry.target);
       }
-
     });
-
   }, {
     threshold: 0.12,
     rootMargin: "0px 0px -30px 0px"
   });
 
-  revealElements.forEach(element => {
-    observer.observe(element);
-  });
-
+  revealItems.forEach(item => revealObserver.observe(item));
 } else {
-
-  revealElements.forEach(element => {
-    element.classList.add("visible");
-  });
-
+  revealItems.forEach(item => item.classList.add("visible"));
 }
 </script>
 
