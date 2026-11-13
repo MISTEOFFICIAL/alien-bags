@@ -1,1151 +1,1588 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#08090B">
-  <meta name="description" content="VYRA — Beyond known form. A new species of object.">
-  <title>VYRA — Beyond Known Form</title>
-
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
-
-  <style>
-    :root {
-      --black: #08090B;
-      --graphite: #202329;
-      --platinum: #AEB4BE;
-      --white: #F4F5F7;
-      --ice: #8496B5;
-      --steel: #343A42;
-
-      --display: "Space Grotesk", sans-serif;
-      --body: "Inter", sans-serif;
-
-      --page: 1440px;
-      --gutter: clamp(22px, 5.2vw, 82px);
-    }
-
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
-    html {
-      scroll-behavior: smooth;
-      background: var(--black);
-    }
-
-    body {
-      background: var(--black);
-      color: var(--white);
-      font-family: var(--body);
-      overflow-x: hidden;
-      -webkit-font-smoothing: antialiased;
-    }
-
-    a {
-      color: inherit;
-      text-decoration: none;
-    }
-
-    img {
-      display: block;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-
-    button {
-      font: inherit;
-    }
-
-    ::selection {
-      background: var(--ice);
-      color: var(--black);
-    }
-
-    .container {
-      width: min(100%, var(--page));
-      margin-inline: auto;
-      padding-inline: var(--gutter);
-    }
-
-    .eyebrow {
-      color: var(--ice);
-      font-size: 10px;
-      font-weight: 500;
-      letter-spacing: .22em;
-      text-transform: uppercase;
-    }
-
-    .muted {
-      color: var(--platinum);
-    }
-
-    /* HEADER */
-
-    .header {
-      position: absolute;
-      z-index: 20;
-      inset: 0 0 auto;
-      height: 82px;
-      border-bottom: 1px solid rgba(174,180,190,.13);
-    }
-
-    .header-inner {
-      height: 100%;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 30px;
-    }
-
-    .logo {
-      font-family: var(--display);
-      font-size: 25px;
-      font-weight: 600;
-      letter-spacing: .19em;
-      color: var(--white);
-    }
-
-    .nav {
-      display: flex;
-      align-items: center;
-      gap: clamp(22px, 3.4vw, 52px);
-    }
-
-    .nav a,
-    .header-meta {
-      color: var(--platinum);
-      font-size: 10px;
-      letter-spacing: .15em;
-      text-transform: uppercase;
-      transition: color .25s ease;
-    }
-
-    .nav a:hover,
-    .header-meta:hover {
-      color: var(--ice);
-    }
-
-    .header-meta {
-      color: var(--ice);
-    }
-
-    .menu-toggle {
-      display: none;
-      border: 0;
-      background: transparent;
-      color: var(--white);
-      font-size: 11px;
-      letter-spacing: .15em;
-      text-transform: uppercase;
-      cursor: pointer;
-    }
-
-    /* HERO */
-
-    .hero {
-      min-height: min(900px, 100svh);
-      min-height: max(720px, 100svh);
-      position: relative;
-      display: flex;
-      align-items: center;
-      overflow: hidden;
-      background: var(--black);
-    }
-
-    .hero-image {
-      position: absolute;
-      inset: 0;
-      background: var(--graphite);
-    }
-
-    .hero-image img {
-      opacity: .76;
-      object-position: center 48%;
-    }
-
-    .hero-image::after {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background:
-        linear-gradient(90deg, rgba(8,9,11,.88) 0%, rgba(8,9,11,.53) 46%, rgba(8,9,11,.15) 100%),
-        linear-gradient(0deg, rgba(8,9,11,.75) 0%, transparent 45%, rgba(8,9,11,.2) 100%);
-    }
-
-    .hero-content {
-      position: relative;
-      z-index: 2;
-      width: 100%;
-      padding-top: 100px;
-    }
-
-    .hero-kicker {
-      display: flex;
-      align-items: center;
-      gap: 14px;
-      margin-bottom: 30px;
-    }
-
-    .hero-kicker span:last-child {
-      color: var(--platinum);
-      font-size: 10px;
-      letter-spacing: .2em;
-      text-transform: uppercase;
-    }
-
-    .hero-kicker .index {
-      color: var(--ice);
-      font-size: 10px;
-      letter-spacing: .15em;
-    }
-
-    .hero h1 {
-      max-width: 1050px;
-      font-family: var(--display);
-      font-size: clamp(66px, 10.4vw, 150px);
-      line-height: .88;
-      font-weight: 500;
-      letter-spacing: -.085em;
-      text-transform: uppercase;
-    }
-
-    .hero h1 span {
-      display: block;
-    }
-
-    .hero h1 .outline {
-      color: transparent;
-      -webkit-text-stroke: 1px rgba(244,245,247,.8);
-    }
-
-    .hero-bottom {
-      margin-top: clamp(55px, 9vh, 100px);
-      display: flex;
-      justify-content: space-between;
-      align-items: end;
-      gap: 30px;
-    }
-
-    .hero-description {
-      max-width: 340px;
-      color: rgba(244,245,247,.76);
-      font-size: 12px;
-      line-height: 1.9;
-      letter-spacing: .015em;
-    }
-
-    .hero-coordinate {
-      color: var(--ice);
-      font-family: var(--display);
-      font-size: 11px;
-      letter-spacing: .16em;
-      text-align: right;
-    }
-
-    /* TICKER */
-
-    .ticker {
-      overflow: hidden;
-      border-top: 1px solid rgba(174,180,190,.2);
-      border-bottom: 1px solid rgba(174,180,190,.2);
-      background: var(--black);
-      padding: 19px 0;
-    }
-
-    .ticker-track {
-      display: flex;
-      width: max-content;
-      animation: ticker 34s linear infinite;
-    }
-
-    .ticker-group {
-      display: flex;
-      align-items: center;
-      flex-shrink: 0;
-      gap: 48px;
-      padding-right: 48px;
-    }
-
-    .ticker span {
-      font-family: var(--display);
-      font-size: 11px;
-      font-weight: 500;
-      letter-spacing: .25em;
-      color: var(--platinum);
-      white-space: nowrap;
-    }
-
-    .ticker .accent {
-      color: var(--ice);
-    }
-
-    @keyframes ticker {
-      to { transform: translateX(-50%); }
-    }
-
-    /* MANIFESTO */
-
-    .manifesto {
-      padding-block: clamp(115px, 16vw, 225px);
-    }
-
-    .manifesto-top {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 25px;
-      margin-bottom: 48px;
-    }
-
-    .manifesto-top .right-note {
-      color: var(--platinum);
-      font-size: 10px;
-      letter-spacing: .14em;
-      text-transform: uppercase;
-      text-align: right;
-    }
-
-    .manifesto h2 {
-      max-width: 1150px;
-      font-family: var(--display);
-      font-size: clamp(34px, 6.3vw, 86px);
-      font-weight: 400;
-      line-height: 1.08;
-      letter-spacing: -.065em;
-      text-transform: uppercase;
-    }
-
-    .manifesto h2 .outline {
-      color: transparent;
-      -webkit-text-stroke: 1px var(--platinum);
-    }
-
-    .manifesto-bottom {
-      display: flex;
-      justify-content: flex-end;
-      margin-top: 44px;
-    }
-
-    .manifesto-bottom p {
-      max-width: 300px;
-      color: var(--platinum);
-      font-size: 11px;
-      line-height: 1.9;
-    }
-
-    /* CONCEPT INDEX */
-
-    .concepts {
-      padding-bottom: clamp(110px, 15vw, 190px);
-    }
-
-    .section-heading {
-      display: flex;
-      align-items: end;
-      justify-content: space-between;
-      gap: 24px;
-      padding-bottom: 25px;
-      border-bottom: 1px solid rgba(174,180,190,.22);
-      margin-bottom: 34px;
-    }
-
-    .section-heading h2 {
-      font-family: var(--display);
-      font-size: clamp(28px, 4vw, 48px);
-      font-weight: 400;
-      letter-spacing: -.06em;
-      text-transform: uppercase;
-    }
-
-    .section-heading p {
-      color: var(--ice);
-      font-size: 10px;
-      letter-spacing: .17em;
-      text-transform: uppercase;
-    }
-
-    .concept-grid {
-      display: grid;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-      gap: 18px;
-    }
-
-    .concept {
-      min-width: 0;
-    }
-
-    .concept-image {
-      position: relative;
-      overflow: hidden;
-      aspect-ratio: 4 / 5;
-      background: var(--graphite);
-    }
-
-    .concept-image img {
-      transition: transform .8s cubic-bezier(.2,.7,.2,1), opacity .5s ease;
-    }
-
-    .concept:hover .concept-image img {
-      transform: scale(1.045);
-    }
-
-    .concept-image .image-number {
-      position: absolute;
-      z-index: 2;
-      top: 16px;
-      left: 16px;
-      color: var(--ice);
-      font-size: 9px;
-      letter-spacing: .17em;
-    }
-
-    .concept-info {
-      display: flex;
-      justify-content: space-between;
-      align-items: baseline;
-      gap: 10px;
-      padding-top: 17px;
-    }
-
-    .concept-info h3 {
-      font-family: var(--display);
-      font-size: clamp(15px, 1.5vw, 21px);
-      font-weight: 500;
-      letter-spacing: .015em;
-    }
-
-    .concept-info span {
-      color: var(--ice);
-      font-size: 9px;
-      letter-spacing: .12em;
-    }
-
-    .concept-description {
-      margin-top: 10px;
-      max-width: 250px;
-      color: var(--platinum);
-      font-size: 10px;
-      line-height: 1.8;
-    }
-
-    /* FEATURED PARASITE */
-
-    .featured {
-      padding-bottom: clamp(120px, 16vw, 220px);
-    }
-
-    .featured-top {
-      display: flex;
-      justify-content: space-between;
-      align-items: end;
-      gap: 25px;
-      margin-bottom: 30px;
-    }
-
-    .featured-top h2 {
-      font-family: var(--display);
-      font-size: clamp(42px, 7vw, 92px);
-      font-weight: 400;
-      letter-spacing: -.075em;
-      line-height: .95;
-    }
-
-    .featured-top h2 span {
-      color: transparent;
-      -webkit-text-stroke: 1px var(--platinum);
-    }
-
-    .featured-top p {
-      max-width: 230px;
-      color: var(--platinum);
-      font-size: 10px;
-      line-height: 1.9;
-      text-align: right;
-    }
-
-    .featured-image {
-      position: relative;
-      height: clamp(390px, 64vw, 760px);
-      overflow: hidden;
-      background: var(--graphite);
-    }
-
-    .featured-image img {
-      object-position: center;
-      transition: transform 1s ease;
-    }
-
-    .featured-image:hover img {
-      transform: scale(1.025);
-    }
-
-    .featured-caption {
-      display: flex;
-      justify-content: space-between;
-      gap: 20px;
-      padding-top: 16px;
-      color: var(--ice);
-      font-size: 9px;
-      letter-spacing: .16em;
-      text-transform: uppercase;
-    }
-
-    /* FIELD INDEX — 12 ENTRIES */
-
-    .field-index {
-      padding-block: clamp(100px, 14vw, 180px);
-      border-top: 1px solid rgba(174,180,190,.2);
-      border-bottom: 1px solid rgba(174,180,190,.2);
-    }
-
-    .index-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: end;
-      gap: 25px;
-      margin-bottom: 48px;
-    }
-
-    .index-header h2 {
-      font-family: var(--display);
-      font-size: clamp(34px, 5.5vw, 72px);
-      font-weight: 400;
-      letter-spacing: -.07em;
-      text-transform: uppercase;
-    }
-
-    .index-header p {
-      color: var(--ice);
-      font-size: 10px;
-      letter-spacing: .17em;
-      text-align: right;
-    }
-
-    .lexicon-grid {
-      display: grid;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-      column-gap: 28px;
-    }
-
-    .lexicon-item {
-      display: grid;
-      grid-template-columns: 30px 1fr;
-      align-items: center;
-      gap: 10px;
-      min-width: 0;
-      min-height: 76px;
-      border-top: 1px solid rgba(174,180,190,.16);
-      transition: border-color .25s ease;
-    }
-
-    .lexicon-item:hover {
-      border-color: var(--ice);
-    }
-
-    .lexicon-item span {
-      color: var(--ice);
-      font-family: var(--display);
-      font-size: 10px;
-      letter-spacing: .12em;
-    }
-
-    .lexicon-item h3 {
-      color: var(--white);
-      font-family: var(--display);
-      font-size: clamp(13px, 1.25vw, 18px);
-      font-weight: 400;
-      letter-spacing: .035em;
-      white-space: nowrap;
-      transition: color .25s ease;
-    }
-
-    .lexicon-item:hover h3 {
-      color: var(--ice);
-    }
-
-    /* CLOSING */
-
-    .closing {
-      padding-block: clamp(130px, 19vw, 250px);
-      text-align: center;
-    }
-
-    .closing .eyebrow {
-      margin-bottom: 32px;
-    }
-
-    .closing h2 {
-      font-family: var(--display);
-      font-size: clamp(45px, 9.5vw, 132px);
-      font-weight: 500;
-      line-height: .9;
-      letter-spacing: -.085em;
-      text-transform: uppercase;
-    }
-
-    .closing h2 span {
-      display: block;
-      color: transparent;
-      -webkit-text-stroke: 1px var(--platinum);
-    }
-
-    .closing p {
-      max-width: 340px;
-      margin: 38px auto 0;
-      color: var(--platinum);
-      font-size: 11px;
-      line-height: 1.9;
-    }
-
-    /* FOOTER */
-
-    .footer {
-      border-top: 1px solid rgba(174,180,190,.2);
-      padding-block: 28px;
-    }
-
-    .footer-inner {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 25px;
-    }
-
-    .footer-logo {
-      font-family: var(--display);
-      font-size: 19px;
-      font-weight: 600;
-      letter-spacing: .18em;
-    }
-
-    .footer-note,
-    .footer-link {
-      color: var(--platinum);
-      font-size: 9px;
-      letter-spacing: .14em;
-      text-transform: uppercase;
-    }
-
-    .footer-link:hover {
-      color: var(--ice);
-    }
-
-    /* REVEAL */
-
-    .reveal {
-      opacity: 0;
-      transform: translateY(24px);
-      transition: opacity .85s ease, transform .85s cubic-bezier(.2,.7,.2,1);
-    }
-
-    .reveal.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-      html { scroll-behavior: auto; }
-      *, *::before, *::after {
-        animation-duration: .01ms !important;
-        transition-duration: .01ms !important;
-      }
-      .reveal {
-        opacity: 1;
-        transform: none;
-      }
-    }
-
-    /* RESPONSIVE */
-
-    @media (max-width: 900px) {
-      .lexicon-grid {
-        grid-template-columns: repeat(3, minmax(0, 1fr));
-        column-gap: 20px;
-      }
-
-      .concept-grid {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-        gap: 34px 16px;
-      }
-
-      .concept-info h3 {
-        font-size: 19px;
-      }
-
-      .hero h1 {
-        font-size: clamp(62px, 12vw, 112px);
-      }
-    }
-
-    @media (max-width: 640px) {
-      :root {
-        --gutter: 21px;
-      }
-
-      .header {
-        height: 70px;
-      }
-
-      .logo {
-        font-size: 22px;
-      }
-
-      .menu-toggle {
-        display: block;
-      }
-
-      .nav {
-        display: none;
-        position: absolute;
-        top: 70px;
-        left: 0;
-        right: 0;
-        padding: 24px var(--gutter) 28px;
-        background: var(--black);
-        border-bottom: 1px solid rgba(174,180,190,.2);
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 23px;
-      }
-
-      .nav.open {
-        display: flex;
-      }
-
-      .header-meta {
-        display: none;
-      }
-
-      .hero {
-        min-height: 760px;
-        min-height: 100svh;
-      }
-
-      .hero-image img {
-        object-position: 60% center;
-      }
-
-      .hero-image::after {
-        background:
-          linear-gradient(90deg, rgba(8,9,11,.78), rgba(8,9,11,.2)),
-          linear-gradient(0deg, rgba(8,9,11,.85), transparent 70%);
-      }
-
-      .hero-content {
-        padding-top: 85px;
-      }
-
-      .hero h1 {
-        font-size: clamp(58px, 14vw, 88px);
-        letter-spacing: -.085em;
-      }
-
-      .hero-bottom {
-        align-items: flex-start;
-        flex-direction: column;
-        margin-top: 65px;
-      }
-
-      .hero-coordinate {
-        text-align: left;
-      }
-
-      .manifesto-top {
-        align-items: flex-start;
-      }
-
-      .manifesto-top .right-note {
-        max-width: 110px;
-        line-height: 1.7;
-      }
-
-      .manifesto h2 {
-        font-size: clamp(34px, 9vw, 58px);
-      }
-
-      .manifesto-bottom {
-        justify-content: flex-start;
-      }
-
-      .section-heading {
-        align-items: flex-start;
-        flex-direction: column;
-      }
-
-      .concept-grid {
-        gap: 30px 12px;
-      }
-
-      .concept-info {
-        display: block;
-      }
-
-      .concept-info span {
-        display: block;
-        margin-top: 6px;
-      }
-
-      .concept-description {
-        font-size: 9px;
-      }
-
-      .featured-top {
-        align-items: flex-start;
-        flex-direction: column;
-      }
-
-      .featured-top p {
-        text-align: left;
-      }
-
-      .featured-image {
-        height: 470px;
-      }
-
-      .index-header {
-        align-items: flex-start;
-        flex-direction: column;
-      }
-
-      .index-header p {
-        text-align: left;
-      }
-
-      .lexicon-grid {
-        grid-template-columns: repeat(3, minmax(0, 1fr));
-        column-gap: 12px;
-      }
-
-      .lexicon-item {
-        grid-template-columns: 22px 1fr;
-        gap: 5px;
-        min-height: 62px;
-      }
-
-      .lexicon-item h3 {
-        font-size: 12px;
-        letter-spacing: 0;
-      }
-
-      .closing h2 {
-        font-size: clamp(48px, 13vw, 82px);
-      }
-
-      .footer-inner {
-        flex-wrap: wrap;
-      }
-
-      .footer-note {
-        order: 3;
-        width: 100%;
-      }
-    }
-
-    @media (max-width: 380px) {
-      .hero h1 {
-        font-size: 54px;
-      }
-
-      .concept-info h3 {
-        font-size: 15px;
-      }
-
-      .concept-description {
-        font-size: 8px;
-      }
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#08090B">
+
+<title>VYRA — Beyond Known Form</title>
+<meta name="description" content="VYRA. A new species of object. Beyond known form.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --black: #08090B;
+  --graphite: #202329;
+  --platinum: #AEB4BE;
+  --white: #F4F5F7;
+  --ice: #8496B5;
+  --steel: #343A42;
+
+  --display: "Space Grotesk", sans-serif;
+  --body: "Inter", sans-serif;
+
+  --gutter: clamp(22px, 5.2vw, 82px);
+  --max-width: 1440px;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  background: var(--black);
+  scrollbar-color: var(--steel) var(--black);
+}
+
+body {
+  background: var(--black);
+  color: var(--white);
+  font-family: var(--body);
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection {
+  background: var(--ice);
+  color: var(--black);
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  font: inherit;
+}
+
+img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.container {
+  width: min(100%, var(--max-width));
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+.eyebrow {
+  color: var(--ice);
+  font-size: 9px;
+  font-weight: 500;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+}
+
+.muted {
+  color: var(--platinum);
+}
+
+/* --------------------------------
+   NAVIGATION
+-------------------------------- */
+
+.header {
+  position: absolute;
+  z-index: 50;
+  inset: 0 0 auto;
+  height: 76px;
+  border-bottom: 1px solid rgba(174,180,190,.12);
+  transition: background .3s ease, backdrop-filter .3s ease;
+}
+
+.header.scrolled {
+  position: fixed;
+  background: rgba(8,9,11,.88);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+}
+
+.header-inner {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.logo {
+  font-family: var(--display);
+  font-size: 23px;
+  font-weight: 600;
+  letter-spacing: .19em;
+}
+
+.nav {
+  display: flex;
+  align-items: center;
+  gap: clamp(22px, 3.3vw, 48px);
+}
+
+.nav a,
+.header-action {
+  color: var(--platinum);
+  font-size: 9px;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  transition: color .25s ease;
+}
+
+.nav a:hover,
+.header-action:hover {
+  color: var(--ice);
+}
+
+.header-action {
+  color: var(--ice);
+}
+
+.menu-toggle {
+  display: none;
+  padding: 8px 0;
+  border: 0;
+  background: none;
+  color: var(--white);
+  font-size: 9px;
+  letter-spacing: .15em;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+/* --------------------------------
+   HERO
+-------------------------------- */
+
+.hero {
+  position: relative;
+  min-height: max(740px, 100svh);
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  background: var(--black);
+}
+
+.hero-media {
+  position: absolute;
+  inset: 0;
+  background: var(--graphite);
+}
+
+.hero-media img {
+  opacity: .76;
+  object-position: center 48%;
+}
+
+.hero-media::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(90deg,
+      rgba(8,9,11,.88) 0%,
+      rgba(8,9,11,.56) 48%,
+      rgba(8,9,11,.12) 100%),
+    linear-gradient(0deg,
+      rgba(8,9,11,.62),
+      transparent 48%);
+}
+
+.hero-content {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  padding-top: 85px;
+}
+
+.hero-meta {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 34px;
+}
+
+.hero-meta span:first-child {
+  color: var(--ice);
+  font-size: 9px;
+  letter-spacing: .17em;
+}
+
+.hero-meta span:last-child {
+  color: var(--platinum);
+  font-size: 9px;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+}
+
+.hero h1 {
+  max-width: 1100px;
+  font-family: var(--display);
+  font-size: clamp(64px, 10.4vw, 148px);
+  line-height: .88;
+  font-weight: 500;
+  letter-spacing: -.085em;
+  text-transform: uppercase;
+}
+
+.hero h1 span {
+  display: block;
+}
+
+.hero h1 .outline {
+  color: transparent;
+  -webkit-text-stroke: 1px rgba(244,245,247,.82);
+}
+
+.hero-footer {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 30px;
+  margin-top: clamp(60px, 10vh, 105px);
+}
+
+.hero-description {
+  max-width: 330px;
+  color: rgba(244,245,247,.76);
+  font-size: 11px;
+  line-height: 1.95;
+}
+
+.hero-coordinate {
+  color: var(--ice);
+  font-family: var(--display);
+  font-size: 9px;
+  letter-spacing: .15em;
+  line-height: 1.9;
+  text-align: right;
+}
+
+/* --------------------------------
+   TICKER
+-------------------------------- */
+
+.ticker {
+  overflow: hidden;
+  padding: 19px 0;
+  border-top: 1px solid rgba(174,180,190,.13);
+  border-bottom: 1px solid rgba(174,180,190,.13);
+}
+
+.ticker-track {
+  display: flex;
+  width: max-content;
+  animation: tickerMove 36s linear infinite;
+}
+
+.ticker-group {
+  display: flex;
+  align-items: center;
+  gap: 48px;
+  padding-right: 48px;
+}
+
+.ticker span {
+  color: var(--platinum);
+  font-family: var(--display);
+  font-size: 9px;
+  letter-spacing: .22em;
+  white-space: nowrap;
+}
+
+.ticker .accent {
+  color: var(--ice);
+}
+
+@keyframes tickerMove {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+/* --------------------------------
+   MANIFESTO
+-------------------------------- */
+
+.manifesto {
+  padding-block: clamp(130px, 17vw, 225px);
+}
+
+.manifesto-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 30px;
+  margin-bottom: 48px;
+}
+
+.manifesto-note {
+  color: var(--platinum);
+  font-size: 9px;
+  line-height: 1.8;
+  letter-spacing: .13em;
+  text-align: right;
+  text-transform: uppercase;
+}
+
+.manifesto h2 {
+  max-width: 1120px;
+  font-family: var(--display);
+  font-size: clamp(36px, 6.2vw, 84px);
+  font-weight: 400;
+  line-height: 1.08;
+  letter-spacing: -.065em;
+  text-transform: uppercase;
+}
+
+.manifesto h2 span {
+  color: transparent;
+  -webkit-text-stroke: 1px var(--platinum);
+}
+
+.manifesto-bottom {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 42px;
+}
+
+.manifesto-bottom p {
+  max-width: 310px;
+  color: var(--platinum);
+  font-size: 10px;
+  line-height: 1.95;
+}
+
+/* --------------------------------
+   CONCEPTS
+-------------------------------- */
+
+.concepts {
+  padding-bottom: clamp(125px, 16vw, 205px);
+}
+
+.section-intro {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 25px;
+  margin-bottom: 35px;
+}
+
+.section-intro h2 {
+  margin-top: 13px;
+  font-family: var(--display);
+  font-size: clamp(30px, 4.2vw, 52px);
+  font-weight: 400;
+  letter-spacing: -.065em;
+  text-transform: uppercase;
+}
+
+.section-intro > p {
+  color: var(--ice);
+  font-size: 9px;
+  letter-spacing: .15em;
+  text-transform: uppercase;
+  text-align: right;
+}
+
+.concept-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 17px;
+}
+
+.concept {
+  min-width: 0;
+}
+
+.concept-image {
+  position: relative;
+  overflow: hidden;
+  aspect-ratio: 4 / 5;
+  background: var(--graphite);
+}
+
+.concept-image img {
+  transition: transform .8s cubic-bezier(.2,.7,.2,1);
+}
+
+.concept:hover .concept-image img {
+  transform: scale(1.045);
+}
+
+.concept-index {
+  position: absolute;
+  z-index: 2;
+  top: 15px;
+  left: 15px;
+  color: var(--ice);
+  font-size: 8px;
+  letter-spacing: .16em;
+}
+
+.concept-title {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 8px;
+  padding-top: 17px;
+}
+
+.concept-title h3 {
+  font-family: var(--display);
+  font-size: clamp(15px, 1.5vw, 20px);
+  font-weight: 500;
+  letter-spacing: .01em;
+}
+
+.concept-title span {
+  color: var(--ice);
+  font-size: 9px;
+}
+
+.concept p {
+  max-width: 245px;
+  margin-top: 10px;
+  color: var(--platinum);
+  font-size: 9px;
+  line-height: 1.85;
+}
+
+/* --------------------------------
+   DOCTRINE
+-------------------------------- */
+
+.doctrine {
+  padding-block: clamp(105px, 14vw, 180px);
+  background: #0B0D11;
+}
+
+.doctrine-layout {
+  display: grid;
+  grid-template-columns: .78fr 1.22fr;
+  gap: clamp(35px, 8vw, 110px);
+  align-items: start;
+}
+
+.doctrine-aside {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+
+.signal {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  color: var(--ice);
+  font-size: 9px;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+}
+
+.signal::before {
+  content: "";
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--ice);
+  animation: signalPulse 2.6s ease-in-out infinite;
+}
+
+@keyframes signalPulse {
+  0%, 100% { opacity: .4; }
+  50% { opacity: 1; }
+}
+
+.doctrine-aside p {
+  max-width: 260px;
+  color: var(--platinum);
+  font-size: 10px;
+  line-height: 1.95;
+}
+
+.doctrine-main h2 {
+  font-family: var(--display);
+  font-size: clamp(42px, 6.3vw, 86px);
+  font-weight: 400;
+  line-height: .99;
+  letter-spacing: -.075em;
+  text-transform: uppercase;
+}
+
+.doctrine-main h2 span {
+  color: transparent;
+  -webkit-text-stroke: 1px var(--ice);
+}
+
+.doctrine-main > p {
+  max-width: 430px;
+  margin: 32px 0 0 auto;
+  color: var(--platinum);
+  font-size: 10px;
+  line-height: 2;
+}
+
+.process {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  margin-top: clamp(65px, 9vw, 115px);
+}
+
+.process-item {
+  padding: 20px 18px 20px 0;
+}
+
+.process-item + .process-item {
+  padding-left: 22px;
+}
+
+.process-item span {
+  color: var(--ice);
+  font-size: 9px;
+  letter-spacing: .14em;
+}
+
+.process-item h3 {
+  margin-top: 20px;
+  font-family: var(--display);
+  font-size: clamp(15px, 1.8vw, 22px);
+  font-weight: 400;
+}
+
+/* --------------------------------
+   FEATURE
+-------------------------------- */
+
+.feature {
+  padding-block: clamp(125px, 16vw, 215px);
+}
+
+.feature-heading {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 25px;
+  margin-bottom: 30px;
+}
+
+.feature-heading h2 {
+  margin-top: 13px;
+  font-family: var(--display);
+  font-size: clamp(43px, 7vw, 92px);
+  font-weight: 400;
+  line-height: .94;
+  letter-spacing: -.075em;
+}
+
+.feature-heading h2 span {
+  color: transparent;
+  -webkit-text-stroke: 1px var(--platinum);
+}
+
+.feature-heading p {
+  max-width: 220px;
+  color: var(--platinum);
+  font-size: 9px;
+  line-height: 1.9;
+  letter-spacing: .1em;
+  text-align: right;
+}
+
+.feature-image {
+  height: clamp(380px, 63vw, 740px);
+  overflow: hidden;
+  background: var(--graphite);
+}
+
+.feature-image img {
+  transition: transform 1s ease;
+}
+
+.feature-image:hover img {
+  transform: scale(1.025);
+}
+
+.feature-caption {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  padding-top: 15px;
+  color: var(--ice);
+  font-size: 8px;
+  letter-spacing: .15em;
+  text-transform: uppercase;
+}
+
+/* --------------------------------
+   FIELD INDEX
+-------------------------------- */
+
+.field-index {
+  padding-block: clamp(110px, 14vw, 180px);
+  background: var(--black);
+}
+
+.index-heading {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 30px;
+  margin-bottom: clamp(45px, 6vw, 72px);
+}
+
+.index-heading h2 {
+  margin-top: 14px;
+  font-family: var(--display);
+  font-size: clamp(38px, 5.2vw, 70px);
+  font-weight: 400;
+  line-height: 1;
+  letter-spacing: -.07em;
+}
+
+.index-description {
+  color: var(--platinum);
+  font-size: 9px;
+  line-height: 1.9;
+  letter-spacing: .12em;
+  text-align: right;
+}
+
+.index-groups {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: clamp(18px, 3vw, 44px);
+}
+
+.index-group {
+  min-width: 0;
+  padding-top: 8px;
+}
+
+.index-group-label {
+  display: block;
+  margin-bottom: 23px;
+  color: var(--ice);
+  font-family: var(--display);
+  font-size: 9px;
+  letter-spacing: .16em;
+}
+
+.index-entry {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  padding: 10px 0;
+  transition: transform .3s ease;
+}
+
+.index-entry:hover {
+  transform: translateX(4px);
+}
+
+.index-entry span {
+  flex: 0 0 19px;
+  color: var(--ice);
+  font-family: var(--display);
+  font-size: 9px;
+  letter-spacing: .08em;
+}
+
+.index-entry h3 {
+  color: var(--white);
+  font-family: var(--display);
+  font-size: clamp(13px, 1.25vw, 17px);
+  font-weight: 400;
+  letter-spacing: .015em;
+  transition: color .25s ease;
+}
+
+.index-entry:hover h3 {
+  color: var(--ice);
+}
+
+/* --------------------------------
+   CLOSING
+-------------------------------- */
+
+.closing {
+  padding-block: clamp(140px, 19vw, 250px);
+  text-align: center;
+}
+
+.closing .eyebrow {
+  display: block;
+  margin-bottom: 32px;
+}
+
+.closing h2 {
+  font-family: var(--display);
+  font-size: clamp(48px, 9.5vw, 130px);
+  font-weight: 500;
+  line-height: .9;
+  letter-spacing: -.085em;
+  text-transform: uppercase;
+}
+
+.closing h2 span {
+  display: block;
+  color: transparent;
+  -webkit-text-stroke: 1px var(--platinum);
+}
+
+.closing p {
+  max-width: 340px;
+  margin: 38px auto 0;
+  color: var(--platinum);
+  font-size: 10px;
+  line-height: 1.95;
+}
+
+/* --------------------------------
+   FOOTER
+-------------------------------- */
+
+.footer {
+  padding-block: 27px;
+  border-top: 1px solid rgba(174,180,190,.15);
+}
+
+.footer-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 25px;
+}
+
+.footer-logo {
+  font-family: var(--display);
+  font-size: 19px;
+  font-weight: 600;
+  letter-spacing: .18em;
+}
+
+.footer-copy,
+.footer-link {
+  color: var(--platinum);
+  font-size: 8px;
+  letter-spacing: .13em;
+  text-transform: uppercase;
+}
+
+.footer-link:hover {
+  color: var(--ice);
+}
+
+/* --------------------------------
+   REVEAL
+-------------------------------- */
+
+.reveal {
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity .7s ease, transform .7s ease;
+}
+
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* --------------------------------
+   RESPONSIVE
+-------------------------------- */
+
+@media (max-width: 950px) {
+  .concept-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 34px 16px;
+  }
+
+  .doctrine-layout {
+    grid-template-columns: 1fr;
+    gap: 38px;
+  }
+
+  .doctrine-main > p {
+    margin-left: 0;
+  }
+
+  .index-groups {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: 35px;
+    row-gap: 32px;
+  }
+}
+
+@media (max-width: 640px) {
+  :root {
+    --gutter: 21px;
+  }
+
+  .header {
+    height: 70px;
+  }
+
+  .logo {
+    font-size: 22px;
+  }
+
+  .menu-toggle {
+    display: block;
+  }
+
+  .nav {
+    display: none;
+    position: absolute;
+    top: 70px;
+    left: 0;
+    right: 0;
+    padding: 25px var(--gutter) 28px;
+    background: rgba(8,9,11,.98);
+    border-bottom: 1px solid rgba(174,180,190,.15);
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 23px;
+  }
+
+  .nav.open {
+    display: flex;
+  }
+
+  .header-action {
+    display: none;
+  }
+
+  .hero {
+    min-height: 100svh;
+  }
+
+  .hero-media img {
+    object-position: 60% center;
+  }
+
+  .hero-media::after {
+    background:
+      linear-gradient(90deg, rgba(8,9,11,.82), rgba(8,9,11,.25)),
+      linear-gradient(0deg, rgba(8,9,11,.82), transparent 72%);
+  }
+
+  .hero-content {
+    padding-top: 80px;
+  }
+
+  .hero h1 {
+    font-size: clamp(57px, 13.8vw, 86px);
+  }
+
+  .hero-footer {
+    align-items: flex-start;
+    flex-direction: column;
+    margin-top: 60px;
+  }
+
+  .hero-coordinate {
+    text-align: left;
+  }
+
+  .manifesto-heading {
+    align-items: flex-start;
+  }
+
+  .manifesto-note {
+    max-width: 110px;
+  }
+
+  .manifesto h2 {
+    font-size: clamp(34px, 9vw, 58px);
+  }
+
+  .manifesto-bottom {
+    justify-content: flex-start;
+  }
+
+  .section-intro {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .section-intro > p {
+    text-align: left;
+  }
+
+  .concept-grid {
+    gap: 30px 12px;
+  }
+
+  .concept-title {
+    display: block;
+  }
+
+  .concept-title h3 {
+    font-size: 16px;
+  }
+
+  .concept-title span {
+    display: block;
+    margin-top: 6px;
+  }
+
+  .concept p {
+    font-size: 9px;
+  }
+
+  .doctrine {
+    padding-block: 90px;
+  }
+
+  .doctrine-main h2 {
+    font-size: clamp(40px, 11vw, 65px);
+  }
+
+  .doctrine-main > p {
+    margin-top: 25px;
+  }
+
+  .process {
+    grid-template-columns: 1fr;
+    margin-top: 55px;
+  }
+
+  .process-item,
+  .process-item + .process-item {
+    padding: 17px 0;
+  }
+
+  .process-item h3 {
+    margin-top: 11px;
+  }
+
+  .feature-heading {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .feature-heading p {
+    text-align: left;
+  }
+
+  .feature-image {
+    height: 470px;
+  }
+
+  .index-heading {
+    align-items: flex-start;
+    flex-direction: column;
+    margin-bottom: 35px;
+  }
+
+  .index-description {
+    text-align: left;
+  }
+
+  .index-groups {
+    column-gap: 18px;
+    row-gap: 28px;
+  }
+
+  .index-group-label {
+    margin-bottom: 14px;
+  }
+
+  .index-entry {
+    gap: 7px;
+    padding: 9px 0;
+  }
+
+  .index-entry span {
+    flex-basis: 17px;
+    font-size: 8px;
+  }
+
+  .index-entry h3 {
+    font-size: 12px;
+  }
+
+  .closing h2 {
+    font-size: clamp(48px, 13vw, 82px);
+  }
+
+  .footer-inner {
+    flex-wrap: wrap;
+  }
+
+  .footer-copy {
+    order: 3;
+    width: 100%;
+  }
+}
+
+@media (max-width: 360px) {
+  .hero h1 {
+    font-size: 52px;
+  }
+
+  .index-groups {
+    column-gap: 12px;
+  }
+
+  .index-entry h3 {
+    font-size: 11px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: .01ms !important;
+    transition-duration: .01ms !important;
+  }
+
+  .reveal {
+    opacity: 1;
+    transform: none;
+  }
+}
+</style>
 </head>
 
 <body>
 
-  <header class="header">
-    <div class="container header-inner">
-      <a class="logo" href="#home" aria-label="VYRA home">VYRA</a>
+<header class="header">
+  <div class="container header-inner">
 
-      <nav class="nav" id="navigation">
-        <a href="#origin">Origin</a>
-        <a href="#concepts">Concepts</a>
-        <a href="#parasite">Parasite</a>
-        <a href="#archive">Archive</a>
-      </nav>
+    <a class="logo" href="#home">VYRA</a>
 
-      <a class="header-meta" href="#contact">Enter the unknown</a>
-      <button class="menu-toggle" id="menuToggle" aria-label="Toggle navigation">Menu</button>
-    </div>
-  </header>
+    <nav class="nav" id="navigation">
+      <a href="#origin">Origin</a>
+      <a href="#concepts">Concepts</a>
+      <a href="#parasite">Parasite</a>
+      <a href="#archive">Archive</a>
+    </nav>
 
-  <main>
+    <a class="header-action" href="#contact">Enter the unknown</a>
 
-    <!-- HERO: replace hero.jpg with your own image -->
+    <button
+      class="menu-toggle"
+      id="menuToggle"
+      aria-expanded="false"
+      aria-controls="navigation">
+      Menu
+    </button>
 
-    <section class="hero" id="home">
-      <div class="hero-image">
-        <img src="assets/hero.jpg" alt="VYRA — main visual" onerror="this.style.display='none'">
-      </div>
+  </div>
+</header>
 
-      <div class="container hero-content">
-        <div class="hero-kicker">
-          <span class="index">VYRA / 001</span>
-          <span>An evolving design universe</span>
-        </div>
+<main>
 
-        <h1>
-          <span>BEYOND KNOWN</span>
-          <span class="outline">FORM.</span>
-        </h1>
+  <!-- HERO -->
 
-        <div class="hero-bottom">
-          <p class="hero-description">
-            Not made to belong. Not designed to follow.
-            VYRA exists somewhere between the familiar
-            and the unknown.
-          </p>
+  <section class="hero" id="home">
 
-          <div class="hero-coordinate">
-            FORM IS NOT FINAL<br>
-            EST. 2026
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <div class="ticker" aria-label="VYRA brand statements">
-      <div class="ticker-track">
-        <div class="ticker-group">
-          <span>NOT MADE TO BELONG</span>
-          <span class="accent">VYRA</span>
-          <span>IT DOESN'T FOLLOW. IT INFECTS.</span>
-          <span class="accent">BEYOND HUMAN FORM</span>
-        </div>
-        <div class="ticker-group" aria-hidden="true">
-          <span>NOT MADE TO BELONG</span>
-          <span class="accent">VYRA</span>
-          <span>IT DOESN'T FOLLOW. IT INFECTS.</span>
-          <span class="accent">BEYOND HUMAN FORM</span>
-        </div>
-      </div>
+    <div class="hero-media">
+      <img src="assets/hero.jpg" alt="VYRA — Beyond Known Form">
     </div>
 
-    <!-- MANIFESTO -->
+    <div class="container hero-content">
 
-    <section class="manifesto container reveal" id="origin">
-      <div class="manifesto-top">
-        <span class="eyebrow">01 / The beginning</span>
-        <span class="right-note">A different kind<br>of existence</span>
+      <div class="hero-meta">
+        <span>VYRA / 001</span>
+        <span>An evolving design universe</span>
       </div>
 
-      <h2>
-        WE ARE NOT HERE TO CREATE ANOTHER FORM.
-        <span class="outline">WE ARE HERE TO QUESTION WHAT FORM CAN BECOME.</span>
-      </h2>
+      <h1>
+        <span>BEYOND KNOWN</span>
+        <span class="outline">FORM.</span>
+      </h1>
 
-      <div class="manifesto-bottom">
-        <p>
-          VYRA challenges the boundaries between object,
-          organism and identity. A presence that cannot
-          be reduced to a single definition.
+      <div class="hero-footer">
+
+        <p class="hero-description">
+          Not made to belong. Not designed to follow.
+          VYRA exists somewhere between the familiar
+          and the unknown.
         </p>
-      </div>
-    </section>
 
-    <!-- FOUR EQUAL CONCEPTS -->
-
-    <section class="concepts container" id="concepts">
-      <div class="section-heading reveal">
-        <div>
-          <span class="eyebrow">02 / The collection of ideas</span>
-          <h2>Four states of VYRA</h2>
-        </div>
-        <p>One universe / Multiple forms</p>
-      </div>
-
-      <div class="concept-grid">
-
-        <article class="concept reveal">
-          <div class="concept-image">
-            <span class="image-number">01 / ORIGIN</span>
-            <img src="assets/origin.jpg" alt="ORIGIN — VYRA visual" loading="lazy" onerror="this.style.display='none'">
-          </div>
-          <div class="concept-info">
-            <h3>ORIGIN</h3>
-            <span>01</span>
-          </div>
-          <p class="concept-description">
-            The point before definition. The beginning of another form.
-          </p>
-        </article>
-
-        <article class="concept reveal">
-          <div class="concept-image">
-            <span class="image-number">02 / PARASITE</span>
-            <img src="assets/parasite.jpg" alt="PARASITE — VYRA visual" loading="lazy" onerror="this.style.display='none'">
-          </div>
-          <div class="concept-info">
-            <h3>PARASITE</h3>
-            <span>02</span>
-          </div>
-          <p class="concept-description">
-            It attaches. It adapts. It becomes impossible to ignore.
-          </p>
-        </article>
-
-        <article class="concept reveal">
-          <div class="concept-image">
-            <span class="image-number">03 / LIQUID</span>
-            <img src="assets/liquid.jpg" alt="LIQUID — VYRA visual" loading="lazy" onerror="this.style.display='none'">
-          </div>
-          <div class="concept-info">
-            <h3>LIQUID</h3>
-            <span>03</span>
-          </div>
-          <p class="concept-description">
-            A form without permanence. Always shifting, never settled.
-          </p>
-        </article>
-
-        <article class="concept reveal">
-          <div class="concept-image">
-            <span class="image-number">04 / MUTANT</span>
-            <img src="assets/mutant.jpg" alt="MUTANT — VYRA visual" loading="lazy" onerror="this.style.display='none'">
-          </div>
-          <div class="concept-info">
-            <h3>MUTANT</h3>
-            <span>04</span>
-          </div>
-          <p class="concept-description">
-            Transformation beyond expectation. A new kind of presence.
-          </p>
-        </article>
-
-      </div>
-    </section>
-
-    <!-- PARASITE FEATURE -->
-
-    <section class="featured container reveal" id="parasite">
-      <div class="featured-top">
-        <div>
-          <span class="eyebrow">03 / Primary specimen</span>
-          <h2>THE <span>PARASITE.</span></h2>
-        </div>
-        <p>
-          IT DOESN'T FOLLOW.<br>
-          IT INFECTS.<br>
-          IT STAYS.
-        </p>
-      </div>
-
-      <div class="featured-image">
-        <img src="assets/parasite-feature.jpg" alt="VYRA — The Parasite" loading="lazy" onerror="this.style.display='none'">
-      </div>
-
-      <div class="featured-caption">
-        <span>VYRA / SPECIMEN 002</span>
-        <span>Beyond human form</span>
-      </div>
-    </section>
-
-    <!-- LOWER 12-ITEM INDEX -->
-
-    <section class="field-index" id="archive">
-      <div class="container">
-        <div class="index-header reveal">
-          <div>
-            <span class="eyebrow">04 / Classified archive</span>
-            <h2>Field index</h2>
-          </div>
-          <p>12 observations<br>One evolving universe</p>
+        <div class="hero-coordinate">
+          FORM IS NOT FINAL<br>
+          EST. 2026
         </div>
 
-        <div class="lexicon-grid">
-          <div class="lexicon-item reveal"><span>01</span><h3>ORIGIN</h3></div>
-          <div class="lexicon-item reveal"><span>02</span><h3>PARASITE</h3></div>
-          <div class="lexicon-item reveal"><span>03</span><h3>LIQUID</h3></div>
-          <div class="lexicon-item reveal"><span>04</span><h3>MUTANT</h3></div>
-          <div class="lexicon-item reveal"><span>05</span><h3>SPORE</h3></div>
-          <div class="lexicon-item reveal"><span>06</span><h3>RELIC</h3></div>
-          <div class="lexicon-item reveal"><span>07</span><h3>FERAL</h3></div>
-          <div class="lexicon-item reveal"><span>08</span><h3>VESSEL</h3></div>
-          <div class="lexicon-item reveal"><span>09</span><h3>ALTER</h3></div>
-          <div class="lexicon-item reveal"><span>10</span><h3>ECHO</h3></div>
-          <div class="lexicon-item reveal"><span>11</span><h3>SPECIMEN</h3></div>
-          <div class="lexicon-item reveal"><span>12</span><h3>AFTERFORM</h3></div>
-        </div>
       </div>
-    </section>
 
-    <!-- CLOSING -->
+    </div>
 
-    <section class="closing container reveal" id="contact">
-      <span class="eyebrow">VYRA / End of known form</span>
-      <h2>
-        NOT MADE
-        <span>TO BELONG.</span>
-      </h2>
+  </section>
+
+  <!-- TRANSMISSION -->
+
+  <div class="ticker">
+    <div class="ticker-track">
+
+      <div class="ticker-group">
+        <span>NOT MADE TO BELONG</span>
+        <span class="accent">VYRA</span>
+        <span>IT DOESN'T FOLLOW. IT INFECTS.</span>
+        <span class="accent">BEYOND HUMAN FORM</span>
+      </div>
+
+      <div class="ticker-group" aria-hidden="true">
+        <span>NOT MADE TO BELONG</span>
+        <span class="accent">VYRA</span>
+        <span>IT DOESN'T FOLLOW. IT INFECTS.</span>
+        <span class="accent">BEYOND HUMAN FORM</span>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ORIGIN -->
+
+  <section class="manifesto container reveal" id="origin">
+
+    <div class="manifesto-heading">
+      <span class="eyebrow">01 / The beginning</span>
+
+      <span class="manifesto-note">
+        A different kind<br>
+        of existence
+      </span>
+    </div>
+
+    <h2>
+      WE ARE NOT HERE TO CREATE ANOTHER FORM.
+      <span>
+        WE ARE HERE TO QUESTION WHAT FORM CAN BECOME.
+      </span>
+    </h2>
+
+    <div class="manifesto-bottom">
       <p>
-        A new species of object.
-        An evolving presence.
-        An unfamiliar world.
+        VYRA challenges the boundaries between object,
+        organism and identity. A presence that cannot
+        be reduced to a single definition.
       </p>
-    </section>
-
-  </main>
-
-  <footer class="footer">
-    <div class="container footer-inner">
-      <a href="#home" class="footer-logo">VYRA</a>
-      <span class="footer-note">Beyond known form. © 2026 VYRA</span>
-      <a class="footer-link" href="mailto:YOUR-EMAIL@example.com">Contact</a>
     </div>
-  </footer>
 
-  <script>
-    // Mobile navigation
-    const menuToggle = document.getElementById("menuToggle");
-    const navigation = document.getElementById("navigation");
+  </section>
 
-    menuToggle.addEventListener("click", () => {
-      const isOpen = navigation.classList.toggle("open");
-      menuToggle.setAttribute("aria-expanded", String(isOpen));
-      menuToggle.textContent = isOpen ? "Close" : "Menu";
+  <!-- CONCEPTS -->
+
+  <section class="concepts container" id="concepts">
+
+    <div class="section-intro reveal">
+
+      <div>
+        <span class="eyebrow">02 / The collection of ideas</span>
+        <h2>Four states of VYRA</h2>
+      </div>
+
+      <p>One universe / Multiple forms</p>
+
+    </div>
+
+    <div class="concept-grid">
+
+      <article class="concept reveal">
+
+        <div class="concept-image">
+          <span class="concept-index">01 / ORIGIN</span>
+          <img src="assets/origin.jpg" alt="ORIGIN" loading="lazy">
+        </div>
+
+        <div class="concept-title">
+          <h3>ORIGIN</h3>
+          <span>01</span>
+        </div>
+
+        <p>
+          The point before definition. The beginning of another form.
+        </p>
+
+      </article>
+
+      <article class="concept reveal">
+
+        <div class="concept-image">
+          <span class="concept-index">02 / PARASITE</span>
+          <img src="assets/parasite.jpg" alt="PARASITE" loading="lazy">
+        </div>
+
+        <div class="concept-title">
+          <h3>PARASITE</h3>
+          <span>02</span>
+        </div>
+
+        <p>
+          It attaches. It adapts. It becomes impossible to ignore.
+        </p>
+
+      </article>
+
+      <article class="concept reveal">
+
+        <div class="concept-image">
+          <span class="concept-index">03 / LIQUID</span>
+          <img src="assets/liquid.jpg" alt="LIQUID" loading="lazy">
+        </div>
+
+        <div class="concept-title">
+          <h3>LIQUID</h3>
+          <span>03</span>
+        </div>
+
+        <p>
+          A form without permanence. Always shifting, never settled.
+        </p>
+
+      </article>
+
+      <article class="concept reveal">
+
+        <div class="concept-image">
+          <span class="concept-index">04 / MUTANT</span>
+          <img src="assets/mutant.jpg" alt="MUTANT" loading="lazy">
+        </div>
+
+        <div class="concept-title">
+          <h3>MUTANT</h3>
+          <span>04</span>
+        </div>
+
+        <p>
+          Transformation beyond expectation. A new kind of presence.
+        </p>
+
+      </article>
+
+    </div>
+
+  </section>
+
+  <!-- INFECTION PROTOCOL -->
+
+  <section class="doctrine">
+
+    <div class="container">
+
+      <div class="doctrine-layout">
+
+        <aside class="doctrine-aside reveal">
+
+          <span class="eyebrow">03 / The infection protocol</span>
+
+          <span class="signal">Transmission active</span>
+
+          <p>
+            VYRA is not a form that asks for attention.
+            It is a presence that changes the space around it.
+          </p>
+
+        </aside>
+
+        <div class="doctrine-main reveal">
+
+          <h2>
+            IT ENTERS.<br>
+            IT ADAPTS.<br>
+            <span>IT BECOMES.</span>
+          </h2>
+
+          <p>
+            No borders. No fixed identity. No single host.
+            VYRA moves between forms, absorbs its surroundings
+            and leaves something unfamiliar behind.
+          </p>
+
+        </div>
+
+      </div>
+
+      <div class="process reveal">
+
+        <div class="process-item">
+          <span>01 / CONTACT</span>
+          <h3>It finds a surface.</h3>
+        </div>
+
+        <div class="process-item">
+          <span>02 / MERGE</span>
+          <h3>It becomes part of it.</h3>
+        </div>
+
+        <div class="process-item">
+          <span>03 / TAKEOVER</span>
+          <h3>The boundary disappears.</h3>
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
+
+  <!-- PARASITE -->
+
+  <section class="feature container reveal" id="parasite">
+
+    <div class="feature-heading">
+
+      <div>
+        <span class="eyebrow">Primary specimen</span>
+        <h2>THE <span>PARASITE.</span></h2>
+      </div>
+
+      <p>
+        IT DOESN'T FOLLOW.<br>
+        IT INFECTS.<br>
+        IT STAYS.
+      </p>
+
+    </div>
+
+    <div class="feature-image">
+      <img src="assets/parasite-feature.jpg" alt="VYRA — The Parasite" loading="lazy">
+    </div>
+
+    <div class="feature-caption">
+      <span>VYRA / SPECIMEN 002</span>
+      <span>Beyond human form</span>
+    </div>
+
+  </section>
+
+  <!-- CLASSIFIED ARCHIVE -->
+
+  <section class="field-index" id="archive">
+
+    <div class="container">
+
+      <div class="index-heading reveal">
+
+        <div>
+          <span class="eyebrow">04 / CLASSIFIED ARCHIVE</span>
+          <h2>FIELD INDEX</h2>
+        </div>
+
+        <p class="index-description">
+          12 observations<br>
+          One evolving universe
+        </p>
+
+      </div>
+
+      <div class="index-groups">
+
+        <div class="index-group reveal">
+
+          <span class="index-group-label">01 — 03</span>
+
+          <div class="index-entry">
+            <span>01</span>
+            <h3>ORIGIN</h3>
+          </div>
+
+          <div class="index-entry">
+            <span>02</span>
+            <h3>PARASITE</h3>
+          </div>
+
+          <div class="index-entry">
+            <span>03</span>
+            <h3>LIQUID</h3>
+          </div>
+
+        </div>
+
+        <div class="index-group reveal">
+
+          <span class="index-group-label">04 — 06</span>
+
+          <div class="index-entry">
+            <span>04</span>
+            <h3>MUTANT</h3>
+          </div>
+
+          <div class="index-entry">
+            <span>05</span>
+            <h3>SPORE</h3>
+          </div>
+
+          <div class="index-entry">
+            <span>06</span>
+            <h3>RELIC</h3>
+          </div>
+
+        </div>
+
+        <div class="index-group reveal">
+
+          <span class="index-group-label">07 — 09</span>
+
+          <div class="index-entry">
+            <span>07</span>
+            <h3>FERAL</h3>
+          </div>
+
+          <div class="index-entry">
+            <span>08</span>
+            <h3>VESSEL</h3>
+          </div>
+
+          <div class="index-entry">
+            <span>09</span>
+            <h3>ALTER</h3>
+          </div>
+
+        </div>
+
+        <div class="index-group reveal">
+
+          <span class="index-group-label">10 — 12</span>
+
+          <div class="index-entry">
+            <span>10</span>
+            <h3>ECHO</h3>
+          </div>
+
+          <div class="index-entry">
+            <span>11</span>
+            <h3>SPECIMEN</h3>
+          </div>
+
+          <div class="index-entry">
+            <span>12</span>
+            <h3>AFTERFORM</h3>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
+
+  <!-- CLOSING -->
+
+  <section class="closing container reveal" id="contact">
+
+    <span class="eyebrow">VYRA / End of known form</span>
+
+    <h2>
+      NOT MADE
+      <span>TO BELONG.</span>
+    </h2>
+
+    <p>
+      A new species of object.
+      An evolving presence.
+      An unfamiliar world.
+    </p>
+
+  </section>
+
+</main>
+
+<footer class="footer">
+
+  <div class="container footer-inner">
+
+    <a href="#home" class="footer-logo">VYRA</a>
+
+    <span class="footer-copy">
+      A new species of object. © 2026 VYRA
+    </span>
+
+    <a class="footer-link" href="#contact">Contact</a>
+
+  </div>
+
+</footer>
+
+<script>
+/* MOBILE NAVIGATION */
+
+const menuToggle = document.getElementById("menuToggle");
+const navigation = document.getElementById("navigation");
+
+menuToggle.addEventListener("click", () => {
+  const isOpen = navigation.classList.toggle("open");
+
+  menuToggle.setAttribute("aria-expanded", String(isOpen));
+  menuToggle.textContent = isOpen ? "Close" : "Menu";
+});
+
+navigation.querySelectorAll("a").forEach(link => {
+  link.addEventListener("click", () => {
+    navigation.classList.remove("open");
+    menuToggle.setAttribute("aria-expanded", "false");
+    menuToggle.textContent = "Menu";
+  });
+});
+
+/* STICKY HEADER */
+
+const header = document.querySelector(".header");
+
+function updateHeader() {
+  header.classList.toggle("scrolled", window.scrollY > 36);
+}
+
+window.addEventListener("scroll", updateHeader, {
+  passive: true
+});
+
+updateHeader();
+
+/* REVEAL */
+
+const revealElements = document.querySelectorAll(".reveal");
+
+if ("IntersectionObserver" in window) {
+
+  const observer = new IntersectionObserver((entries, obs) => {
+
+    entries.forEach(entry => {
+
+      if (entry.isIntersecting) {
+        entry.target.classList.add("visible");
+        obs.unobserve(entry.target);
+      }
+
     });
 
-    navigation.querySelectorAll("a").forEach(link => {
-      link.addEventListener("click", () => {
-        navigation.classList.remove("open");
-        menuToggle.setAttribute("aria-expanded", "false");
-        menuToggle.textContent = "Menu";
-      });
-    });
+  }, {
+    threshold: 0.12,
+    rootMargin: "0px 0px -30px 0px"
+  });
 
-    // Scroll reveal
-    const revealElements = document.querySelectorAll(".reveal");
+  revealElements.forEach(element => {
+    observer.observe(element);
+  });
 
-    if ("IntersectionObserver" in window) {
-      const observer = new IntersectionObserver((entries, obs) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add("visible");
-            obs.unobserve(entry.target);
-          }
-        });
-      }, {
-        threshold: 0.12,
-        rootMargin: "0px 0px -35px 0px"
-      });
+} else {
 
-      revealElements.forEach(element => observer.observe(element));
-    } else {
-      revealElements.forEach(element => element.classList.add("visible"));
-    }
-  </script>
+  revealElements.forEach(element => {
+    element.classList.add("visible");
+  });
+
+}
+</script>
 
 </body>
 </html>
