@@ -2,1670 +2,1054 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#08090B">
-  <meta name="description" content="VYRA — Independent design beyond familiar form.">
-  <title>VYRA — Beyond Familiar Form</title>
-
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-
-  <style>
-    :root {
-      --black: #08090B;
-      --graphite: #202329;
-      --platinum: #AEB4BE;
-      --white: #F4F5F7;
-      --ice: #8496B5;
-      --steel: #343A42;
-      --muted: #858B96;
-      --line: rgba(174,180,190,.16);
-      --display: "Space Grotesk", sans-serif;
-      --body: "Inter", sans-serif;
-      --ease: cubic-bezier(.22,.8,.25,1);
-    }
-
-    * {
-      box-sizing: border-box;
-    }
-
-    html {
-      scroll-behavior: smooth;
-      background: var(--black);
-      scrollbar-color: var(--steel) var(--black);
-    }
-
-    body {
-      margin: 0;
-      overflow-x: hidden;
-      background: var(--black);
-      color: var(--white);
-      font-family: var(--body);
-      -webkit-font-smoothing: antialiased;
-    }
-
-    body.menu-open,
-    body.detail-open {
-      overflow: hidden;
-    }
-
-    a {
-      color: inherit;
-      text-decoration: none;
-    }
-
-    button {
-      font: inherit;
-      color: inherit;
-    }
-
-    button, a {
-      -webkit-tap-highlight-color: transparent;
-    }
-
-    img {
-      display: block;
-      max-width: 100%;
-    }
-
-    ::selection {
-      color: var(--black);
-      background: var(--ice);
-    }
-
-    .shell {
-      width: min(100% - 76px, 1540px);
-      margin: 0 auto;
-    }
-
-    .eyebrow {
-      display: flex;
-      align-items: center;
-      gap: 11px;
-      color: var(--ice);
-      font-size: 9px;
-      font-weight: 600;
-      letter-spacing: .24em;
-      text-transform: uppercase;
-    }
-
-    .eyebrow::before {
-      content: "";
-      width: 5px;
-      height: 5px;
-      flex: 0 0 5px;
-      border-radius: 50%;
-      background: var(--ice);
-      box-shadow: 0 0 9px rgba(132,150,181,.65);
-    }
-
-    .micro {
-      color: var(--muted);
-      font-size: 9px;
-      letter-spacing: .18em;
-      text-transform: uppercase;
-    }
-
-    /* GRAIN */
-
-    .grain {
-      position: fixed;
-      inset: 0;
-      z-index: 80;
-      pointer-events: none;
-      opacity: .025;
-      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.92' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.7'/%3E%3C/svg%3E");
-    }
-
-    /* HEADER */
-
-    .header {
-      position: absolute;
-      top: 0;
-      left: 0;
-      z-index: 60;
-      width: 100%;
-      height: 82px;
-      background: var(--black);
-      border-bottom: 1px solid var(--line);
-    }
-
-    .nav {
-      width: min(100% - 76px, 1540px);
-      height: 100%;
-      margin: auto;
-      display: grid;
-      grid-template-columns: 1fr auto 1fr;
-      align-items: center;
-    }
-
-    .logo {
-      width: fit-content;
-      font-family: var(--display);
-      font-size: 25px;
-      font-weight: 700;
-      letter-spacing: .2em;
-    }
-
-    .nav-links {
-      display: flex;
-      align-items: center;
-      gap: 36px;
-    }
-
-    .nav-links a,
-    .nav-right a {
-      color: rgba(244,245,247,.65);
-      font-size: 9px;
-      font-weight: 500;
-      letter-spacing: .15em;
-      text-transform: uppercase;
-      transition: color .25s ease;
-    }
-
-    .nav-links a:hover,
-    .nav-right a:hover {
-      color: var(--white);
-    }
-
-    .nav-right {
-      display: flex;
-      justify-content: flex-end;
-      align-items: center;
-      gap: 24px;
-    }
-
-    .nav-right .edition {
-      color: var(--ice);
-      font-family: var(--display);
-    }
-
-    .menu-toggle {
-      display: none;
-      width: 42px;
-      height: 42px;
-      padding: 10px;
-      border: 1px solid var(--line);
-      background: transparent;
-      cursor: pointer;
-    }
-
-    .menu-toggle span {
-      display: block;
-      width: 18px;
-      height: 1px;
-      margin: 5px auto;
-      background: var(--white);
-      transition: transform .3s ease;
-    }
-
-    /* HERO */
-
-    .hero {
-      position: relative;
-      min-height: max(760px, 100svh);
-      display: flex;
-      align-items: center;
-      overflow: hidden;
-      background: var(--black);
-    }
-
-    .hero::after {
-      content: "";
-      position: absolute;
-      top: 0;
-      right: 0;
-      width: 1px;
-      height: 100%;
-      background: var(--line);
-    }
-
-    .hero-layout {
-      width: min(100% - 76px, 1540px);
-      margin: auto;
-      padding-top: 100px;
-      display: grid;
-      grid-template-columns: .9fr 1.1fr;
-      align-items: center;
-      gap: 25px;
-    }
-
-    .hero-copy {
-      position: relative;
-      z-index: 3;
-      padding: 35px 0 55px;
-    }
-
-    .hero-copy .eyebrow {
-      margin-bottom: 36px;
-    }
-
-    .hero h1 {
-      margin: 0;
-      font-family: var(--display);
-      font-size: clamp(76px, 10.5vw, 154px);
-      font-weight: 500;
-      line-height: .79;
-      letter-spacing: -.095em;
-    }
-
-    .hero h1 span {
-      display: block;
-      color: transparent;
-      -webkit-text-stroke: 1px rgba(174,180,190,.76);
-    }
-
-    .hero-description {
-      max-width: 355px;
-      margin: 34px 0 0;
-      color: rgba(244,245,247,.56);
-      font-size: 12px;
-      line-height: 1.95;
-      font-weight: 300;
-    }
-
-    .hero-actions {
-      display: flex;
-      align-items: center;
-      gap: 29px;
-      margin-top: 38px;
-    }
-
-    .button-primary {
-      min-width: 168px;
-      height: 49px;
-      display: inline-flex;
-      justify-content: center;
-      align-items: center;
-      padding: 0 22px;
-      background: var(--white);
-      color: var(--black);
-      font-size: 9px;
-      font-weight: 700;
-      letter-spacing: .15em;
-      text-transform: uppercase;
-      transition: background .3s ease, transform .3s ease;
-    }
-
-    .button-primary:hover {
-      background: var(--ice);
-      transform: translateY(-3px);
-    }
-
-    .button-text {
-      padding: 9px 0;
-      border-bottom: 1px solid rgba(174,180,190,.48);
-      color: rgba(244,245,247,.72);
-      font-size: 9px;
-      letter-spacing: .15em;
-      text-transform: uppercase;
-      transition: color .25s ease;
-    }
-
-    .button-text:hover {
-      color: var(--white);
-    }
-
-    .hero-art {
-      position: relative;
-      min-height: 650px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      overflow: hidden;
-      background: var(--black);
-    }
-
-    .hero-art img {
-      position: relative;
-      z-index: 1;
-      width: min(100%, 700px);
-      height: 620px;
-      object-fit: contain;
-      filter: drop-shadow(0 35px 38px rgba(0,0,0,.55));
-      animation: floatObject 8s ease-in-out infinite;
-    }
-
-    .hero-art-label {
-      position: absolute;
-      top: 16%;
-      right: 1%;
-      z-index: 2;
-      color: rgba(174,180,190,.48);
-      font-size: 8px;
-      letter-spacing: .22em;
-      writing-mode: vertical-rl;
-    }
-
-    .hero-bottom {
-      position: absolute;
-      bottom: 27px;
-      left: 50%;
-      width: min(100% - 76px, 1540px);
-      transform: translateX(-50%);
-      display: flex;
-      justify-content: space-between;
-      color: rgba(174,180,190,.48);
-      font-size: 8px;
-      letter-spacing: .18em;
-      text-transform: uppercase;
-    }
-
-    .hero-bottom span:last-child {
-      color: var(--ice);
-    }
-
-    @keyframes floatObject {
-      0%, 100% { transform: translateY(0) rotate(-1deg); }
-      50% { transform: translateY(-12px) rotate(1deg); }
-    }
-
-    /* MOVING TEXT */
-
-    .ticker {
-      position: relative;
-      z-index: 3;
-      height: 66px;
-      display: flex;
-      align-items: center;
-      overflow: hidden;
-      border-top: 1px solid var(--line);
-      border-bottom: 1px solid var(--line);
-      background: var(--graphite);
-    }
-
-    .ticker-track {
-      display: flex;
-      width: max-content;
-      align-items: center;
-      animation: tickerMove 36s linear infinite;
-      will-change: transform;
-    }
-
-    .ticker-group {
-      display: flex;
-      align-items: center;
-      flex-shrink: 0;
-      gap: 34px;
-      padding-right: 34px;
-    }
-
-    .ticker-group span {
-      color: var(--white);
-      font-family: var(--display);
-      font-size: 11px;
-      font-weight: 500;
-      letter-spacing: .2em;
-      text-transform: uppercase;
-      white-space: nowrap;
-    }
-
-    .ticker-group i {
-      display: inline-block;
-      width: 4px;
-      height: 4px;
-      margin-left: 30px;
-      border-radius: 50%;
-      background: var(--ice);
-      vertical-align: middle;
-    }
-
-    @keyframes tickerMove {
-      to { transform: translateX(-50%); }
-    }
-
-    /* MANIFESTO */
-
-    .manifesto {
-      padding: 160px 0 150px;
-      background: var(--black);
-    }
-
-    .manifesto-layout {
-      display: grid;
-      grid-template-columns: .65fr 1.35fr;
-      gap: 75px;
-    }
-
-    .manifesto-side p {
-      max-width: 200px;
-      margin-top: 23px;
-      color: var(--muted);
-      font-size: 10px;
-      line-height: 1.9;
-    }
-
-    .manifesto-main h2 {
-      max-width: 970px;
-      margin: 0;
-      font-family: var(--display);
-      font-size: clamp(46px, 7.5vw, 104px);
-      font-weight: 400;
-      line-height: .98;
-      letter-spacing: -.075em;
-    }
-
-    .manifesto-main h2 span {
-      color: var(--ice);
-    }
-
-    .manifesto-foot {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-end;
-      gap: 35px;
-      margin-top: 48px;
-    }
-
-    .manifesto-foot p {
-      max-width: 390px;
-      margin: 0;
-      color: rgba(244,245,247,.54);
-      font-size: 11px;
-      line-height: 1.95;
-      font-weight: 300;
-    }
-
-    .manifesto-foot .micro {
-      white-space: nowrap;
-    }
-
-    /* COLLECTION */
-
-    .collection {
-      padding: 105px 0 140px;
-      background: var(--graphite);
-      border-top: 1px solid var(--line);
-      border-bottom: 1px solid var(--line);
-    }
-
-    .collection-heading {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-end;
-      gap: 35px;
-      margin-bottom: 55px;
-    }
-
-    .collection-heading h2 {
-      margin: 18px 0 0;
-      font-family: var(--display);
-      font-size: clamp(52px, 7vw, 90px);
-      font-weight: 400;
-      line-height: .9;
-      letter-spacing: -.08em;
-    }
-
-    .collection-heading p {
-      max-width: 255px;
-      margin: 0 0 5px;
-      color: rgba(244,245,247,.52);
-      font-size: 10px;
-      line-height: 1.9;
-    }
-
-    .object-grid {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 65px 24px;
-    }
-
-    .object-card {
-      min-width: 0;
-      cursor: pointer;
-      outline: none;
-    }
-
-    .object-visual {
-      position: relative;
-      aspect-ratio: 1.12 / 1;
-      display: grid;
-      place-items: center;
-      overflow: hidden;
-      background: #111419;
-      border: 1px solid rgba(174,180,190,.1);
-      transition: border-color .4s ease, background .4s ease;
-    }
-
-    .object-visual::after {
-      content: "";
-      position: absolute;
-      inset: 0;
-      z-index: 1;
-      pointer-events: none;
-      background: linear-gradient(130deg, transparent 25%, rgba(255,255,255,.045), transparent 70%);
-      transform: translateX(-100%);
-      transition: transform .9s var(--ease);
-    }
-
-    .object-card:hover .object-visual::after {
-      transform: translateX(100%);
-    }
-
-    .object-card:hover .object-visual {
-      border-color: rgba(132,150,181,.42);
-      background: #171B21;
-    }
-
-    .object-image {
-      position: relative;
-      z-index: 2;
-      width: 86%;
-      height: 86%;
-      object-fit: contain;
-      filter: drop-shadow(0 25px 28px rgba(0,0,0,.48));
-      transition: transform .8s var(--ease), filter .8s ease;
-    }
-
-    .object-card:hover .object-image {
-      transform: scale(1.055) translateY(-6px);
-      filter: drop-shadow(0 34px 35px rgba(0,0,0,.62));
-    }
-
-    .object-index {
-      position: absolute;
-      z-index: 3;
-      top: 21px;
-      left: 22px;
-      color: rgba(174,180,190,.62);
-      font-family: var(--display);
-      font-size: 10px;
-      letter-spacing: .16em;
-    }
-
-    .object-category {
-      position: absolute;
-      z-index: 3;
-      right: 21px;
-      bottom: 20px;
-      color: rgba(174,180,190,.56);
-      font-size: 8px;
-      letter-spacing: .17em;
-      text-transform: uppercase;
-    }
-
-    .object-info {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-      gap: 20px;
-      padding: 21px 1px 0;
-    }
-
-    .object-info h3 {
-      margin: 0;
-      font-family: var(--display);
-      font-size: 24px;
-      font-weight: 500;
-      letter-spacing: -.045em;
-    }
-
-    .object-info p {
-      margin: 8px 0 0;
-      color: rgba(244,245,247,.48);
-      font-size: 9px;
-      letter-spacing: .13em;
-      text-transform: uppercase;
-    }
-
-    .object-open {
-      margin-top: 5px;
-      color: var(--ice);
-      font-size: 8px;
-      letter-spacing: .16em;
-      text-transform: uppercase;
-      white-space: nowrap;
-    }
-
-    /* STATEMENT */
-
-    .statement {
-      padding: 155px 0 165px;
-      overflow: hidden;
-      background: var(--black);
-      border-bottom: 1px solid var(--line);
-    }
-
-    .statement-inner {
-      max-width: 1120px;
-    }
-
-    .statement h2 {
-      margin: 34px 0 0;
-      font-family: var(--display);
-      font-size: clamp(60px, 10.2vw, 145px);
-      font-weight: 500;
-      line-height: .84;
-      letter-spacing: -.09em;
-    }
-
-    .statement h2 span {
-      display: block;
-      color: transparent;
-      -webkit-text-stroke: 1px rgba(174,180,190,.72);
-    }
-
-    .statement-foot {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-end;
-      gap: 35px;
-      margin-top: 48px;
-    }
-
-    .statement-foot p {
-      max-width: 355px;
-      margin: 0;
-      color: rgba(244,245,247,.54);
-      font-size: 11px;
-      line-height: 1.9;
-    }
-
-    /* VOCABULARY */
-
-    .vocabulary {
-      padding: 125px 0 135px;
-      background: var(--black);
-    }
-
-    .vocabulary-heading {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-end;
-      gap: 30px;
-      margin-bottom: 54px;
-    }
-
-    .vocabulary-heading h2 {
-      margin: 17px 0 0;
-      font-family: var(--display);
-      font-size: clamp(43px, 6.5vw, 78px);
-      font-weight: 400;
-      letter-spacing: -.075em;
-      line-height: .95;
-    }
-
-    .vocabulary-heading p {
-      max-width: 250px;
-      margin: 0 0 4px;
-      color: var(--muted);
-      font-size: 10px;
-      line-height: 1.9;
-    }
-
-    .word-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      border-top: 1px solid var(--line);
-      border-left: 1px solid var(--line);
-    }
-
-    .word {
-      min-height: 115px;
-      display: flex;
-      align-items: center;
-      padding: 24px;
-      border-right: 1px solid var(--line);
-      border-bottom: 1px solid var(--line);
-      font-family: var(--display);
-      font-size: clamp(18px, 2.2vw, 29px);
-      font-weight: 500;
-      letter-spacing: -.045em;
-      color: rgba(244,245,247,.78);
-      transition: color .3s ease, background .3s ease, padding .4s var(--ease);
-    }
-
-    .word:hover {
-      color: var(--white);
-      background: var(--graphite);
-      padding-left: 30px;
-    }
-
-    .word span {
-      display: block;
-      width: 5px;
-      height: 5px;
-      margin-left: auto;
-      flex: 0 0 5px;
-      border-radius: 50%;
-      background: var(--ice);
-      opacity: .7;
-    }
-
-    /* CONTACT */
-
-    .contact {
-      padding: 130px 0 120px;
-      text-align: center;
-      background: var(--graphite);
-      border-top: 1px solid var(--line);
-    }
-
-    .contact .eyebrow {
-      justify-content: center;
-    }
-
-    .contact h2 {
-      margin: 35px 0 20px;
-      font-family: var(--display);
-      font-size: clamp(60px, 10vw, 132px);
-      font-weight: 500;
-      line-height: .87;
-      letter-spacing: -.09em;
-    }
-
-    .contact h2 span {
-      display: block;
-      color: transparent;
-      -webkit-text-stroke: 1px rgba(174,180,190,.72);
-    }
-
-    .contact-description {
-      max-width: 370px;
-      margin: 26px auto 34px;
-      color: rgba(244,245,247,.53);
-      font-size: 11px;
-      line-height: 1.9;
-    }
-
-    /* FOOTER */
-
-    .footer {
-      padding: 34px 0;
-      background: var(--black);
-    }
-
-    .footer-inner {
-      width: min(100% - 76px, 1540px);
-      margin: auto;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 25px;
-    }
-
-    .footer-logo {
-      font-family: var(--display);
-      font-size: 18px;
-      font-weight: 700;
-      letter-spacing: .2em;
-    }
-
-    .footer-note {
-      color: var(--muted);
-      font-size: 8px;
-      letter-spacing: .15em;
-      text-transform: uppercase;
-    }
-
-    .footer-links {
-      display: flex;
-      gap: 22px;
-    }
-
-    .footer-links a {
-      color: rgba(244,245,247,.58);
-      font-size: 8px;
-      letter-spacing: .13em;
-      text-transform: uppercase;
-      transition: color .2s ease;
-    }
-
-    .footer-links a:hover {
-      color: var(--white);
-    }
-
-    /* OBJECT DETAIL */
-
-    .detail-overlay {
-      position: fixed;
-      inset: 0;
-      z-index: 100;
-      display: grid;
-      place-items: center;
-      padding: 22px;
-      background: rgba(0,0,0,.86);
-      backdrop-filter: blur(12px);
-      opacity: 0;
-      visibility: hidden;
-      transition: opacity .35s ease, visibility .35s ease;
-    }
-
-    .detail-overlay.active {
-      opacity: 1;
-      visibility: visible;
-    }
-
-    .detail-panel {
-      position: relative;
-      width: min(900px, 100%);
-      max-height: 90svh;
-      overflow: auto;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      background: #111419;
-      border: 1px solid var(--line);
-      transform: translateY(20px);
-      transition: transform .4s var(--ease);
-    }
-
-    .detail-overlay.active .detail-panel {
-      transform: translateY(0);
-    }
-
-    .detail-image {
-      min-height: 430px;
-      display: grid;
-      place-items: center;
-      overflow: hidden;
-      background: var(--graphite);
-    }
-
-    .detail-image img {
-      width: 90%;
-      height: 90%;
-      object-fit: contain;
-    }
-
-    .detail-copy {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      padding: 50px 43px;
-    }
-
-    .detail-copy .eyebrow {
-      margin-bottom: 24px;
-    }
-
-    .detail-copy h3 {
-      margin: 0;
-      font-family: var(--display);
-      font-size: clamp(37px, 5vw, 58px);
-      font-weight: 500;
-      letter-spacing: -.07em;
-    }
-
-    .detail-copy p {
-      margin: 19px 0 29px;
-      color: rgba(244,245,247,.56);
-      font-size: 11px;
-      line-height: 1.9;
-    }
-
-    .detail-close {
-      position: absolute;
-      top: 15px;
-      right: 15px;
-      z-index: 2;
-      width: 38px;
-      height: 38px;
-      border: 1px solid var(--line);
-      background: rgba(8,9,11,.8);
-      cursor: pointer;
-      font-size: 21px;
-      font-weight: 300;
-      transition: background .2s ease;
-    }
-
-    .detail-close:hover {
-      background: var(--steel);
-    }
-
-    /* SCROLL REVEAL */
-
-    .reveal {
-      opacity: 0;
-      transform: translateY(27px);
-      transition: opacity .85s var(--ease), transform .85s var(--ease);
-    }
-
-    .reveal.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    .delay-1 { transition-delay: .12s; }
-    .delay-2 { transition-delay: .23s; }
-    .delay-3 { transition-delay: .34s; }
-
-    /* RESPONSIVE */
-
-    @media (max-width: 900px) {
-      .shell,
-      .nav,
-      .hero-layout,
-      .hero-bottom,
-      .footer-inner {
-        width: calc(100% - 48px);
-      }
-
-      .nav-links { gap: 20px; }
-      .nav-links a,
-      .nav-right a { font-size: 8px; }
-
-      .hero-layout {
-        grid-template-columns: .95fr 1.05fr;
-      }
-
-      .hero h1 {
-        font-size: clamp(68px, 10vw, 105px);
-      }
-
-      .hero-art { min-height: 530px; }
-      .hero-art img { height: 510px; }
-
-      .manifesto-layout { gap: 40px; }
-      .anatomy-heading { gap: 35px; }
-    }
-
-    @media (max-width: 650px) {
-      .shell,
-      .nav,
-      .hero-layout,
-      .hero-bottom,
-      .footer-inner {
-        width: calc(100% - 40px);
-      }
-
-      .header { height: 68px; }
-
-      .nav {
-        grid-template-columns: 1fr auto;
-      }
-
-      .logo { font-size: 23px; }
-
-      .nav-links {
-        position: fixed;
-        inset: 68px 0 0;
-        z-index: 70;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: flex-start;
-        gap: 28px;
-        padding: 35px 11%;
-        background: var(--black);
-        opacity: 0;
-        visibility: hidden;
-        transform: translateY(-10px);
-        transition: opacity .3s ease, visibility .3s ease, transform .3s ease;
-      }
-
-      .nav-links.open {
-        opacity: 1;
-        visibility: visible;
-        transform: translateY(0);
-      }
-
-      .nav-links a {
-        font-family: var(--display);
-        font-size: 35px;
-        letter-spacing: -.04em;
-        text-transform: none;
-      }
-
-      .nav-right { display: none; }
-      .menu-toggle { display: block; }
-
-      .menu-toggle.active span:first-child {
-        transform: translateY(3px) rotate(45deg);
-      }
-
-      .menu-toggle.active span:last-child {
-        transform: translateY(-3px) rotate(-45deg);
-      }
-
-      .hero {
-        min-height: 100svh;
-        padding-bottom: 82px;
-      }
-
-      .hero-layout {
-        display: flex;
-        flex-direction: column;
-        align-items: stretch;
-        gap: 0;
-        padding-top: 105px;
-      }
-
-      .hero-copy {
-        padding: 20px 0 0;
-      }
-
-      .hero-copy .eyebrow { margin-bottom: 28px; }
-
-      .hero h1 {
-        font-size: clamp(76px, 18vw, 112px);
-      }
-
-      .hero-description {
-        max-width: 290px;
-        margin-top: 25px;
-        font-size: 11px;
-      }
-
-      .hero-actions {
-        margin-top: 27px;
-        gap: 20px;
-      }
-
-      .button-primary {
-        min-width: 150px;
-        height: 46px;
-        font-size: 8px;
-      }
-
-      .hero-art {
-        min-height: 345px;
-        margin-top: 7px;
-      }
-
-      .hero-art img {
-        width: 100%;
-        height: 340px;
-      }
-
-      .hero-art-label { top: 12%; }
-
-      .hero-bottom {
-        bottom: 20px;
-        font-size: 7px;
-      }
-
-      .ticker { height: 54px; }
-      .ticker-group { gap: 24px; padding-right: 24px; }
-      .ticker-group span { font-size: 9px; }
-      .ticker-group i { margin-left: 20px; }
-
-      .manifesto {
-        padding: 100px 0 95px;
-      }
-
-      .manifesto-layout {
-        grid-template-columns: 1fr;
-        gap: 34px;
-      }
-
-      .manifesto-side p { margin-top: 14px; }
-
-      .manifesto-main h2 {
-        font-size: clamp(44px, 11vw, 68px);
-      }
-
-      .manifesto-foot {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 22px;
-        margin-top: 30px;
-      }
-
-      .collection {
-        padding: 82px 0 100px;
-      }
-
-      .collection-heading {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 19px;
-        margin-bottom: 35px;
-      }
-
-      .collection-heading h2 { font-size: 57px; }
-
-      .object-grid { gap: 38px 12px; }
-
-      .object-visual { aspect-ratio: .85 / 1; }
-
-      .object-index {
-        top: 12px;
-        left: 12px;
-        font-size: 8px;
-      }
-
-      .object-category {
-        right: 11px;
-        bottom: 12px;
-        font-size: 7px;
-      }
-
-      .object-info {
-        flex-direction: column;
-        gap: 9px;
-        padding-top: 15px;
-      }
-
-      .object-info h3 { font-size: 18px; }
-      .object-info p { font-size: 8px; }
-      .object-open { font-size: 7px; }
-
-      .statement {
-        padding: 105px 0 110px;
-      }
-
-      .statement h2 {
-        font-size: clamp(58px, 13vw, 90px);
-      }
-
-      .statement-foot {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 22px;
-      }
-
-      .vocabulary {
-        padding: 90px 0 100px;
-      }
-
-      .vocabulary-heading {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 20px;
-        margin-bottom: 35px;
-      }
-
-      .vocabulary-heading h2 { font-size: 49px; }
-
-      .word-grid { grid-template-columns: repeat(2, 1fr); }
-
-      .word {
-        min-height: 85px;
-        padding: 17px;
-        font-size: 21px;
-      }
-
-      .word:hover { padding-left: 21px; }
-
-      .contact {
-        padding: 95px 0 90px;
-      }
-
-      .contact h2 {
-        font-size: clamp(57px, 13vw, 85px);
-      }
-
-      .footer-inner {
-        flex-wrap: wrap;
-        gap: 20px;
-      }
-
-      .footer-note {
-        order: 3;
-        width: 100%;
-      }
-
-      .footer-links { gap: 13px; }
-      .footer-links a { font-size: 7px; }
-
-      .detail-overlay { padding: 12px; }
-
-      .detail-panel {
-        grid-template-columns: 1fr;
-        max-height: 92svh;
-      }
-
-      .detail-image { min-height: 250px; }
-
-      .detail-copy { padding: 27px 24px 30px; }
-
-      .detail-copy .eyebrow { margin-bottom: 14px; }
-
-      .detail-copy h3 { font-size: 42px; }
-
-      .detail-copy p { margin: 12px 0 22px; }
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-      *,
-      *::before,
-      *::after {
-        scroll-behavior: auto !important;
-        animation-duration: .01ms !important;
-        animation-iteration-count: 1 !important;
-        transition-duration: .01ms !important;
-      }
-
-      .reveal {
-        opacity: 1;
-        transform: none;
-      }
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#08090B">
+<title>VYRA — Beyond Known Form</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --black:#08090B;
+  --graphite:#202329;
+  --platinum:#AEB4BE;
+  --white:#F4F5F7;
+  --ice:#8496B5;
+  --steel:#343A42;
+  --font:'Space Grotesk',sans-serif;
+  --body:'Inter',sans-serif;
+  --ease:cubic-bezier(.19,1,.22,1);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;background:var(--black)}
+body{
+  margin:0;
+  background:var(--black);
+  color:var(--white);
+  font-family:var(--body);
+  overflow-x:hidden;
+  cursor:default;
+}
+body::selection{background:var(--ice);color:var(--black)}
+a{color:inherit;text-decoration:none}
+button{font:inherit;color:inherit}
+img{display:block;width:100%;height:100%;object-fit:cover}
+button{border:0;background:none;cursor:pointer}
+main{overflow:hidden}
+.container{width:min(1380px,88%);margin:auto}
+.eyebrow{
+  font:500 10px var(--font);
+  letter-spacing:.25em;
+  text-transform:uppercase;
+  color:var(--ice);
+}
+.small-label{
+  font:500 9px var(--font);
+  letter-spacing:.2em;
+  text-transform:uppercase;
+  color:var(--platinum);
+}
+h1,h2,h3,p{margin-top:0}
+h1,h2,h3{font-family:var(--font);font-weight:400}
+.reveal{
+  opacity:0;
+  transform:translateY(55px);
+  transition:opacity 1s var(--ease),transform 1.2s var(--ease);
+}
+.reveal.visible{opacity:1;transform:translateY(0)}
+/* CUSTOM CURSOR */
+.cursor{
+  position:fixed;
+  z-index:1000;
+  width:9px;height:9px;
+  border-radius:50%;
+  background:var(--ice);
+  pointer-events:none;
+  transform:translate(-50%,-50%);
+  mix-blend-mode:difference;
+  transition:width .25s,height .25s,opacity .25s;
+}
+.cursor-ring{
+  position:fixed;
+  z-index:999;
+  width:34px;height:34px;
+  border:1px solid rgba(174,180,190,.45);
+  border-radius:50%;
+  pointer-events:none;
+  transform:translate(-50%,-50%);
+  transition:width .35s var(--ease),height .35s var(--ease),border-color .3s;
+}
+body.hovering .cursor{width:15px;height:15px}
+body.hovering .cursor-ring{width:58px;height:58px;border-color:var(--ice)}
+@media(hover:none){.cursor,.cursor-ring{display:none}}
+/* NAVIGATION */
+header{
+  position:absolute;
+  top:0;left:0;width:100%;
+  z-index:100;
+  padding:29px 0;
+}
+.nav{
+  width:min(1440px,90%);
+  margin:auto;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+}
+.logo{
+  font:600 27px var(--font);
+  letter-spacing:.17em;
+  line-height:1;
+}
+.nav-links{
+  display:flex;gap:38px;align-items:center;
+}
+.nav-links a,.nav-right a{
+  font:500 10px var(--font);
+  letter-spacing:.16em;
+  text-transform:uppercase;
+  color:rgba(244,245,247,.72);
+  transition:color .3s;
+}
+.nav-links a:hover,.nav-right a:hover{color:var(--ice)}
+.nav-right{display:flex;align-items:center;gap:24px}
+.nav-cta{
+  border-bottom:1px solid var(--ice);
+  padding-bottom:7px;
+}
+.menu-toggle{display:none;font-size:22px}
+/* HERO */
+.hero{
+  position:relative;
+  min-height:900px;
+  height:100svh;
+  max-height:1100px;
+  display:flex;
+  align-items:center;
+  isolation:isolate;
+  overflow:hidden;
+  background:var(--black);
+}
+.hero::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  z-index:-2;
+  background:
+    linear-gradient(90deg,rgba(8,9,11,.98) 0%,rgba(8,9,11,.86) 37%,rgba(8,9,11,.12) 100%),
+    linear-gradient(0deg,var(--black) 0%,transparent 25%,transparent 80%,rgba(8,9,11,.35) 100%),
+    url("assets/hero-bag.png") center 45%/cover no-repeat;
+  transform:scale(1.04);
+  animation:heroDrift 18s ease-in-out infinite alternate;
+}
+.hero::after{
+  content:"";
+  position:absolute;
+  z-index:-1;
+  width:48vw;height:48vw;
+  max-width:680px;max-height:680px;
+  right:9%;top:16%;
+  background:radial-gradient(ellipse,rgba(132,150,181,.11),transparent 68%);
+  filter:blur(35px);
+  pointer-events:none;
+}
+@keyframes heroDrift{
+  from{transform:scale(1.04) translate3d(0,0,0)}
+  to{transform:scale(1.11) translate3d(-1%,1%,0)}
+}
+.hero-content{
+  width:min(1380px,88%);
+  margin:95px auto 0;
+  position:relative;
+  z-index:2;
+}
+.hero-kicker{
+  display:flex;align-items:center;gap:13px;
+  margin-bottom:32px;
+}
+.hero-kicker span:last-child{
+  font:500 10px var(--font);
+  letter-spacing:.23em;
+  color:var(--platinum);
+}
+.live-dot{
+  width:6px;height:6px;border-radius:50%;
+  background:var(--ice);
+  box-shadow:0 0 15px rgba(132,150,181,.9);
+  animation:pulse 2s infinite;
+}
+@keyframes pulse{50%{opacity:.3;box-shadow:0 0 3px var(--ice)}}
+.hero h1{
+  font-size:clamp(68px,10.5vw,155px);
+  line-height:.82;
+  letter-spacing:-.085em;
+  text-transform:uppercase;
+  margin:0;
+  max-width:1000px;
+}
+.hero h1 .outline{
+  color:transparent;
+  -webkit-text-stroke:1px rgba(244,245,247,.78);
+}
+.hero-bottom{
+  display:flex;justify-content:space-between;align-items:end;
+  max-width:900px;
+  margin-top:55px;
+}
+.hero-description{
+  max-width:340px;
+  font-size:13px;
+  line-height:1.9;
+  color:rgba(244,245,247,.67);
+  font-weight:300;
+}
+.hero-link{
+  display:inline-flex;align-items:center;gap:18px;
+  font:500 10px var(--font);
+  letter-spacing:.2em;
+  text-transform:uppercase;
+  padding-bottom:11px;
+  border-bottom:1px solid var(--ice);
+  transition:gap .4s var(--ease),color .3s;
+}
+.hero-link:hover{gap:30px;color:var(--ice)}
+.hero-link span{font-size:17px}
+.hero-index{
+  position:absolute;right:5%;bottom:85px;
+  writing-mode:vertical-rl;
+  color:rgba(244,245,247,.45);
+  font:10px var(--font);
+  letter-spacing:.22em;
+}
+/* MOVING TYPE */
+.ticker{
+  position:relative;
+  z-index:5;
+  background:var(--ice);
+  color:var(--black);
+  overflow:hidden;
+  padding:17px 0 16px;
+  transform:rotate(-1.2deg) scale(1.02);
+  width:102%;
+  margin:0 0 15px -1%;
+}
+.ticker-track{
+  display:flex;
+  width:max-content;
+  animation:tickerMove 26s linear infinite;
+  will-change:transform;
+}
+.ticker-group{
+  display:flex;
+  align-items:center;
+  flex-shrink:0;
+}
+.ticker-word{
+  display:flex;align-items:center;gap:35px;
+  padding:0 35px;
+  font:600 13px var(--font);
+  letter-spacing:.2em;
+  white-space:nowrap;
+}
+.ticker-word i{
+  display:block;width:7px;height:7px;
+  background:var(--black);
+  border-radius:50%;
+}
+@keyframes tickerMove{
+  from{transform:translateX(0)}
+  to{transform:translateX(-50%)}
+}
+.ticker:hover .ticker-track{animation-play-state:paused}
+/* MANIFESTO */
+.manifesto{
+  padding:190px 0 180px;
+  position:relative;
+}
+.manifesto-grid{
+  display:grid;
+  grid-template-columns:1fr 2fr;
+  gap:8%;
+}
+.manifesto-note{padding-top:14px}
+.manifesto-note p{
+  max-width:220px;
+  margin-top:25px;
+  color:rgba(244,245,247,.48);
+  font-size:12px;line-height:1.9;
+}
+.manifesto h2{
+  font-size:clamp(44px,7.2vw,100px);
+  line-height:.98;
+  letter-spacing:-.07em;
+  max-width:900px;
+  text-transform:uppercase;
+}
+.manifesto h2 em{
+  color:var(--ice);
+  font-style:normal;
+}
+.manifesto-foot{
+  display:flex;justify-content:flex-end;
+  margin-top:48px;
+}
+.manifesto-foot p{
+  max-width:330px;
+  color:rgba(244,245,247,.55);
+  font-size:12px;line-height:1.9;
+}
+/* PARASITE FEATURE */
+.parasite{
+  min-height:780px;
+  position:relative;
+  display:flex;
+  align-items:center;
+  background:#050608;
+  isolation:isolate;
+  overflow:hidden;
+}
+.parasite-visual{
+  position:absolute;
+  inset:0;
+  z-index:-2;
+  background:
+    linear-gradient(90deg,#050608 0%,rgba(5,6,8,.85) 34%,rgba(5,6,8,.1) 100%),
+    linear-gradient(0deg,#050608 0%,transparent 40%,rgba(5,6,8,.2) 100%),
+    url("assets/bag-parasite.png") center/cover no-repeat;
+  transform:scale(1.02);
+  transition:transform 1.8s var(--ease);
+}
+.parasite:hover .parasite-visual{transform:scale(1.07)}
+.parasite-content{
+  width:min(1380px,88%);
+  margin:auto;
+  padding:130px 0;
+}
+.parasite .eyebrow{margin-bottom:28px}
+.parasite h2{
+  font-size:clamp(80px,15vw,210px);
+  line-height:.76;
+  letter-spacing:-.1em;
+  margin:0 0 42px;
+  text-transform:uppercase;
+}
+.parasite h2 span{
+  display:block;
+  color:var(--ice);
+  margin-left:12vw;
+}
+.parasite-copy{
+  display:flex;justify-content:space-between;
+  align-items:end;max-width:900px;
+}
+.parasite-copy p{
+  max-width:300px;
+  color:rgba(244,245,247,.65);
+  font-size:13px;line-height:1.9;
+}
+.parasite-number{
+  font:300 12px var(--font);
+  letter-spacing:.18em;color:var(--platinum);
+}
+/* COLLECTION */
+.collection{padding:170px 0 180px}
+.section-head{
+  display:flex;justify-content:space-between;align-items:end;
+  margin-bottom:75px;
+}
+.section-head h2{
+  font-size:clamp(48px,8vw,105px);
+  letter-spacing:-.08em;
+  line-height:.85;
+  margin:20px 0 0;
+  text-transform:uppercase;
+}
+.section-head p{
+  max-width:210px;
+  color:rgba(244,245,247,.48);
+  font-size:11px;line-height:1.8;
+  margin:0 0 5px;
+}
+.concept-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  column-gap:7%;
+  row-gap:100px;
+}
+.concept:nth-child(even){margin-top:120px}
+.concept-image{
+  position:relative;
+  height:clamp(300px,46vw,610px);
+  overflow:hidden;
+  background:#111318;
+}
+.concept-image img{
+  transition:transform 1.4s var(--ease),filter 1.2s;
+  filter:brightness(.84) saturate(.8);
+}
+.concept:hover .concept-image img{
+  transform:scale(1.055);
+  filter:brightness(1) saturate(1);
+}
+.concept-image::after{
+  content:"";
+  position:absolute;inset:0;
+  background:linear-gradient(140deg,rgba(132,150,181,.08),transparent 45%,rgba(8,9,11,.18));
+  pointer-events:none;
+}
+.concept-top{
+  display:flex;justify-content:space-between;
+  align-items:center;margin-top:23px;
+}
+.concept h3{
+  font-size:clamp(27px,4vw,48px);
+  letter-spacing:-.06em;
+  margin:0;
+}
+.concept-id{
+  color:var(--ice);
+  font:10px var(--font);
+  letter-spacing:.15em;
+}
+.concept-desc{
+  color:rgba(244,245,247,.48);
+  font-size:11px;
+  line-height:1.8;
+  max-width:300px;
+  margin-top:12px;
+}
+.concept-link{
+  display:inline-flex;align-items:center;gap:12px;
+  font:500 9px var(--font);
+  letter-spacing:.2em;
+  text-transform:uppercase;
+  margin-top:12px;
+  color:var(--platinum);
+  transition:color .3s,gap .3s;
+}
+.concept-link:hover{color:var(--ice);gap:20px}
+/* LIQUID BREAK */
+.liquid-break{
+  min-height:650px;
+  position:relative;
+  display:flex;align-items:center;
+  background:
+    linear-gradient(0deg,rgba(8,9,11,.65),rgba(8,9,11,.15)),
+    url("assets/bag-liquid.png") center 48%/cover no-repeat;
+  overflow:hidden;
+}
+.liquid-break::after{
+  content:"";
+  position:absolute;inset:0;
+  background:linear-gradient(90deg,var(--black),transparent 75%);
+}
+.liquid-text{
+  width:min(1380px,88%);
+  margin:auto;
+  position:relative;z-index:2;
+}
+.liquid-text h2{
+  font-size:clamp(100px,19vw,260px);
+  line-height:.75;
+  letter-spacing:-.11em;
+  margin:0;
+  text-transform:uppercase;
+}
+.liquid-text p{
+  margin:45px 0 0 10px;
+  color:rgba(244,245,247,.68);
+  font:11px var(--font);
+  letter-spacing:.2em;
+  text-transform:uppercase;
+}
+/* STATEMENT */
+.statement{
+  padding:180px 0;
+  text-align:center;
+}
+.statement .eyebrow{margin-bottom:35px}
+.statement h2{
+  font-size:clamp(48px,9vw,125px);
+  line-height:.9;
+  letter-spacing:-.085em;
+  text-transform:uppercase;
+  margin:0;
+}
+.statement h2 span{color:var(--ice)}
+.statement p{
+  max-width:370px;
+  margin:40px auto 0;
+  color:rgba(244,245,247,.5);
+  font-size:12px;line-height:1.9;
+}
+/* LEXICON */
+.lexicon{padding:70px 0 170px}
+.lexicon-heading{
+  display:flex;justify-content:space-between;
+  align-items:end;margin-bottom:45px;
+}
+.lexicon-heading h2{
+  font-size:clamp(45px,7vw,90px);
+  letter-spacing:-.08em;margin:15px 0 0;
+}
+.lexicon-heading p{
+  color:rgba(244,245,247,.45);
+  font-size:11px;max-width:190px;line-height:1.8;
+}
+.lexicon-list{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  column-gap:35px;
+}
+.lexicon-item{
+  padding:24px 0;
+  border-top:1px solid rgba(174,180,190,.22);
+  transition:border-color .35s,transform .4s var(--ease);
+}
+.lexicon-item:hover{border-color:var(--ice);transform:translateY(-4px)}
+.lexicon-item span{
+  display:block;
+  color:var(--ice);
+  font:10px var(--font);
+  letter-spacing:.16em;
+  margin-bottom:15px;
+}
+.lexicon-item h3{
+  font-size:22px;letter-spacing:-.04em;
+  margin:0;text-transform:uppercase;
+}
+/* CONTACT */
+.contact{
+  position:relative;
+  padding:150px 0 140px;
+  background:#0C0E13;
+  overflow:hidden;
+}
+.contact::before{
+  content:"";
+  position:absolute;
+  width:600px;height:600px;
+  right:-230px;top:-260px;
+  background:radial-gradient(ellipse,rgba(132,150,181,.12),transparent 68%);
+  filter:blur(30px);
+}
+.contact-inner{position:relative;z-index:1}
+.contact h2{
+  font-size:clamp(65px,12vw,160px);
+  line-height:.82;
+  letter-spacing:-.09em;
+  text-transform:uppercase;
+  margin:30px 0 55px;
+}
+.contact-bottom{
+  display:flex;justify-content:space-between;
+  align-items:end;
+}
+.contact-bottom p{
+  color:rgba(244,245,247,.5);
+  max-width:280px;
+  font-size:12px;line-height:1.9;
+}
+.contact-email{
+  font:500 12px var(--font);
+  letter-spacing:.12em;
+  border-bottom:1px solid var(--ice);
+  padding-bottom:12px;
+  transition:color .3s;
+}
+.contact-email:hover{color:var(--ice)}
+/* FOOTER */
+footer{padding:32px 0 28px;background:var(--black)}
+.footer-inner{
+  display:flex;justify-content:space-between;align-items:center;
+}
+.footer-logo{
+  font:600 23px var(--font);
+  letter-spacing:.17em;
+}
+.footer-copy,.footer-links a{
+  font:9px var(--font);
+  letter-spacing:.15em;
+  text-transform:uppercase;
+  color:rgba(244,245,247,.4);
+}
+.footer-links{display:flex;gap:25px}
+.footer-links a:hover{color:var(--ice)}
+/* MOBILE MENU */
+.mobile-menu{
+  position:fixed;inset:0;z-index:90;
+  background:var(--black);
+  display:flex;flex-direction:column;
+  justify-content:center;align-items:center;
+  gap:28px;
+  opacity:0;visibility:hidden;
+  transition:opacity .4s,visibility .4s;
+}
+.mobile-menu.open{opacity:1;visibility:visible}
+.mobile-menu a{
+  font:400 34px var(--font);
+  letter-spacing:-.05em;
+  text-transform:uppercase;
+}
+.mobile-menu a:hover{color:var(--ice)}
+/* RESPONSIVE */
+@media(max-width:800px){
+  header{padding:23px 0}
+  .nav-links,.nav-right{display:none}
+  .menu-toggle{display:block;color:var(--white);font-size:24px}
+  .hero{min-height:760px;height:92svh;max-height:900px}
+  .hero::before{
+    background:
+      linear-gradient(90deg,rgba(8,9,11,.8),rgba(8,9,11,.3)),
+      linear-gradient(0deg,var(--black),transparent 60%),
+      url("assets/hero-bag.png") 58% center/cover no-repeat;
+  }
+  .hero-content{margin-top:60px}
+  .hero h1{font-size:clamp(66px,14vw,110px)}
+  .hero-bottom{display:block;margin-top:42px}
+  .hero-link{margin-top:20px}
+  .hero-index{display:none}
+  .manifesto{padding:115px 0}
+  .manifesto-grid{grid-template-columns:1fr;gap:45px}
+  .manifesto-note p{max-width:300px}
+  .manifesto-foot{justify-content:flex-start}
+  .parasite{min-height:690px}
+  .parasite-visual{
+    background:
+      linear-gradient(90deg,rgba(5,6,8,.78),rgba(5,6,8,.2)),
+      linear-gradient(0deg,#050608,transparent 60%),
+      url("assets/bag-parasite.png") 58% center/cover no-repeat;
+  }
+  .parasite h2{font-size:clamp(78px,17vw,145px)}
+  .parasite h2 span{margin-left:7vw}
+  .parasite-copy{display:block}
+  .parasite-number{display:block;margin-top:25px}
+  .collection{padding:115px 0}
+  .section-head{display:block;margin-bottom:50px}
+  .section-head p{margin-top:25px}
+  .concept-grid{column-gap:22px;row-gap:65px}
+  .concept:nth-child(even){margin-top:75px}
+  .concept-image{height:clamp(230px,58vw,440px)}
+  .concept h3{font-size:clamp(24px,5vw,38px)}
+  .liquid-break{min-height:500px}
+  .statement{padding:120px 0}
+  .lexicon{padding:50px 0 110px}
+  .lexicon-list{grid-template-columns:repeat(2,1fr);gap:0 25px}
+  .contact{padding:110px 0}
+  .contact-bottom{display:block}
+  .contact-email{display:inline-block;margin-top:25px}
+  .footer-inner{flex-wrap:wrap;gap:25px}
+}
+@media(max-width:480px){
+  .container,.hero-content,.parasite-content,.liquid-text{width:88%}
+  .hero{min-height:720px}
+  .hero h1{font-size:18vw}
+  .hero-description{font-size:12px;max-width:290px}
+  .ticker{padding:14px 0}
+  .ticker-word{font-size:11px;padding:0 22px;gap:22px}
+  .manifesto h2{font-size:13vw}
+  .parasite{min-height:620px}
+  .parasite h2{font-size:19vw}
+  .parasite-copy p{font-size:12px}
+  .concept-grid{grid-template-columns:1fr;row-gap:55px}
+  .concept:nth-child(even){margin-top:0}
+  .concept-image{height:105vw;max-height:470px}
+  .concept h3{font-size:35px}
+  .liquid-break{min-height:420px}
+  .liquid-text h2{font-size:23vw}
+  .lexicon-heading{display:block}
+  .lexicon-heading p{margin-top:20px}
+  .lexicon-item h3{font-size:19px}
+  .footer-copy{order:3;width:100%}
+  .footer-links{gap:15px}
+}
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{
+    animation-duration:.01ms!important;
+    animation-iteration-count:1!important;
+    scroll-behavior:auto!important;
+    transition-duration:.01ms!important;
+  }
+  .reveal{opacity:1;transform:none}
+}
+</style>
 </head>
 
 <body>
-  <div class="grain" aria-hidden="true"></div>
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
 
-  <!-- NAVIGATION -->
-  <header class="header">
-    <nav class="nav" aria-label="Main navigation">
-      <a class="logo" href="#home" aria-label="VYRA home">VYRA</a>
+<header>
+  <nav class="nav">
+    <a class="logo" href="#top" aria-label="VYRA home">VYRA</a>
 
-      <div class="nav-links" id="navLinks">
-        <a href="#collection">Objects</a>
-        <a href="#manifesto">Identity</a>
-        <a href="#vocabulary">Lexicon</a>
-        <a href="#contact">Contact</a>
-      </div>
-
-      <div class="nav-right">
-        <a class="edition" href="#collection">E.002</a>
-        <a href="#contact">Connect</a>
-      </div>
-
-      <button class="menu-toggle" id="menuToggle" aria-label="Open menu" aria-expanded="false">
-        <span></span>
-        <span></span>
-      </button>
-    </nav>
-  </header>
-
-  <main>
-    <!-- HERO -->
-    <section class="hero" id="home">
-      <div class="hero-layout">
-        <div class="hero-copy">
-          <div class="eyebrow reveal">Independent design organism</div>
-
-          <h1 class="reveal delay-1">
-            BEYOND
-            <span>KNOWN</span>
-            FORM.
-          </h1>
-
-          <p class="hero-description reveal delay-2">
-            A different instinct. An unfamiliar language. VYRA explores what objects can become when design moves beyond the expected.
-          </p>
-
-          <div class="hero-actions reveal delay-3">
-            <a class="button-primary" href="#collection">Enter VYRA</a>
-            <a class="button-text" href="#manifesto">Discover identity</a>
-          </div>
-        </div>
-
-        <div class="hero-art reveal delay-2">
-          <img src="assets/hero-bag.png" alt="" aria-hidden="true">
-          <span class="hero-art-label">EVOLUTION / 002</span>
-        </div>
-      </div>
-
-      <div class="hero-bottom">
-        <span>VYRA — Independent design</span>
-        <span>Beyond familiar form / 2026</span>
-      </div>
-    </section>
-
-    <!-- TICKER -->
-    <div class="ticker" aria-label="VYRA design language">
-      <div class="ticker-track">
-        <div class="ticker-group">
-          <span>ORIGIN<i></i></span>
-          <span>PARASITE<i></i></span>
-          <span>LIQUID<i></i></span>
-          <span>MUTANT<i></i></span>
-          <span>ALTER<i></i></span>
-          <span>FERAL<i></i></span>
-        </div>
-
-        <div class="ticker-group" aria-hidden="true">
-          <span>ORIGIN<i></i></span>
-          <span>PARASITE<i></i></span>
-          <span>LIQUID<i></i></span>
-          <span>MUTANT<i></i></span>
-          <span>ALTER<i></i></span>
-          <span>FERAL<i></i></span>
-        </div>
-      </div>
+    <div class="nav-links">
+      <a href="#origin">Origin</a>
+      <a href="#parasite">Parasite</a>
+      <a href="#objects">Objects</a>
+      <a href="#lexicon">Lexicon</a>
     </div>
 
-    <!-- MANIFESTO -->
-    <section class="manifesto" id="manifesto">
-      <div class="shell manifesto-layout">
-        <div class="manifesto-side reveal">
-          <div class="eyebrow">A new visual language</div>
-          <p>
-            Not bound to a category. Not defined by convention. Built around a different way of seeing.
-          </p>
-        </div>
+    <div class="nav-right">
+      <a class="nav-cta" href="#contact">Enter VYRA ↗</a>
+    </div>
 
-        <div class="manifesto-main">
-          <h2 class="reveal delay-1">
-            THE FAMILIAR
-            IS ONLY THE
-            <span>BEGINNING.</span>
-          </h2>
+    <button class="menu-toggle" id="menuToggle" aria-label="Open menu">＋</button>
+  </nav>
+</header>
 
-          <div class="manifesto-foot reveal delay-2">
-            <p>
-              VYRA is an independent design universe exploring unfamiliar forms, unexpected materials and objects with a distinct presence. One identity. Endless directions.
-            </p>
-            <span class="micro">A different point of origin / 001</span>
-          </div>
-        </div>
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#origin">Origin</a>
+  <a href="#parasite">Parasite</a>
+  <a href="#objects">Objects</a>
+  <a href="#lexicon">Lexicon</a>
+  <a href="#contact">Contact</a>
+</div>
+
+<main id="top">
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-content">
+      <div class="hero-kicker reveal">
+        <span class="live-dot"></span>
+        <span>AN UNFAMILIAR DESIGN UNIVERSE</span>
       </div>
-    </section>
 
-    <!-- OBJECTS -->
-    <section class="collection" id="collection">
-      <div class="shell">
-        <div class="collection-heading reveal">
-          <div>
-            <div class="eyebrow">Selected forms / Evolution 002</div>
-            <h2>OBJECTS<br>OF VYRA.</h2>
-          </div>
+      <h1 class="reveal">
+        BEYOND<br>
+        <span class="outline">KNOWN</span><br>
+        FORM.
+      </h1>
 
-          <p>
-            Different expressions. Different instincts. Connected by one evolving design language.
-          </p>
-        </div>
-
-        <div class="object-grid">
-          <article class="object-card reveal" data-object="origin" tabindex="0" role="button" aria-label="Explore Origin">
-            <div class="object-visual">
-              <span class="object-index">001 / VYRA</span>
-              <img class="object-image" src="assets/hero-bag.png" alt="" aria-hidden="true">
-              <span class="object-category">The beginning</span>
-            </div>
-            <div class="object-info">
-              <div>
-                <h3>ORIGIN</h3>
-                <p>Identity / First form</p>
-              </div>
-              <span class="object-open">Explore form</span>
-            </div>
-          </article>
-
-          <article class="object-card reveal delay-1" data-object="parasite" tabindex="0" role="button" aria-label="Explore Parasite">
-            <div class="object-visual">
-              <span class="object-index">002 / VYRA</span>
-              <img class="object-image" src="assets/bag-parasite.png" alt="" aria-hidden="true">
-              <span class="object-category">Organic attachment</span>
-            </div>
-            <div class="object-info">
-              <div>
-                <h3>PARASITE</h3>
-                <p>Instinct / Attachment</p>
-              </div>
-              <span class="object-open">Explore form</span>
-            </div>
-          </article>
-
-          <article class="object-card reveal" data-object="liquid" tabindex="0" role="button" aria-label="Explore Liquid">
-            <div class="object-visual">
-              <span class="object-index">003 / VYRA</span>
-              <img class="object-image" src="assets/bag-liquid.png" alt="" aria-hidden="true">
-              <span class="object-category">Fluid structure</span>
-            </div>
-            <div class="object-info">
-              <div>
-                <h3>LIQUID</h3>
-                <p>Movement / Transformation</p>
-              </div>
-              <span class="object-open">Explore form</span>
-            </div>
-          </article>
-
-          <article class="object-card reveal delay-1" data-object="mutant" tabindex="0" role="button" aria-label="Explore Mutant">
-            <div class="object-visual">
-              <span class="object-index">004 / VYRA</span>
-              <img class="object-image" src="assets/bag-mutant.png" alt="" aria-hidden="true">
-              <span class="object-category">New anatomy</span>
-            </div>
-            <div class="object-info">
-              <div>
-                <h3>MUTANT</h3>
-                <p>Disruption / Evolution</p>
-              </div>
-              <span class="object-open">Explore form</span>
-            </div>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <!-- STATEMENT -->
-    <section class="statement">
-      <div class="shell">
-        <div class="statement-inner">
-          <div class="eyebrow reveal">The VYRA principle</div>
-
-          <h2 class="reveal delay-1">
-            IT DOESN'T
-            <span>FOLLOW.</span>
-            IT INFECTS.
-          </h2>
-
-          <div class="statement-foot reveal delay-2">
-            <p>
-              We are not here to repeat what already exists. We take familiar ideas, disrupt their structure and give them another life.
-            </p>
-            <span class="micro">Not made to belong / 2026</span>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- LEXICON -->
-    <section class="vocabulary" id="vocabulary">
-      <div class="shell">
-        <div class="vocabulary-heading reveal">
-          <div>
-            <div class="eyebrow">The VYRA lexicon</div>
-            <h2>WORDS WITHOUT<br>FIXED FORM.</h2>
-          </div>
-
-          <p>
-            A growing vocabulary for an evolving universe. Every word is a possible direction.
-          </p>
-        </div>
-
-        <div class="word-grid">
-          <div class="word reveal">ORIGIN <span></span></div>
-          <div class="word reveal delay-1">PARASITE <span></span></div>
-          <div class="word reveal delay-2">LIQUID <span></span></div>
-          <div class="word reveal delay-3">MUTANT <span></span></div>
-          <div class="word reveal">SPORE <span></span></div>
-          <div class="word reveal delay-1">RELIC <span></span></div>
-          <div class="word reveal delay-2">FERAL <span></span></div>
-          <div class="word reveal delay-3">VESSEL <span></span></div>
-          <div class="word reveal">ALTER <span></span></div>
-          <div class="word reveal delay-1">ECHO <span></span></div>
-          <div class="word reveal delay-2">SPECIMEN <span></span></div>
-          <div class="word reveal delay-3">AFTERFORM <span></span></div>
-        </div>
-      </div>
-    </section>
-
-    <!-- CONTACT -->
-    <section class="contact" id="contact">
-      <div class="shell">
-        <div class="eyebrow reveal">The next form is waiting</div>
-
-        <h2 class="reveal delay-1">
-          ENTER
-          <span>THE UNKNOWN.</span>
-        </h2>
-
-        <p class="contact-description reveal delay-2">
-          Follow the evolution. Discover the language. Be part of what comes next.
+      <div class="hero-bottom reveal">
+        <p class="hero-description">
+          Not designed to fit in. Not created to follow.
+          VYRA exists somewhere between the organic,
+          the artificial and the unknown.
         </p>
-
-        <a class="button-primary reveal delay-3" href="mailto:YOUR-EMAIL@example.com">
-          Connect with VYRA
+        <a href="#origin" class="hero-link">
+          DISCOVER THE UNKNOWN <span>↘</span>
         </a>
-      </div>
-    </section>
-  </main>
-
-  <!-- FOOTER -->
-  <footer class="footer">
-    <div class="footer-inner">
-      <a class="footer-logo" href="#home">VYRA</a>
-      <span class="footer-note">Independent design universe / 2026</span>
-
-      <div class="footer-links">
-        <a href="#collection">Objects</a>
-        <a href="#manifesto">Identity</a>
-        <a href="mailto:YOUR-EMAIL@example.com">Contact</a>
       </div>
     </div>
-  </footer>
+    <div class="hero-index">VYRA — EXPERIMENTAL DESIGN / 001</div>
+  </section>
 
-  <!-- OBJECT DETAIL -->
-  <div class="detail-overlay" id="detailOverlay" aria-hidden="true">
-    <div class="detail-panel" role="dialog" aria-modal="true" aria-labelledby="detailTitle">
-      <button class="detail-close" id="detailClose" aria-label="Close">×</button>
-
-      <div class="detail-image">
-        <img id="detailImage" src="assets/hero-bag.png" alt="">
+  <!-- MOVING TICKER -->
+  <div class="ticker" aria-label="VYRA design language">
+    <div class="ticker-track">
+      <div class="ticker-group">
+        <div class="ticker-word">ORIGIN <i></i></div>
+        <div class="ticker-word">PARASITE <i></i></div>
+        <div class="ticker-word">LIQUID <i></i></div>
+        <div class="ticker-word">MUTANT <i></i></div>
+        <div class="ticker-word">SPORE <i></i></div>
+        <div class="ticker-word">AFTERFORM <i></i></div>
       </div>
-
-      <div class="detail-copy">
-        <div class="eyebrow" id="detailCode">VYRA / FORM 001</div>
-        <h3 id="detailTitle">ORIGIN</h3>
-        <p id="detailDescription"></p>
-        <a class="button-primary" id="detailContact" href="mailto:YOUR-EMAIL@example.com">
-          Enquire
-        </a>
+      <div class="ticker-group" aria-hidden="true">
+        <div class="ticker-word">ORIGIN <i></i></div>
+        <div class="ticker-word">PARASITE <i></i></div>
+        <div class="ticker-word">LIQUID <i></i></div>
+        <div class="ticker-word">MUTANT <i></i></div>
+        <div class="ticker-word">SPORE <i></i></div>
+        <div class="ticker-word">AFTERFORM <i></i></div>
       </div>
     </div>
   </div>
 
-  <script>
-    // MOBILE MENU
-    const menuToggle = document.getElementById("menuToggle");
-    const navLinks = document.getElementById("navLinks");
+  <!-- ORIGIN / MANIFESTO -->
+  <section class="manifesto" id="origin">
+    <div class="container manifesto-grid">
+      <div class="manifesto-note reveal">
+        <span class="eyebrow">01 / THE BEGINNING</span>
+        <p>
+          Every form has an origin.
+          VYRA questions what happens
+          when that origin is no longer familiar.
+        </p>
+      </div>
 
-    function closeMenu() {
-      menuToggle.classList.remove("active");
-      navLinks.classList.remove("open");
-      document.body.classList.remove("menu-open");
-      menuToggle.setAttribute("aria-expanded", "false");
-      menuToggle.setAttribute("aria-label", "Open menu");
+      <div class="reveal">
+        <h2>
+          THE FAMILIAR<br>
+          IS ONLY THE<br>
+          <em>BEGINNING.</em>
+        </h2>
+        <div class="manifesto-foot">
+          <p>
+            A new design language. A different instinct.
+            An evolving universe of forms that refuse
+            to remain what they were expected to be.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PARASITE FEATURE -->
+  <section class="parasite" id="parasite">
+    <div class="parasite-visual"></div>
+    <div class="parasite-content">
+      <div class="eyebrow reveal">02 / THE ORGANISM</div>
+      <h2 class="reveal">
+        PARA<br>
+        <span>SITE.</span>
+      </h2>
+      <div class="parasite-copy reveal">
+        <p>
+          It doesn't ask for space.
+          It finds a place, attaches, adapts
+          and becomes impossible to ignore.
+          The boundary between object and organism begins to disappear.
+        </p>
+        <span class="parasite-number">SPECIMEN 001 — ACTIVE</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- COLLECTION -->
+  <section class="collection" id="objects">
+    <div class="container">
+      <div class="section-head reveal">
+        <div>
+          <span class="eyebrow">03 / FORMS IN EVOLUTION</span>
+          <h2>OBJECTS<br>OF VYRA.</h2>
+        </div>
+        <p>
+          Different expressions of one unfamiliar instinct.
+          Each form belongs to a world of its own.
+        </p>
+      </div>
+
+      <div class="concept-grid">
+        <article class="concept reveal">
+          <div class="concept-image">
+            <img src="assets/hero-bag.png" alt="Origin — VYRA concept form">
+          </div>
+          <div class="concept-top">
+            <h3>ORIGIN</h3>
+            <span class="concept-id">01 / FIRST FORM</span>
+          </div>
+          <p class="concept-desc">
+            The first appearance. The beginning of something not yet defined.
+          </p>
+          <a class="concept-link" href="#contact">EXPLORE FORM ↗</a>
+        </article>
+
+        <article class="concept reveal">
+          <div class="concept-image">
+            <img src="assets/bag-parasite.png" alt="Parasite — VYRA concept form">
+          </div>
+          <div class="concept-top">
+            <h3>PARASITE</h3>
+            <span class="concept-id">02 / ATTACHMENT</span>
+          </div>
+          <p class="concept-desc">
+            An unfamiliar presence. It attaches, adapts and takes on a life of its own.
+          </p>
+          <a class="concept-link" href="#contact">EXPLORE FORM ↗</a>
+        </article>
+
+        <article class="concept reveal">
+          <div class="concept-image">
+            <img src="assets/bag-liquid.png" alt="Liquid — VYRA concept form">
+          </div>
+          <div class="concept-top">
+            <h3>LIQUID</h3>
+            <span class="concept-id">03 / TRANSFORMATION</span>
+          </div>
+          <p class="concept-desc">
+            Never fixed. Never final. A form caught in the act of becoming.
+          </p>
+          <a class="concept-link" href="#contact">EXPLORE FORM ↗</a>
+        </article>
+
+        <article class="concept reveal">
+          <div class="concept-image">
+            <img src="assets/bag-mutant.png" alt="Mutant — VYRA concept form">
+          </div>
+          <div class="concept-top">
+            <h3>MUTANT</h3>
+            <span class="concept-id">04 / EVOLUTION</span>
+          </div>
+          <p class="concept-desc">
+            A deviation from the expected. A new form beyond its original nature.
+          </p>
+          <a class="concept-link" href="#contact">EXPLORE FORM ↗</a>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- LIQUID -->
+  <section class="liquid-break">
+    <div class="liquid-text reveal">
+      <span class="eyebrow">04 / NO FIXED STATE</span>
+      <h2>LIQUID.</h2>
+      <p>FORM IS NEVER THE FINAL FORM.</p>
+    </div>
+  </section>
+
+  <!-- BRAND STATEMENT -->
+  <section class="statement">
+    <div class="container reveal">
+      <span class="eyebrow">A DIFFERENT KIND OF PRESENCE</span>
+      <h2>
+        IT DOESN'T<br>
+        FOLLOW.<br>
+        <span>IT INFECTS.</span>
+      </h2>
+      <p>
+        VYRA is not built around what already exists.
+        It is an invitation to encounter something
+        that feels strangely unfamiliar — and impossible to forget.
+      </p>
+    </div>
+  </section>
+
+  <!-- LEXICON -->
+  <section class="lexicon" id="lexicon">
+    <div class="container">
+      <div class="lexicon-heading reveal">
+        <div>
+          <span class="eyebrow">05 / THE VYRA LANGUAGE</span>
+          <h2>THE LEXICON.</h2>
+        </div>
+        <p>
+          A vocabulary for forms that have yet to find a category.
+        </p>
+      </div>
+
+      <div class="lexicon-list">
+        <div class="lexicon-item reveal"><span>01</span><h3>ORIGIN</h3></div>
+        <div class="lexicon-item reveal"><span>02</span><h3>PARASITE</h3></div>
+        <div class="lexicon-item reveal"><span>03</span><h3>LIQUID</h3></div>
+        <div class="lexicon-item reveal"><span>04</span><h3>MUTANT</h3></div>
+        <div class="lexicon-item reveal"><span>05</span><h3>SPORE</h3></div>
+        <div class="lexicon-item reveal"><span>06</span><h3>RELIC</h3></div>
+        <div class="lexicon-item reveal"><span>07</span><h3>FERAL</h3></div>
+        <div class="lexicon-item reveal"><span>08</span><h3>VESSEL</h3></div>
+        <div class="lexicon-item reveal"><span>09</span><h3>ALTER</h3></div>
+        <div class="lexicon-item reveal"><span>10</span><h3>ECHO</h3></div>
+        <div class="lexicon-item reveal"><span>11</span><h3>SPECIMEN</h3></div>
+        <div class="lexicon-item reveal"><span>12</span><h3>AFTERFORM</h3></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section class="contact" id="contact">
+    <div class="container contact-inner reveal">
+      <span class="eyebrow">06 / CONNECTION ESTABLISHED</span>
+      <h2>ENTER<br>THE<br>UNKNOWN.</h2>
+      <div class="contact-bottom">
+        <p>
+          Something unfamiliar is taking shape.
+          Stay close. The next form is already evolving.
+        </p>
+        <a class="contact-email" href="mailto:YOUR-EMAIL@example.com">
+          CONNECT WITH VYRA ↗
+        </a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="container footer-inner">
+    <a href="#top" class="footer-logo">VYRA</a>
+    <span class="footer-copy">INDEPENDENT DESIGN UNIVERSE · 2026</span>
+    <div class="footer-links">
+      <a href="#origin">ABOUT</a>
+      <a href="#objects">FORMS</a>
+      <a href="#contact">CONTACT</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+/* SCROLL REVEAL */
+const revealObserver = new IntersectionObserver((entries)=>{
+  entries.forEach(entry=>{
+    if(entry.isIntersecting){
+      entry.target.classList.add('visible');
+      revealObserver.unobserve(entry.target);
     }
+  });
+},{threshold:0.12,rootMargin:"0px 0px -35px 0px"});
 
-    menuToggle.addEventListener("click", () => {
-      const open = navLinks.classList.toggle("open");
+document.querySelectorAll('.reveal').forEach(el=>revealObserver.observe(el));
 
-      menuToggle.classList.toggle("active", open);
-      document.body.classList.toggle("menu-open", open);
-      menuToggle.setAttribute("aria-expanded", String(open));
-      menuToggle.setAttribute("aria-label", open ? "Close menu" : "Open menu");
-    });
+/* CURSOR */
+const cursor=document.getElementById('cursor');
+const ring=document.getElementById('cursorRing');
+let mouseX=0,mouseY=0,ringX=0,ringY=0;
 
-    navLinks.querySelectorAll("a").forEach(link => {
-      link.addEventListener("click", closeMenu);
-    });
+window.addEventListener('mousemove',(e)=>{
+  mouseX=e.clientX;
+  mouseY=e.clientY;
+  cursor.style.left=mouseX+'px';
+  cursor.style.top=mouseY+'px';
+});
 
-    // SCROLL REVEAL
-    const revealElements = document.querySelectorAll(".reveal");
+function animateRing(){
+  ringX+=(mouseX-ringX)*.13;
+  ringY+=(mouseY-ringY)*.13;
+  ring.style.left=ringX+'px';
+  ring.style.top=ringY+'px';
+  requestAnimationFrame(animateRing);
+}
+animateRing();
 
-    if ("IntersectionObserver" in window) {
-      const observer = new IntersectionObserver((entries, currentObserver) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add("visible");
-            currentObserver.unobserve(entry.target);
-          }
-        });
-      }, {
-        threshold: 0.12,
-        rootMargin: "0px 0px -35px 0px"
-      });
+document.querySelectorAll('a,button,.concept,.concept-image').forEach(el=>{
+  el.addEventListener('mouseenter',()=>document.body.classList.add('hovering'));
+  el.addEventListener('mouseleave',()=>document.body.classList.remove('hovering'));
+});
 
-      revealElements.forEach(element => observer.observe(element));
-    } else {
-      revealElements.forEach(element => element.classList.add("visible"));
-    }
+/* MOBILE MENU */
+const menuToggle=document.getElementById('menuToggle');
+const mobileMenu=document.getElementById('mobileMenu');
 
-    // OBJECT CONCEPTS
-    const objects = {
-      origin: {
-        name: "ORIGIN",
-        code: "VYRA / FORM 001",
-        image: "assets/hero-bag.png",
-        description: "The beginning of a new visual language. ORIGIN represents the first expression of the VYRA identity — a starting point for forms that refuse to remain familiar."
-      },
+menuToggle.addEventListener('click',()=>{
+  const isOpen=mobileMenu.classList.toggle('open');
+  menuToggle.textContent=isOpen?'×':'＋';
+  document.body.style.overflow=isOpen?'hidden':'';
+});
 
-      parasite: {
-        name: "PARASITE",
-        code: "VYRA / FORM 002",
-        image: "assets/bag-parasite.png",
-        description: "An instinct to attach, adapt and evolve. PARASITE explores organic structures and the tension between an object and the form it becomes."
-      },
+mobileMenu.querySelectorAll('a').forEach(link=>{
+  link.addEventListener('click',()=>{
+    mobileMenu.classList.remove('open');
+    menuToggle.textContent='＋';
+    document.body.style.overflow='';
+  });
+});
 
-      liquid: {
-        name: "LIQUID",
-        code: "VYRA / FORM 003",
-        image: "assets/bag-liquid.png",
-        description: "A study of movement and transformation. LIQUID is a visual exploration of fluid geometry, reflective surfaces and forms that seem to escape definition."
-      },
+/* SUBTLE PARALLAX — DESKTOP ONLY */
+const hero=document.querySelector('.hero');
+const heroContent=document.querySelector('.hero-content');
 
-      mutant: {
-        name: "MUTANT",
-        code: "VYRA / FORM 004",
-        image: "assets/bag-mutant.png",
-        description: "An unfamiliar evolution. MUTANT challenges expected proportions and creates a new visual identity through asymmetry, disruption and unexpected anatomy."
-      }
-    };
+if(window.matchMedia('(hover:hover) and (min-width: 801px)').matches){
+  hero.addEventListener('mousemove',(e)=>{
+    const rect=hero.getBoundingClientRect();
+    const x=(e.clientX-rect.left)/rect.width-.5;
+    const y=(e.clientY-rect.top)/rect.height-.5;
+    heroContent.style.transform=`translate3d(${x*-9}px,${y*-7}px,0)`;
+  });
+  hero.addEventListener('mouseleave',()=>{
+    heroContent.style.transform='translate3d(0,0,0)';
+  });
+}
 
-    // OBJECT DETAIL WINDOW
-    const overlay = document.getElementById("detailOverlay");
-    const detailImage = document.getElementById("detailImage");
-    const detailTitle = document.getElementById("detailTitle");
-    const detailCode = document.getElementById("detailCode");
-    const detailDescription = document.getElementById("detailDescription");
-    const detailClose = document.getElementById("detailClose");
-
-    function openObject(key) {
-      const object = objects[key];
-      if (!object) return;
-
-      detailImage.src = object.image;
-      detailTitle.textContent = object.name;
-      detailCode.textContent = object.code;
-      detailDescription.textContent = object.description;
-
-      overlay.classList.add("active");
-      overlay.setAttribute("aria-hidden", "false");
-      document.body.classList.add("detail-open");
-      detailClose.focus();
-    }
-
-    function closeObject() {
-      overlay.classList.remove("active");
-      overlay.setAttribute("aria-hidden", "true");
-      document.body.classList.remove("detail-open");
-    }
-
-    document.querySelectorAll(".object-card").forEach(card => {
-      card.addEventListener("click", () => {
-        openObject(card.dataset.object);
-      });
-
-      card.addEventListener("keydown", event => {
-        if (event.key === "Enter" || event.key === " ") {
-          event.preventDefault();
-          openObject(card.dataset.object);
-        }
-      });
-    });
-
-    detailClose.addEventListener("click", closeObject);
-
-    overlay.addEventListener("click", event => {
-      if (event.target === overlay) closeObject();
-    });
-
-    document.addEventListener("keydown", event => {
-      if (event.key === "Escape") {
-        closeObject();
-        closeMenu();
-      }
-    });
-  </script>
+/* CLOSE MENU WITH ESCAPE */
+document.addEventListener('keydown',(e)=>{
+  if(e.key==='Escape'){
+    mobileMenu.classList.remove('open');
+    menuToggle.textContent='＋';
+    document.body.style.overflow='';
+  }
+});
+</script>
 </body>
 </html>
