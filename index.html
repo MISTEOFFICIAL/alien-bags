@@ -6,1088 +6,715 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="theme-color" content="#08090B">
 <title>VYRA — Beyond Known Form</title>
-
+<meta name="description" content="VYRA. Beyond known form. A new species of object.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 
 <style>
-:root{
+:root {
   --black:#08090B;
-  --deep:#0D0E11;
   --graphite:#202329;
-  --steel:#343A42;
   --platinum:#AEB4BE;
   --white:#F4F5F7;
-  --muted:#777D85;
-  --line:rgba(174,180,190,.19);
-  --display:"Space Grotesk",sans-serif;
-  --body:"Inter",sans-serif;
-  --ease:cubic-bezier(.2,.75,.25,1);
+  --ice:#8496B5;
+  --steel:#343A42;
+  --font-display:'Space Grotesk',sans-serif;
+  --font-body:'Inter',sans-serif;
+  --page: min(1440px, calc(100% - 100px));
 }
 
-*{box-sizing:border-box}
-html{scroll-behavior:smooth;background:var(--black)}
-body{
-  margin:0;
+* { box-sizing:border-box; margin:0; padding:0; }
+html { scroll-behavior:smooth; background:var(--black); }
+body {
   background:var(--black);
   color:var(--white);
-  font-family:var(--body);
+  font-family:var(--font-body);
   overflow-x:hidden;
+  -webkit-font-smoothing:antialiased;
 }
-body.menu-open{overflow:hidden}
-::selection{background:var(--platinum);color:var(--black)}
-a{color:inherit;text-decoration:none}
-button{font:inherit;color:inherit}
-img{display:block;width:100%;height:100%;object-fit:cover}
-.container{width:min(1260px,86%);margin:0 auto}
-.display{font-family:var(--display)}
-.eyebrow{
-  font:500 9px var(--display);
-  letter-spacing:.22em;
-  text-transform:uppercase;
-  color:var(--platinum);
-}
-.muted{color:var(--muted)}
-.reveal{
-  opacity:0;
-  transform:translateY(22px);
-  transition:opacity .85s var(--ease),transform .95s var(--ease);
-}
-.reveal.visible{opacity:1;transform:translateY(0)}
+a { color:inherit; text-decoration:none; }
+button { font:inherit; color:inherit; }
+img { display:block; width:100%; height:100%; object-fit:cover; }
 
-/* CUSTOM CURSOR */
-.cursor-dot,.cursor-outline{
-  position:fixed;
-  z-index:1000;
-  top:0;left:0;
-  pointer-events:none;
-  border-radius:50%;
-  transform:translate(-50%,-50%);
-}
-.cursor-dot{
-  width:5px;height:5px;
-  background:var(--white);
-}
-.cursor-outline{
-  width:27px;height:27px;
-  border:1px solid rgba(244,245,247,.4);
-  transition:width .25s,height .25s,border-color .25s;
-}
-body.cursor-hover .cursor-outline{
-  width:43px;height:43px;
-  border-color:var(--white);
-}
-@media(hover:none){
-  .cursor-dot,.cursor-outline{display:none}
-}
+::selection { background:var(--platinum); color:var(--black); }
 
-/* HEADER */
-.header{
-  position:absolute;
-  z-index:100;
-  top:0;left:0;
-  width:100%;
-  padding:25px 0;
-}
-.nav{
-  width:88%;
-  max-width:1360px;
-  margin:auto;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-}
-.logo{
-  font:600 24px var(--display);
-  letter-spacing:.16em;
-}
-.nav-links{
-  display:flex;
-  gap:35px;
-  align-items:center;
-}
-.nav-links a,.nav-entry{
-  font:500 9px var(--display);
-  letter-spacing:.15em;
-  text-transform:uppercase;
-  color:rgba(244,245,247,.68);
-  transition:color .25s;
-}
-.nav-links a:hover,.nav-entry:hover{color:var(--white)}
-.nav-entry{
-  padding-bottom:7px;
-  border-bottom:1px solid var(--platinum);
-}
-.menu-button{
-  display:none;
-  background:none;
-  border:0;
-  font:300 25px var(--display);
-  cursor:pointer;
-}
-
-/* HERO */
-.hero{
-  min-height:760px;
-  height:94svh;
-  max-height:940px;
-  position:relative;
-  isolation:isolate;
-  display:flex;
-  align-items:center;
-  overflow:hidden;
+.preloader {
+  position:fixed; inset:0; z-index:1000;
   background:var(--black);
+  display:flex; align-items:center; justify-content:center;
+  transition:opacity .8s ease, visibility .8s ease;
 }
-.hero-image{
-  position:absolute;
-  inset:0;
-  z-index:-2;
-  background:
-    linear-gradient(90deg,
-      rgba(8,9,11,.97) 0%,
-      rgba(8,9,11,.83) 30%,
-      rgba(8,9,11,.28) 70%,
-      rgba(8,9,11,.2) 100%),
-    linear-gradient(0deg,var(--black) 0%,transparent 38%),
-    url("assets/hero-bag.png") center 48%/cover no-repeat;
-  transform:scale(1.025);
-  animation:heroMotion 20s ease-in-out infinite alternate;
+.preloader.done { opacity:0; visibility:hidden; }
+.preloader span {
+  font:600 24px var(--font-display);
+  letter-spacing:.32em;
+  animation:pulse 1.3s ease-in-out infinite alternate;
 }
-.hero-image:after{
-  content:"";
-  position:absolute;
-  inset:0;
-  background:linear-gradient(115deg,transparent 45%,rgba(255,255,255,.045),transparent 75%);
-  mix-blend-mode:screen;
-}
-@keyframes heroMotion{
-  from{transform:scale(1.025)}
-  to{transform:scale(1.075)}
-}
-.hero-content{
-  width:86%;
-  max-width:1260px;
-  margin:55px auto 0;
-}
-.hero-meta{
-  display:flex;
-  align-items:center;
-  gap:12px;
-  margin-bottom:27px;
-}
-.meta-line{
-  width:26px;height:1px;
-  background:var(--platinum);
-}
-.hero-meta span:last-child{
-  font:500 9px var(--display);
-  letter-spacing:.2em;
-  color:rgba(244,245,247,.68);
-}
-.hero h1{
-  font:400 clamp(62px,8.2vw,108px)/.91 var(--display);
-  letter-spacing:-.075em;
-  text-transform:uppercase;
-  margin:0;
-}
-.hero h1 .second-line{
-  color:transparent;
-  -webkit-text-stroke:1px rgba(244,245,247,.78);
-}
-.hero h1 .third-line{color:var(--platinum)}
-.hero-bottom{
-  margin-top:37px;
-  display:flex;
-  align-items:flex-end;
-  justify-content:space-between;
-  max-width:760px;
-}
-.hero-description{
-  max-width:310px;
-  color:rgba(244,245,247,.61);
-  font:300 11px/1.9 var(--body);
-  margin:0;
-}
-.text-link{
-  display:inline-block;
-  padding-bottom:8px;
-  border-bottom:1px solid var(--platinum);
-  font:500 9px var(--display);
-  letter-spacing:.16em;
-  text-transform:uppercase;
-  transition:opacity .3s;
-}
-.text-link:hover{opacity:.55}
-.hero-coordinate{
-  position:absolute;
-  right:5.5%;
-  bottom:65px;
-  writing-mode:vertical-rl;
-  color:rgba(244,245,247,.42);
-  font:9px var(--display);
-  letter-spacing:.18em;
+@keyframes pulse { to { opacity:.3; letter-spacing:.48em; } }
+
+.noise {
+  position:fixed; inset:0; z-index:20; pointer-events:none;
+  opacity:.035;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.45'/%3E%3C/svg%3E");
 }
 
-/* TICKER */
-.ticker{
-  overflow:hidden;
-  padding:15px 0;
-  background:var(--white);
-  color:var(--black);
-}
-.ticker-track{
-  display:flex;
-  width:max-content;
-  animation:marquee 32s linear infinite;
-}
-.ticker-group{
-  display:flex;
-  flex-shrink:0;
+.nav {
+  position:fixed; top:0; left:0; width:100%; z-index:100;
+  height:76px;
+  display:grid; grid-template-columns:1fr auto 1fr;
   align-items:center;
+  padding:0 50px;
+  border-bottom:1px solid rgba(174,180,190,.12);
+  background:rgba(8,9,11,.76);
+  backdrop-filter:blur(22px);
+  -webkit-backdrop-filter:blur(22px);
+  transition:background .4s ease;
 }
-.ticker-item{
-  display:flex;
-  align-items:center;
-  gap:25px;
-  padding:0 27px;
-  font:600 10px var(--display);
-  letter-spacing:.19em;
-  white-space:nowrap;
-}
-.ticker-item i{
-  width:4px;height:4px;
-  border-radius:50%;
-  background:var(--black);
-}
-@keyframes marquee{
-  to{transform:translateX(-50%)}
-}
-.ticker:hover .ticker-track{animation-play-state:paused}
-
-/* MANIFESTO */
-.manifesto{padding:140px 0 145px}
-.manifesto-grid{
-  display:grid;
-  grid-template-columns:.7fr 2fr;
-  gap:9%;
-}
-.manifesto-aside{padding-top:8px}
-.manifesto-aside p{
-  max-width:205px;
-  margin-top:24px;
-  color:rgba(244,245,247,.43);
-  font:300 10px/1.9 var(--body);
-}
-.manifesto-main h2{
-  font:400 clamp(43px,6vw,76px)/.99 var(--display);
-  letter-spacing:-.075em;
-  text-transform:uppercase;
-  margin:0;
-}
-.manifesto-main h2 span{color:var(--platinum)}
-.manifesto-bottom{
-  display:flex;
-  justify-content:flex-end;
-  margin-top:30px;
-}
-.manifesto-bottom p{
-  max-width:315px;
-  color:rgba(244,245,247,.47);
-  font:300 10px/1.95 var(--body);
-}
-
-/* PARASITE FEATURE */
-.parasite{
-  min-height:670px;
-  position:relative;
-  display:flex;
-  align-items:center;
-  overflow:hidden;
-  isolation:isolate;
-  background:#050607;
-}
-.parasite-image{
-  position:absolute;
-  inset:0;
-  z-index:-1;
-  background:
-    linear-gradient(90deg,#050607 0%,rgba(5,6,7,.87) 27%,rgba(5,6,7,.3) 75%),
-    linear-gradient(0deg,#050607 0%,transparent 42%),
-    url("assets/bag-parasite.png") center/cover no-repeat;
-  transition:transform 1.8s var(--ease);
-}
-.parasite:hover .parasite-image{transform:scale(1.045)}
-.parasite-content{
-  width:86%;
-  max-width:1260px;
-  margin:auto;
-  padding:105px 0;
-}
-.parasite-title{
-  font:400 clamp(76px,10.5vw,138px)/.79 var(--display);
-  letter-spacing:-.095em;
-  margin:27px 0 34px;
-}
-.parasite-title span{
-  display:block;
-  color:transparent;
-  -webkit-text-stroke:1px rgba(244,245,247,.85);
-  margin-left:9vw;
-}
-.parasite-footer{
-  display:flex;
-  align-items:flex-end;
-  justify-content:space-between;
-  max-width:790px;
-}
-.parasite-footer p{
-  max-width:315px;
-  margin:0;
-  color:rgba(244,245,247,.62);
-  font:300 11px/1.9 var(--body);
-}
-.specimen-code{
-  font:9px var(--display);
+.logo {
+  font:700 25px var(--font-display);
   letter-spacing:.17em;
-  color:var(--platinum);
+}
+.nav-links { display:flex; align-items:center; gap:38px; }
+.nav-links a,.nav-right a {
+  font-size:10px; letter-spacing:.16em; text-transform:uppercase;
+  color:rgba(244,245,247,.66);
+  transition:color .25s ease;
+}
+.nav-links a:hover,.nav-right a:hover { color:var(--white); }
+.nav-right { display:flex; justify-content:flex-end; align-items:center; gap:25px; }
+.nav-index { color:var(--platinum)!important; }
+
+.menu-toggle {
+  display:none; background:none; border:0; cursor:pointer;
+  font-size:10px; letter-spacing:.16em; text-transform:uppercase;
 }
 
-/* FOUR CONCEPTS */
-.concepts{padding:135px 0 150px}
-.section-heading{
+.hero {
+  min-height:100svh;
+  position:relative;
   display:flex;
   align-items:flex-end;
-  justify-content:space-between;
-  margin-bottom:54px;
-}
-.section-heading h2{
-  font:400 clamp(43px,6vw,75px)/.9 var(--display);
-  letter-spacing:-.075em;
-  margin:17px 0 0;
-}
-.section-heading p{
-  max-width:220px;
-  margin:0 0 4px;
-  color:rgba(244,245,247,.45);
-  font:300 10px/1.9 var(--body);
-}
-.concept-grid{
-  display:grid;
-  grid-template-columns:repeat(2,minmax(0,1fr));
-  gap:58px 32px;
-  align-items:start;
-}
-.concept{min-width:0}
-.concept-visual{
-  position:relative;
-  width:100%;
-  aspect-ratio:1 / 1;
+  padding:150px max(50px, calc((100vw - 1440px)/2)) 74px;
   overflow:hidden;
-  background:#111216;
-}
-.concept-visual img{
-  filter:brightness(.88) contrast(1.04) saturate(.72);
-  transition:transform 1.2s var(--ease),filter 1s var(--ease);
-}
-.concept:hover .concept-visual img{
-  transform:scale(1.045);
-  filter:brightness(1) contrast(1.06) saturate(.88);
-}
-.concept-visual:after{
-  content:"";
-  position:absolute;
-  inset:0;
-  background:linear-gradient(145deg,rgba(255,255,255,.09),transparent 38%,rgba(0,0,0,.18));
-  pointer-events:none;
-}
-.concept-index{
-  position:absolute;
-  z-index:2;
-  top:17px;left:18px;
-  font:9px var(--display);
-  letter-spacing:.15em;
-  color:rgba(244,245,247,.76);
-}
-.concept-caption{
-  display:flex;
-  align-items:baseline;
-  justify-content:space-between;
-  gap:15px;
-  padding-top:17px;
-  border-top:1px solid var(--line);
-  margin-top:15px;
-}
-.concept-caption h3{
-  margin:0;
-  font:500 clamp(25px,3vw,35px)/1 var(--display);
-  letter-spacing:-.055em;
-}
-.concept-type{
-  color:var(--muted);
-  font:9px var(--display);
-  letter-spacing:.13em;
-  white-space:nowrap;
-}
-.concept-description{
-  max-width:350px;
-  margin:10px 0 0;
-  color:rgba(244,245,247,.46);
-  font:300 10px/1.85 var(--body);
-}
-
-/* MUTATION BREAK */
-.mutation{
-  min-height:570px;
-  position:relative;
   isolation:isolate;
-  overflow:hidden;
-  display:flex;
-  align-items:center;
-  background:#090A0C;
 }
-.mutation-image{
-  position:absolute;
-  inset:0;
-  z-index:-1;
+.hero-image {
+  position:absolute; inset:0; z-index:-3;
+  background:#111317;
+}
+.hero-image img {
+  object-position:center 43%;
+  opacity:.68;
+  transform:scale(1.04);
+  animation:hero-arrive 2s cubic-bezier(.2,.7,.2,1) forwards;
+}
+@keyframes hero-arrive { to { transform:scale(1); } }
+
+.hero-image::after {
+  content:""; position:absolute; inset:0;
   background:
-    linear-gradient(90deg,rgba(8,9,11,.93),rgba(8,9,11,.4) 75%),
-    linear-gradient(0deg,rgba(8,9,11,.5),transparent),
-    url("assets/bag-liquid.png") center/cover no-repeat;
-  transform:scale(1.02);
+    linear-gradient(90deg,rgba(8,9,11,.88) 0%,rgba(8,9,11,.45) 49%,rgba(8,9,11,.1) 100%),
+    linear-gradient(0deg,var(--black) 0%,transparent 48%,rgba(8,9,11,.22) 100%);
 }
-.mutation-content{
-  width:86%;
-  max-width:1260px;
-  margin:auto;
+.hero-content { width:100%; position:relative; z-index:2; }
+.eyebrow {
+  display:flex; align-items:center; gap:13px;
+  color:var(--platinum);
+  font-size:9px; letter-spacing:.25em; text-transform:uppercase;
 }
-.mutation-content h2{
-  font:400 clamp(82px,12vw,155px)/.82 var(--display);
-  letter-spacing:-.105em;
-  margin:24px 0 0;
+.eyebrow::before {
+  content:""; width:27px; height:1px; background:var(--platinum);
 }
-.mutation-content p{
-  margin:27px 0 0 5px;
-  color:rgba(244,245,247,.62);
-  font:500 9px var(--display);
-  letter-spacing:.2em;
+.hero h1 {
+  margin-top:29px;
+  font:500 clamp(54px,7.6vw,108px)/.94 var(--font-display);
+  letter-spacing:-.075em;
+  max-width:980px;
+  text-transform:uppercase;
+}
+.hero h1 span {
+  display:block;
+  color:var(--platinum);
+}
+.hero-bottom {
+  display:flex; justify-content:space-between; align-items:flex-end;
+  margin-top:48px;
+}
+.hero-copy {
+  max-width:340px;
+  color:rgba(244,245,247,.68);
+  font-size:12px; line-height:1.9; font-weight:300;
+}
+.hero-meta {
+  display:flex; gap:45px; color:rgba(244,245,247,.48);
+  font-size:9px; letter-spacing:.15em; text-transform:uppercase;
+}
+.hero-meta strong {
+  display:block; color:var(--platinum); font-weight:400;
+  margin-bottom:9px;
+}
+.scroll-line {
+  position:absolute; right:50px; top:50%; transform:translateY(-50%);
+  writing-mode:vertical-rl; color:rgba(244,245,247,.5);
+  font-size:9px; letter-spacing:.2em; text-transform:uppercase;
+}
+.scroll-line::after {
+  content:""; display:inline-block; width:1px; height:55px;
+  background:linear-gradient(var(--platinum),transparent);
+  margin-top:17px; margin-right:4px;
 }
 
-/* STATEMENT */
-.statement{
-  padding:140px 0 145px;
+.ticker {
+  overflow:hidden; border-top:1px solid rgba(174,180,190,.16);
+  border-bottom:1px solid rgba(174,180,190,.16);
+  padding:18px 0;
+  background:#0B0D10;
+}
+.ticker-track {
+  display:flex; width:max-content;
+  animation:ticker 32s linear infinite;
+}
+.ticker-group {
+  display:flex; align-items:center; flex-shrink:0;
+}
+.ticker span {
+  font:500 11px var(--font-display);
+  letter-spacing:.25em; color:var(--platinum);
+  padding:0 30px; white-space:nowrap;
+}
+.ticker i {
+  display:block; width:4px; height:4px;
+  background:var(--steel); flex-shrink:0;
+}
+@keyframes ticker { to { transform:translateX(-50%); } }
+
+.section { padding:145px 0; }
+.container { width:var(--page); margin:0 auto; }
+.section-top {
+  display:flex; justify-content:space-between; align-items:flex-end;
+  margin-bottom:60px;
+}
+.section-label {
+  font-size:9px; letter-spacing:.22em; color:var(--platinum);
+  text-transform:uppercase;
+}
+.section-title {
+  font:500 clamp(34px,4.5vw,61px)/1.02 var(--font-display);
+  letter-spacing:-.065em; text-transform:uppercase;
+  margin-top:19px;
+}
+.section-note {
+  max-width:245px; color:rgba(244,245,247,.48);
+  font-size:11px; line-height:1.8; font-weight:300;
+}
+
+.intro {
+  display:grid; grid-template-columns:1fr 1fr;
+  gap:100px; align-items:end;
+  padding:0 0 145px;
+}
+.intro-statement {
+  font:400 clamp(28px,3.7vw,49px)/1.16 var(--font-display);
+  letter-spacing:-.055em; max-width:650px;
+}
+.intro-statement span { color:var(--platinum); }
+.intro-description {
+  max-width:350px; margin-left:auto;
+  color:rgba(244,245,247,.57);
+  font-size:12px; line-height:2; font-weight:300;
+}
+
+.specimens { padding:0 0 150px; }
+.specimen-grid {
+  display:grid; grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:15px;
+}
+.specimen {
+  position:relative; min-width:0; overflow:hidden;
+  background:var(--graphite);
+  aspect-ratio:1.22/1;
+  isolation:isolate;
+}
+.specimen img {
+  position:absolute; inset:0;
+  transition:transform 1.2s cubic-bezier(.2,.7,.2,1), filter .8s ease;
+  filter:brightness(.72) saturate(.72);
+}
+.specimen:hover img { transform:scale(1.055); filter:brightness(.9) saturate(.9); }
+.specimen::after {
+  content:""; position:absolute; inset:0; z-index:1;
+  background:linear-gradient(0deg,rgba(8,9,11,.88),transparent 62%);
+}
+.specimen-content {
+  position:absolute; z-index:2; left:30px; right:30px; bottom:29px;
+  display:flex; justify-content:space-between; align-items:flex-end;
+}
+.specimen-number {
+  font-size:9px; letter-spacing:.2em; color:var(--platinum);
+  margin-bottom:11px;
+}
+.specimen h3 {
+  font:500 clamp(25px,3.2vw,42px)/1 var(--font-display);
+  letter-spacing:-.06em;
+}
+.specimen p {
+  color:rgba(244,245,247,.58); font-size:10px;
+  letter-spacing:.1em; text-transform:uppercase;
+  margin-top:10px;
+}
+.specimen-tag {
+  font-size:9px; letter-spacing:.14em; color:var(--platinum);
+  text-transform:uppercase;
+}
+
+.parasite {
+  position:relative; min-height:780px;
+  display:flex; align-items:center; overflow:hidden;
+  background:#0C0E11;
+  isolation:isolate;
+}
+.parasite-visual { position:absolute; inset:0; z-index:-2; }
+.parasite-visual img {
+  opacity:.72; object-position:center 44%;
+  transition:transform 1.5s cubic-bezier(.2,.7,.2,1);
+}
+.parasite:hover .parasite-visual img { transform:scale(1.035); }
+.parasite-visual::after {
+  content:""; position:absolute; inset:0;
+  background:linear-gradient(90deg,#08090B 0%,rgba(8,9,11,.88) 31%,rgba(8,9,11,.22) 100%),
+             linear-gradient(0deg,#08090B 0%,transparent 40%);
+}
+.parasite-content {
+  width:var(--page); margin:0 auto; padding:130px 0;
+}
+.parasite h2 {
+  font:500 clamp(60px,10vw,132px)/.85 var(--font-display);
+  letter-spacing:-.09em; text-transform:uppercase;
+  margin:35px 0 30px;
+}
+.parasite h2 span { display:block; color:var(--platinum); }
+.parasite-copy {
+  max-width:320px; color:rgba(244,245,247,.63);
+  font-size:12px; line-height:1.9; font-weight:300;
+}
+.parasite-foot {
+  display:flex; gap:45px; margin-top:60px;
+  font-size:9px; letter-spacing:.18em; text-transform:uppercase;
+  color:var(--platinum);
+}
+.parasite-foot span { border-bottom:1px solid rgba(174,180,190,.4); padding-bottom:9px; }
+
+.manifesto {
+  padding:160px 0 170px;
   text-align:center;
 }
-.statement h2{
-  margin:25px 0 0;
-  font:400 clamp(48px,7.4vw,94px)/.92 var(--display);
-  letter-spacing:-.08em;
+.manifesto .section-label { margin-bottom:38px; }
+.manifesto h2 {
+  font:500 clamp(37px,6.5vw,82px)/1.04 var(--font-display);
+  letter-spacing:-.075em; text-transform:uppercase;
 }
-.statement h2 span{
-  color:transparent;
-  -webkit-text-stroke:1px rgba(244,245,247,.75);
-}
-.statement p{
-  max-width:345px;
-  margin:28px auto 0;
-  color:rgba(244,245,247,.46);
-  font:300 10px/1.95 var(--body);
+.manifesto h2 span { color:var(--platinum); }
+.manifesto p {
+  max-width:390px; margin:32px auto 0;
+  color:rgba(244,245,247,.5); font-size:11px;
+  line-height:1.9; font-weight:300;
 }
 
-/* LEXICON */
-.lexicon{padding:30px 0 140px}
-.lexicon-head{
-  display:flex;
-  justify-content:space-between;
-  align-items:flex-end;
-  margin-bottom:38px;
+.liquid-section {
+  display:grid; grid-template-columns:1fr 1fr;
+  min-height:630px; background:#101216;
 }
-.lexicon-head h2{
-  font:400 clamp(42px,5.7vw,72px)/.9 var(--display);
-  letter-spacing:-.075em;
-  margin:15px 0 0;
+.liquid-image { min-height:630px; overflow:hidden; }
+.liquid-image img {
+  filter:brightness(.82) saturate(.65);
+  transition:transform 1.4s ease;
 }
-.lexicon-head p{
-  max-width:205px;
-  margin:0 0 4px;
-  color:rgba(244,245,247,.43);
-  font:300 10px/1.9 var(--body);
+.liquid-section:hover .liquid-image img { transform:scale(1.035); }
+.liquid-copy {
+  display:flex; flex-direction:column; justify-content:center;
+  padding:80px clamp(35px,7vw,110px);
 }
-.lexicon-grid{
-  display:grid;
-  grid-template-columns:repeat(4,1fr);
-  gap:0 28px;
+.liquid-copy h2 {
+  font:500 clamp(45px,6vw,76px)/.95 var(--font-display);
+  letter-spacing:-.075em; margin:24px 0;
 }
-.lexicon-item{
-  padding:17px 0 19px;
-  border-top:1px solid var(--line);
-  transition:border-color .3s;
+.liquid-copy h2 span { color:var(--platinum); }
+.liquid-copy p {
+  max-width:330px; color:rgba(244,245,247,.56);
+  font-size:12px; line-height:1.9; font-weight:300;
 }
-.lexicon-item:hover{border-color:var(--platinum)}
-.lexicon-item span{
-  display:block;
-  margin-bottom:12px;
-  color:var(--muted);
-  font:9px var(--display);
-  letter-spacing:.15em;
-}
-.lexicon-item h3{
-  margin:0;
-  font:500 17px var(--display);
-  letter-spacing:-.035em;
+.liquid-index {
+  font-size:9px; color:var(--platinum); letter-spacing:.2em;
 }
 
-/* CONTACT */
-.contact{
-  position:relative;
-  overflow:hidden;
-  padding:110px 0 105px;
-  background:#0D0E11;
+.last-word {
+  padding:150px 0;
+  border-bottom:1px solid rgba(174,180,190,.15);
 }
-.contact:before{
-  content:"";
-  position:absolute;
-  width:600px;height:600px;
-  right:-240px;top:-360px;
-  border-radius:50%;
-  border:1px solid rgba(174,180,190,.07);
-  box-shadow:0 0 0 50px rgba(174,180,190,.018),0 0 0 100px rgba(174,180,190,.012);
+.last-word-inner {
+  display:flex; justify-content:space-between; align-items:flex-end;
 }
-.contact-inner{position:relative}
-.contact h2{
-  margin:22px 0 35px;
-  font:400 clamp(60px,8.5vw,110px)/.84 var(--display);
+.last-word h2 {
+  font:500 clamp(54px,9vw,112px)/.88 var(--font-display);
   letter-spacing:-.09em;
 }
-.contact-bottom{
-  display:flex;
-  align-items:flex-end;
-  justify-content:space-between;
-}
-.contact-bottom p{
-  max-width:280px;
-  margin:0;
-  color:rgba(244,245,247,.45);
-  font:300 10px/1.9 var(--body);
-}
-.contact-bottom a{
-  padding-bottom:9px;
-  border-bottom:1px solid var(--platinum);
-  font:500 9px var(--display);
-  letter-spacing:.15em;
-  text-transform:uppercase;
+.last-word h2 span { color:var(--platinum); }
+.last-word p {
+  max-width:220px; color:rgba(244,245,247,.48);
+  font-size:11px; line-height:1.9;
 }
 
-/* FOOTER */
-.footer{padding:25px 0;background:var(--black)}
-.footer-inner{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  gap:20px;
+.footer {
+  padding:35px 0 28px;
 }
-.footer-logo{
-  font:600 21px var(--display);
-  letter-spacing:.16em;
+.footer-top {
+  display:flex; justify-content:space-between; align-items:center;
+  padding-bottom:35px;
 }
-.footer-copy,.footer-links a{
-  color:rgba(244,245,247,.38);
-  font:9px var(--display);
-  letter-spacing:.12em;
-  text-transform:uppercase;
+.footer-logo {
+  font:700 25px var(--font-display); letter-spacing:.17em;
 }
-.footer-links{display:flex;gap:23px}
-.footer-links a:hover{color:var(--white)}
-
-/* MOBILE NAV */
-.mobile-menu{
-  position:fixed;
-  z-index:95;
-  inset:0;
-  background:rgba(8,9,11,.98);
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  justify-content:center;
-  gap:25px;
-  opacity:0;
-  visibility:hidden;
-  transition:opacity .35s,visibility .35s;
+.footer-links { display:flex; gap:27px; }
+.footer-links a {
+  font-size:9px; color:rgba(244,245,247,.55);
+  letter-spacing:.14em; text-transform:uppercase;
 }
-.mobile-menu.open{opacity:1;visibility:visible}
-.mobile-menu a{
-  font:400 29px var(--display);
-  letter-spacing:-.04em;
-  text-transform:uppercase;
+.footer-bottom {
+  border-top:1px solid rgba(174,180,190,.13);
+  padding-top:19px; display:flex; justify-content:space-between;
+  color:rgba(244,245,247,.34);
+  font-size:9px; letter-spacing:.12em; text-transform:uppercase;
 }
 
-/* RESPONSIVE */
-@media(max-width:800px){
-  .header{padding:21px 0}
-  .nav-links,.nav-entry{display:none}
-  .menu-button{display:block}
-  .hero{min-height:700px;height:90svh}
-  .hero-image{
-    background:
-      linear-gradient(90deg,rgba(8,9,11,.88),rgba(8,9,11,.3)),
-      linear-gradient(0deg,var(--black),transparent 65%),
-      url("assets/hero-bag.png") 59% center/cover no-repeat;
+.reveal {
+  opacity:0; transform:translateY(28px);
+  transition:opacity .9s ease,transform .9s cubic-bezier(.2,.7,.2,1);
+}
+.reveal.visible { opacity:1; transform:translateY(0); }
+.reveal-delay { transition-delay:.14s; }
+
+@media(max-width:900px) {
+  :root { --page:calc(100% - 48px); }
+  .nav { padding:0 24px; height:68px; }
+  .nav-links { gap:20px; }
+  .nav-links a,.nav-right a { font-size:9px; }
+  .hero { padding:130px 24px 60px; }
+  .scroll-line { right:23px; }
+  .intro { gap:45px; }
+  .parasite { min-height:680px; }
+  .liquid-copy { padding:55px 35px; }
+}
+
+@media(max-width:640px) {
+  :root { --page:calc(100% - 40px); }
+  .nav { grid-template-columns:1fr auto; padding:0 20px; }
+  .logo { font-size:22px; }
+  .menu-toggle { display:block; }
+  .nav-links {
+    position:absolute; top:68px; left:0; right:0;
+    padding:25px 20px 30px;
+    background:rgba(8,9,11,.97);
+    border-bottom:1px solid rgba(174,180,190,.14);
+    display:none; flex-direction:column; align-items:flex-start; gap:25px;
   }
-  .hero h1{font-size:clamp(60px,10vw,85px)}
-  .hero-bottom{display:block;margin-top:30px}
-  .hero-bottom .text-link{margin-top:20px}
-  .hero-coordinate{display:none}
-
-  .manifesto{padding:105px 0}
-  .manifesto-grid{grid-template-columns:1fr;gap:32px}
-  .manifesto-aside p{max-width:280px}
-  .manifesto-main h2{font-size:clamp(42px,7.5vw,65px)}
-  .manifesto-bottom{justify-content:flex-start}
-
-  .parasite{min-height:590px}
-  .parasite-image{
-    background:
-      linear-gradient(90deg,rgba(5,6,7,.82),rgba(5,6,7,.28)),
-      linear-gradient(0deg,#050607,transparent 65%),
-      url("assets/bag-parasite.png") 58% center/cover no-repeat;
+  .nav-links.open { display:flex; }
+  .nav-right { display:none; }
+  .hero { min-height:92svh; padding:120px 20px 43px; }
+  .hero-image img { object-position:58% center; }
+  .hero h1 { font-size:clamp(49px,12vw,76px); }
+  .hero-bottom { display:block; margin-top:30px; }
+  .hero-copy { max-width:290px; font-size:11px; }
+  .hero-meta { margin-top:30px; gap:28px; }
+  .scroll-line { display:none; }
+  .ticker { padding:15px 0; }
+  .ticker span { font-size:9px; padding:0 20px; }
+  .section { padding:95px 0; }
+  .section-top { display:block; margin-bottom:35px; }
+  .section-note { margin-top:22px; }
+  .intro { grid-template-columns:1fr; gap:25px; padding-bottom:95px; }
+  .intro-description { margin-left:0; }
+  .specimens { padding-bottom:95px; }
+  .specimen-grid { grid-template-columns:1fr; gap:12px; }
+  .specimen { aspect-ratio:1.08/1; }
+  .specimen-content { left:20px; right:20px; bottom:20px; }
+  .parasite { min-height:630px; }
+  .parasite-visual img { object-position:58% center; }
+  .parasite-visual::after {
+    background:linear-gradient(90deg,rgba(8,9,11,.82),rgba(8,9,11,.35)),
+               linear-gradient(0deg,#08090B,transparent 70%);
   }
-  .parasite-title{font-size:clamp(72px,12vw,105px)}
-  .parasite-footer{display:block}
-  .specimen-code{display:block;margin-top:22px}
-
-  .concepts{padding:105px 0}
-  .section-heading{display:block;margin-bottom:40px}
-  .section-heading p{margin-top:18px}
-  .concept-grid{gap:43px 24px}
-  .concept-caption h3{font-size:clamp(23px,3.5vw,30px)}
-  .concept-type{font-size:8px}
-
-  .mutation{min-height:460px}
-  .statement{padding:105px 0}
-  .lexicon{padding:25px 0 105px}
-  .lexicon-grid{grid-template-columns:repeat(2,1fr);gap:0 22px}
-  .contact{padding:90px 0}
+  .parasite-content { padding:100px 0; }
+  .parasite h2 { font-size:clamp(58px,15vw,90px); }
+  .manifesto { padding:105px 0; }
+  .liquid-section { grid-template-columns:1fr; }
+  .liquid-image { min-height:390px; }
+  .liquid-copy { padding:55px 24px 70px; }
+  .last-word { padding:100px 0; }
+  .last-word-inner { display:block; }
+  .last-word p { margin-top:30px; }
+  .footer-top { align-items:flex-start; gap:30px; flex-direction:column; }
+  .footer-links { flex-wrap:wrap; gap:18px; }
+  .footer-bottom { gap:15px; flex-wrap:wrap; font-size:8px; }
 }
 
-@media(max-width:520px){
-  .container,.hero-content,.parasite-content,.mutation-content{width:88%}
-  .hero{min-height:670px}
-  .hero h1{font-size:15.5vw}
-  .hero-description{max-width:275px;font-size:10px}
-  .ticker{padding:13px 0}
-  .ticker-item{font-size:9px;padding:0 19px;gap:18px}
-
-  .manifesto-main h2{font-size:11.6vw}
-  .parasite{min-height:530px}
-  .parasite-title{font-size:17vw}
-  .parasite-footer p{font-size:10px;max-width:280px}
-
-  .section-heading h2{font-size:13vw}
-  .concept-grid{grid-template-columns:1fr;gap:42px}
-  .concept-visual{aspect-ratio:1 / 1!important}
-  .concept-caption h3{font-size:30px}
-  .concept-type{font-size:9px}
-  .concept-description{font-size:10px}
-
-  .mutation{min-height:390px}
-  .mutation-content h2{font-size:19vw}
-  .statement h2{font-size:12vw}
-  .lexicon-head{display:block}
-  .lexicon-head p{margin-top:17px}
-  .lexicon-item h3{font-size:16px}
-  .contact h2{font-size:17vw}
-  .contact-bottom{display:block}
-  .contact-bottom a{display:inline-block;margin-top:22px}
-  .footer-inner{flex-wrap:wrap}
-  .footer-copy{order:3;width:100%}
-  .footer-links{gap:15px}
-}
-
-@media(prefers-reduced-motion:reduce){
-  *,*::before,*::after{
+@media(prefers-reduced-motion:reduce) {
+  *,*::before,*::after {
     animation-duration:.01ms!important;
     animation-iteration-count:1!important;
     scroll-behavior:auto!important;
     transition-duration:.01ms!important;
   }
-  .reveal{opacity:1;transform:none}
+  .reveal { opacity:1; transform:none; }
 }
 </style>
 </head>
 
 <body>
-<div class="cursor-dot" id="cursorDot"></div>
-<div class="cursor-outline" id="cursorOutline"></div>
+<div class="preloader" id="preloader"><span>VYRA</span></div>
+<div class="noise"></div>
 
-<header class="header">
-  <nav class="nav">
-    <a class="logo" href="#top">VYRA</a>
-
-    <div class="nav-links">
-      <a href="#origin">Origin</a>
-      <a href="#parasite">Parasite</a>
-      <a href="#concepts">Concepts</a>
-      <a href="#lexicon">Lexicon</a>
-    </div>
-
-    <a class="nav-entry" href="#contact">Enter VYRA</a>
-    <button class="menu-button" id="menuButton" aria-label="Open menu">+</button>
+<header class="nav">
+  <a class="logo" href="#home">VYRA</a>
+  <nav class="nav-links" id="navLinks">
+    <a href="#universe">Universe</a>
+    <a href="#specimens">Specimens</a>
+    <a href="#parasite">Parasite</a>
+    <a href="#manifesto">Manifesto</a>
   </nav>
+  <div class="nav-right">
+    <a class="nav-index" href="#specimens">Index 001—004</a>
+    <a href="mailto:YOUR-EMAIL@example.com">Contact</a>
+  </div>
+  <button class="menu-toggle" id="menuToggle" aria-label="Toggle navigation">Menu</button>
 </header>
 
-<nav class="mobile-menu" id="mobileMenu">
-  <a href="#origin">Origin</a>
-  <a href="#parasite">Parasite</a>
-  <a href="#concepts">Concepts</a>
-  <a href="#lexicon">Lexicon</a>
-  <a href="#contact">Contact</a>
-</nav>
-
-<main id="top">
-
-  <section class="hero">
-    <div class="hero-image"></div>
-
-    <div class="hero-content">
-      <div class="hero-meta reveal">
-        <span class="meta-line"></span>
-        <span>INDEPENDENT DESIGN UNIVERSE</span>
-      </div>
-
-      <h1 class="reveal">
-        BEYOND<br>
-        <span class="second-line">KNOWN</span><br>
-        <span class="third-line">FORM.</span>
-      </h1>
-
-      <div class="hero-bottom reveal">
-        <p class="hero-description">
-          A new species of object. An unfamiliar design language.
-          Forms that exist beyond expectation, function and category.
-        </p>
-        <a class="text-link" href="#origin">Discover the universe</a>
-      </div>
-    </div>
-
-    <div class="hero-coordinate">VYRA / FIELD STUDY 001</div>
-  </section>
-
-  <div class="ticker">
-    <div class="ticker-track">
-      <div class="ticker-group">
-        <div class="ticker-item">NOT MADE TO BELONG <i></i></div>
-        <div class="ticker-item">BEYOND HUMAN FORM <i></i></div>
-        <div class="ticker-item">A NEW SPECIES OF OBJECT <i></i></div>
-        <div class="ticker-item">IT DOESN'T FOLLOW <i></i></div>
-        <div class="ticker-item">IT INFECTS <i></i></div>
-      </div>
-      <div class="ticker-group" aria-hidden="true">
-        <div class="ticker-item">NOT MADE TO BELONG <i></i></div>
-        <div class="ticker-item">BEYOND HUMAN FORM <i></i></div>
-        <div class="ticker-item">A NEW SPECIES OF OBJECT <i></i></div>
-        <div class="ticker-item">IT DOESN'T FOLLOW <i></i></div>
-        <div class="ticker-item">IT INFECTS <i></i></div>
+<main>
+<section class="hero" id="home">
+  <div class="hero-image">
+    <img src="assets/hero-bag.png" alt="VYRA — an unfamiliar sculptural form">
+  </div>
+  <div class="hero-content">
+    <div class="eyebrow">Independent design universe / Est. 001</div>
+    <h1>BEYOND <span>KNOWN FORM.</span></h1>
+    <div class="hero-bottom">
+      <p class="hero-copy">
+        An evolving collection of unfamiliar forms.
+        Objects that refuse definition. A world that refuses to stay still.
+      </p>
+      <div class="hero-meta">
+        <div><strong>01 / 04</strong>Origin point</div>
+        <div><strong>Unknown</strong>Classification</div>
       </div>
     </div>
   </div>
+  <div class="scroll-line">Enter the unknown</div>
+</section>
 
-  <section class="manifesto" id="origin">
-    <div class="container manifesto-grid">
-      <aside class="manifesto-aside reveal">
-        <span class="eyebrow">01 / ORIGIN</span>
-        <p>
-          A point of departure.
-          A world without familiar boundaries.
-          A form waiting to emerge.
-        </p>
-      </aside>
-
-      <div class="manifesto-main reveal">
-        <h2>
-          NOT MADE<br>
-          TO <span>BELONG.</span><br>
-          MADE TO<br>
-          EXIST.
-        </h2>
-        <div class="manifesto-bottom">
-          <p>
-            VYRA explores the space between the organic and the artificial.
-            It questions the familiar and gives shape to what has not
-            yet found a name.
-          </p>
-        </div>
-      </div>
+<div class="ticker" aria-label="VYRA identity">
+  <div class="ticker-track">
+    <div class="ticker-group">
+      <span>NOT MADE TO BELONG</span><i></i><span>BEYOND HUMAN FORM</span><i></i>
+      <span>A NEW SPECIES OF OBJECT</span><i></i><span>IT DOESN'T FOLLOW. IT INFECTS.</span><i></i>
     </div>
-  </section>
-
-  <section class="parasite" id="parasite">
-    <div class="parasite-image"></div>
-    <div class="parasite-content">
-      <span class="eyebrow reveal">02 / SPECIMEN 001</span>
-      <h2 class="parasite-title reveal">
-        PARA<br>
-        <span>SITE.</span>
-      </h2>
-      <div class="parasite-footer reveal">
-        <p>
-          It attaches. It adapts. It transforms.
-          A presence that spreads beyond its original form.
-          The boundary between object and organism disappears.
-        </p>
-        <span class="specimen-code">PARASITE / ACTIVE FORM</span>
-      </div>
+    <div class="ticker-group" aria-hidden="true">
+      <span>NOT MADE TO BELONG</span><i></i><span>BEYOND HUMAN FORM</span><i></i>
+      <span>A NEW SPECIES OF OBJECT</span><i></i><span>IT DOESN'T FOLLOW. IT INFECTS.</span><i></i>
     </div>
-  </section>
+  </div>
+</div>
 
-  <section class="concepts" id="concepts">
-    <div class="container">
-      <div class="section-heading reveal">
-        <div>
-          <span class="eyebrow">03 / THE FOUR EXPRESSIONS</span>
-          <h2>FOUR FORMS.<br>ONE UNIVERSE.</h2>
-        </div>
-        <p>
-          Four distinct directions.
-          One evolving design language.
+<section class="section" id="universe">
+  <div class="container">
+    <div class="intro">
+      <div class="reveal">
+        <div class="section-label">00 — The beginning</div>
+        <p class="intro-statement">
+          We are not here to create another form.
+          <span>We are here to question what form can become.</span>
         </p>
       </div>
-
-      <div class="concept-grid">
-
-        <article class="concept reveal">
-          <div class="concept-visual">
-            <span class="concept-index">01 / ORIGIN</span>
-            <img src="assets/hero-bag.png" alt="VYRA Origin concept">
-          </div>
-          <div class="concept-caption">
-            <h3>ORIGIN</h3>
-            <span class="concept-type">THE FIRST FORM</span>
-          </div>
-          <p class="concept-description">
-            The beginning of an unfamiliar language.
-          </p>
-        </article>
-
-        <article class="concept reveal">
-          <div class="concept-visual">
-            <span class="concept-index">02 / PARASITE</span>
-            <img src="assets/bag-parasite.png" alt="VYRA Parasite concept">
-          </div>
-          <div class="concept-caption">
-            <h3>PARASITE</h3>
-            <span class="concept-type">THE ATTACHMENT</span>
-          </div>
-          <p class="concept-description">
-            An organism-like presence that refuses to remain contained.
-          </p>
-        </article>
-
-        <article class="concept reveal">
-          <div class="concept-visual">
-            <span class="concept-index">03 / LIQUID</span>
-            <img src="assets/bag-liquid.png" alt="VYRA Liquid concept">
-          </div>
-          <div class="concept-caption">
-            <h3>LIQUID</h3>
-            <span class="concept-type">THE TRANSFORMATION</span>
-          </div>
-          <p class="concept-description">
-            A shifting structure with no permanent state.
-          </p>
-        </article>
-
-        <article class="concept reveal">
-          <div class="concept-visual">
-            <span class="concept-index">04 / MUTANT</span>
-            <img src="assets/bag-mutant.png" alt="VYRA Mutant concept">
-          </div>
-          <div class="concept-caption">
-            <h3>MUTANT</h3>
-            <span class="concept-type">THE DEVIATION</span>
-          </div>
-          <p class="concept-description">
-            An evolution beyond the limits of its original design.
-          </p>
-        </article>
-
-      </div>
-    </div>
-  </section>
-
-  <section class="mutation">
-    <div class="mutation-image"></div>
-    <div class="mutation-content reveal">
-      <span class="eyebrow">04 / CONTINUOUS EVOLUTION</span>
-      <h2>NO FIXED<br>FORM.</h2>
-      <p>CHANGE IS THE ONLY CONSTANT.</p>
-    </div>
-  </section>
-
-  <section class="statement">
-    <div class="container reveal">
-      <span class="eyebrow">THE VYRA PRINCIPLE</span>
-      <h2>
-        IT DOESN'T<br>
-        FOLLOW.<br>
-        <span>IT INFECTS.</span>
-      </h2>
-      <p>
-        Not another interpretation of what already exists.
-        A different instinct. A different presence.
-        A world that leaves a mark.
+      <p class="intro-description reveal reveal-delay">
+        VYRA exists somewhere between the familiar and the unknown.
+        A continuously evolving design language, shaped by distortion,
+        mutation and the beauty of the unfamiliar.
       </p>
     </div>
-  </section>
+  </div>
+</section>
 
-  <section class="lexicon" id="lexicon">
-    <div class="container">
-      <div class="lexicon-head reveal">
-        <div>
-          <span class="eyebrow">05 / LANGUAGE OF VYRA</span>
-          <h2>THE LEXICON.</h2>
+<section class="specimens" id="specimens">
+  <div class="container">
+    <div class="section-top reveal">
+      <div>
+        <div class="section-label">01 — Classification system</div>
+        <h2 class="section-title">Four states of being.</h2>
+      </div>
+      <p class="section-note">
+        Nothing here is entirely what it appears to be.
+        Every form belongs to a different state.
+      </p>
+    </div>
+
+    <div class="specimen-grid">
+      <article class="specimen reveal">
+        <img src="assets/hero-bag.png" alt="Origin — first form">
+        <div class="specimen-content">
+          <div>
+            <div class="specimen-number">001 / SOURCE</div>
+            <h3>ORIGIN</h3>
+            <p>The first unknown</p>
+          </div>
+          <span class="specimen-tag">State 01</span>
         </div>
-        <p>
-          Words for forms that refuse familiar definitions.
-        </p>
-      </div>
+      </article>
 
-      <div class="lexicon-grid">
-        <div class="lexicon-item reveal"><span>01</span><h3>ORIGIN</h3></div>
-        <div class="lexicon-item reveal"><span>02</span><h3>PARASITE</h3></div>
-        <div class="lexicon-item reveal"><span>03</span><h3>LIQUID</h3></div>
-        <div class="lexicon-item reveal"><span>04</span><h3>MUTANT</h3></div>
-        <div class="lexicon-item reveal"><span>05</span><h3>SPORE</h3></div>
-        <div class="lexicon-item reveal"><span>06</span><h3>RELIC</h3></div>
-        <div class="lexicon-item reveal"><span>07</span><h3>FERAL</h3></div>
-        <div class="lexicon-item reveal"><span>08</span><h3>VESSEL</h3></div>
-        <div class="lexicon-item reveal"><span>09</span><h3>ALTER</h3></div>
-        <div class="lexicon-item reveal"><span>10</span><h3>ECHO</h3></div>
-        <div class="lexicon-item reveal"><span>11</span><h3>SPECIMEN</h3></div>
-        <div class="lexicon-item reveal"><span>12</span><h3>AFTERFORM</h3></div>
-      </div>
+      <article class="specimen reveal reveal-delay">
+        <img src="assets/bag-parasite.png" alt="Parasite — attached form">
+        <div class="specimen-content">
+          <div>
+            <div class="specimen-number">002 / ATTACHMENT</div>
+            <h3>PARASITE</h3>
+            <p>It finds a host</p>
+          </div>
+          <span class="specimen-tag">State 02</span>
+        </div>
+      </article>
+
+      <article class="specimen reveal">
+        <img src="assets/bag-liquid.png" alt="Liquid — flowing form">
+        <div class="specimen-content">
+          <div>
+            <div class="specimen-number">003 / FLUIDITY</div>
+            <h3>LIQUID</h3>
+            <p>Never the same twice</p>
+          </div>
+          <span class="specimen-tag">State 03</span>
+        </div>
+      </article>
+
+      <article class="specimen reveal reveal-delay">
+        <img src="assets/bag-mutant.png" alt="Mutant — altered form">
+        <div class="specimen-content">
+          <div>
+            <div class="specimen-number">004 / EVOLUTION</div>
+            <h3>MUTANT</h3>
+            <p>Beyond recognition</p>
+          </div>
+          <span class="specimen-tag">State 04</span>
+        </div>
+      </article>
     </div>
-  </section>
+  </div>
+</section>
 
-  <section class="contact" id="contact">
-    <div class="container contact-inner reveal">
-      <span class="eyebrow">06 / THE NEXT FORM</span>
-      <h2>ENTER THE<br>UNKNOWN.</h2>
-      <div class="contact-bottom">
-        <p>
-          An unfamiliar world is taking shape.
-          This is only the beginning.
-        </p>
-        <a href="mailto:YOUR-EMAIL@example.com">CONNECT WITH VYRA</a>
-      </div>
+<section class="parasite" id="parasite">
+  <div class="parasite-visual">
+    <img src="assets/bag-parasite.png" alt="The Parasite — VYRA specimen">
+  </div>
+  <div class="parasite-content">
+    <div class="eyebrow reveal">002 — The attachment</div>
+    <h2 class="reveal">IT DOESN'T <span>FOLLOW.</span> IT INFECTS.</h2>
+    <p class="parasite-copy reveal">
+      Some things are not designed to be observed from a distance.
+      They attach. They adapt. They become impossible to separate
+      from the world they enter.
+    </p>
+    <div class="parasite-foot reveal">
+      <span>PARASITE / ACTIVE</span>
+      <span>HOST NOT IDENTIFIED</span>
     </div>
-  </section>
+  </div>
+</section>
 
+<section class="manifesto" id="manifesto">
+  <div class="container">
+    <div class="section-label reveal">03 — VYRA philosophy</div>
+    <h2 class="reveal">
+      NOT MADE TO <span>BELONG.</span><br>
+      MADE TO <span>EVOLVE.</span>
+    </h2>
+    <p class="reveal">
+      No fixed identity. No final form. No familiar boundaries.
+      VYRA is an ongoing transformation.
+    </p>
+  </div>
+</section>
+
+<section class="liquid-section">
+  <div class="liquid-image">
+    <img src="assets/bag-liquid.png" alt="Liquid specimen">
+  </div>
+  <div class="liquid-copy">
+    <div class="liquid-index reveal">003 / LIQUID STATE</div>
+    <h2 class="reveal">FORM IS <span>FLUID.</span></h2>
+    <p class="reveal">
+      Structure becomes movement. Matter becomes possibility.
+      What seems solid can change. What seems familiar can dissolve.
+    </p>
+  </div>
+</section>
+
+<section class="last-word">
+  <div class="container last-word-inner">
+    <h2 class="reveal">BEYOND <span>HUMAN FORM.</span></h2>
+    <p class="reveal">
+      VYRA is not a destination.
+      It is the beginning of something unfamiliar.
+    </p>
+  </div>
+</section>
 </main>
 
 <footer class="footer">
-  <div class="container footer-inner">
-    <a href="#top" class="footer-logo">VYRA</a>
-    <span class="footer-copy">INDEPENDENT DESIGN UNIVERSE / 2026</span>
-    <div class="footer-links">
-      <a href="#origin">ABOUT</a>
-      <a href="#concepts">CONCEPTS</a>
-      <a href="#contact">CONTACT</a>
+  <div class="container">
+    <div class="footer-top">
+      <a href="#home" class="footer-logo">VYRA</a>
+      <div class="footer-links">
+        <a href="#universe">Universe</a>
+        <a href="#specimens">Specimens</a>
+        <a href="#manifesto">Manifesto</a>
+        <a href="mailto:YOUR-EMAIL@example.com">Contact</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 VYRA — Beyond Known Form</span>
+      <span>Independent design universe</span>
+      <span>Origin unknown</span>
     </div>
   </div>
 </footer>
 
 <script>
-/* SCROLL REVEAL */
-const revealObserver = new IntersectionObserver((entries)=>{
-  entries.forEach(entry=>{
-    if(entry.isIntersecting){
-      entry.target.classList.add("visible");
-      revealObserver.unobserve(entry.target);
+window.addEventListener('load', () => {
+  setTimeout(() => document.getElementById('preloader').classList.add('done'), 650);
+});
+
+const menuToggle = document.getElementById('menuToggle');
+const navLinks = document.getElementById('navLinks');
+
+menuToggle.addEventListener('click', () => {
+  const opened = navLinks.classList.toggle('open');
+  menuToggle.textContent = opened ? 'Close' : 'Menu';
+});
+
+navLinks.querySelectorAll('a').forEach(link => {
+  link.addEventListener('click', () => {
+    navLinks.classList.remove('open');
+    menuToggle.textContent = 'Menu';
+  });
+});
+
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+      observer.unobserve(entry.target);
     }
   });
-},{threshold:.12,rootMargin:"0px 0px -25px 0px"});
+}, { threshold: 0.12 });
 
-document.querySelectorAll(".reveal").forEach(element=>{
-  revealObserver.observe(element);
-});
-
-/* CUSTOM CURSOR */
-const cursorDot = document.getElementById("cursorDot");
-const cursorOutline = document.getElementById("cursorOutline");
-
-let pointerX = 0;
-let pointerY = 0;
-let outlineX = 0;
-let outlineY = 0;
-
-window.addEventListener("mousemove",(event)=>{
-  pointerX = event.clientX;
-  pointerY = event.clientY;
-  cursorDot.style.left = pointerX + "px";
-  cursorDot.style.top = pointerY + "px";
-});
-
-function moveCursor(){
-  outlineX += (pointerX-outlineX)*.13;
-  outlineY += (pointerY-outlineY)*.13;
-  cursorOutline.style.left = outlineX + "px";
-  cursorOutline.style.top = outlineY + "px";
-  requestAnimationFrame(moveCursor);
-}
-moveCursor();
-
-document.querySelectorAll("a,button,.concept-visual").forEach(element=>{
-  element.addEventListener("mouseenter",()=>{
-    document.body.classList.add("cursor-hover");
-  });
-  element.addEventListener("mouseleave",()=>{
-    document.body.classList.remove("cursor-hover");
-  });
-});
-
-/* MOBILE MENU */
-const menuButton = document.getElementById("menuButton");
-const mobileMenu = document.getElementById("mobileMenu");
-
-function closeMenu(){
-  mobileMenu.classList.remove("open");
-  document.body.classList.remove("menu-open");
-  menuButton.textContent = "+";
-  menuButton.setAttribute("aria-label","Open menu");
-}
-
-menuButton.addEventListener("click",()=>{
-  const isOpen = mobileMenu.classList.toggle("open");
-  document.body.classList.toggle("menu-open",isOpen);
-  menuButton.textContent = isOpen ? "×" : "+";
-  menuButton.setAttribute("aria-label",isOpen ? "Close menu" : "Open menu");
-});
-
-mobileMenu.querySelectorAll("a").forEach(link=>{
-  link.addEventListener("click",closeMenu);
-});
-
-document.addEventListener("keydown",(event)=>{
-  if(event.key === "Escape") closeMenu();
-});
-
-/* SUBTLE HERO MOVEMENT */
-const hero = document.querySelector(".hero");
-const heroContent = document.querySelector(".hero-content");
-
-if(window.matchMedia("(hover:hover) and (min-width:801px)").matches){
-  hero.addEventListener("mousemove",(event)=>{
-    const bounds = hero.getBoundingClientRect();
-    const x = (event.clientX-bounds.left)/bounds.width-.5;
-    const y = (event.clientY-bounds.top)/bounds.height-.5;
-    heroContent.style.transform =
-      `translate3d(${x*-5}px,${y*-4}px,0)`;
-  });
-
-  hero.addEventListener("mouseleave",()=>{
-    heroContent.style.transform = "translate3d(0,0,0)";
-  });
-}
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 </script>
 </body>
 </html>
